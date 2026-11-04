@@ -49,6 +49,10 @@ Tapping any session card reveals the interactive **Session Inspector**, allowing
 
 ## Weekly Consultation Routine
 
+<p align="center">
+  <img src="./showcase_timetable_matrix.png" alt="Official Weekly Consultation Timetable Matrix - BRAC University CSE110 Section 07" width="100%" />
+</p>
+
 ### Active Time Matrix (80-Minute Academic Blocks)
 * **Slot 1 (11:00 AM - 12:20 PM)**: Lab Session / Student Class
 * **Slot 2 (12:30 PM - 1:50 PM)**: Offline Consultation / Lab Session
