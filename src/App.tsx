@@ -55,7 +55,7 @@ const JAVA_TOPIC_PRESETS = [
 /* 6 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
 const TIME_COLUMNS = [
   { id: 1, label: '8:00 AM - 9:20 AM', sub: 'Student Class', hasSession: true },
-  { id: 2, label: '11:00 AM - 12:20 PM', sub: 'CSE110 Lab', hasSession: true },
+  { id: 2, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
   { id: 3, label: '12:30 PM - 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
   { id: 4, label: '2:00 PM - 3:20 PM', sub: 'Offline Session', hasSession: true },
   { id: 5, label: '3:30 PM - 4:50 PM', sub: 'Offline Session', hasSession: true },
@@ -68,7 +68,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     abbr: 'SAT',
     slots: [
       { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Class', location: 'Student Slot' },
-      null,
+      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Class', location: 'Student Slot' },
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
@@ -76,6 +76,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     ],
     consultations: [
       { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Student Class', location: 'Class' },
+      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Student Class', location: 'Class' },
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
     ],

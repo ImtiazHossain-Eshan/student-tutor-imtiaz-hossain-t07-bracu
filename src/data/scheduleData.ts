@@ -39,6 +39,14 @@ export const REGULAR_SCHEDULE: ScheduleSlot[] = [
     type: 'class' as SessionType,
   },
   {
+    id: 'reg-sat-0b',
+    day: 'Saturday',
+    time: '11:00 AM',
+    activity: 'Student Class',
+    location: 'Class',
+    type: 'class' as SessionType,
+  },
+  {
     id: 'reg-sat-1',
     day: 'Saturday',
     time: '12:30 PM',
