@@ -324,7 +324,7 @@ export default function App() {
   const [mobileTab, setMobileTab] = useState<'cards' | 'table'>('cards');
   const [selectedSession, setSelectedSession] = useState<{ day: string; slot: SlotData } | null>(null);
 
-  // Option 1 Consultation Request Composer State
+  // Consultation Request Composer State
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const [composerName, setComposerName] = useState('');
   const [composerId, setComposerId] = useState('');
@@ -352,7 +352,7 @@ export default function App() {
     setTimeout(() => setCopiedSlackId(false), 2000);
   };
 
-  const generateOption1Message = () => {
+  const generateConsultationMessage = () => {
     const name = composerName.trim() || '[Student Name]';
     const id = composerId.trim() || '[Student ID]';
     const topic = composerTopic.trim() || '[e.g. Module 7: Iterations (Nested) / Module 9: Array]';
@@ -368,30 +368,30 @@ export default function App() {
     setTimeout(() => setComposerCopiedToast(null), 3500);
   };
 
-  const handleCopyOption1Text = () => {
-    const text = generateOption1Message();
+  const handleCopyConsultationText = () => {
+    const text = generateConsultationMessage();
     navigator.clipboard.writeText(text);
     setCopiedRawText(true);
-    triggerToast('Copied Option 1 template to clipboard!');
+    triggerToast('Copied formatted message to clipboard!');
     setTimeout(() => setCopiedRawText(false), 2200);
   };
 
   const handleSendDiscord = () => {
-    const text = generateOption1Message();
+    const text = generateConsultationMessage();
     navigator.clipboard.writeText(text);
-    triggerToast('Copied Option 1 template! Opening Discord server...');
+    triggerToast('Copied formatted message! Opening Discord...');
     window.open('https://discord.gg/S6qrvUVrgF', '_blank');
   };
 
   const handleSendSlack = () => {
-    const text = generateOption1Message();
+    const text = generateConsultationMessage();
     navigator.clipboard.writeText(text);
-    triggerToast('Copied Option 1 template! Opening Slack profile...');
+    triggerToast('Copied formatted message! Opening Slack...');
     window.open('https://cse110fall2026.slack.com/team/U0CDM29USQ7', '_blank');
   };
 
   const handleSendEmail = () => {
-    const text = generateOption1Message();
+    const text = generateConsultationMessage();
     const subject = encodeURIComponent(
       `CSE110 Consultation Request - ${composerName.trim() || 'Student'} (${composerId.trim() || 'ID'})`
     );
@@ -582,7 +582,7 @@ export default function App() {
                   <svg className="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                   </svg>
-                  <span>Draft Consultation (Option 1)</span>
+                  <span>Draft Consultation Request</span>
                 </button>
               </div>
 
@@ -902,7 +902,7 @@ export default function App() {
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                       </svg>
-                      <span>Draft Consultation Request (Option 1)</span>
+                      <span>Draft Consultation Request</span>
                     </button>
                   </div>
                 </div>
@@ -1427,7 +1427,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* ── 7. Option 1 Consultation Request Interactive Composer Modal ── */}
+      {/* ── 7. Consultation Request Interactive Composer Modal ── */}
       <AnimatePresence>
         {isComposerOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
@@ -1446,7 +1446,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 15 }}
               transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-              className="relative w-full max-w-4xl bg-[var(--paper)] text-[var(--ink)] border-2 border-[var(--ink)] rounded-xs shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
+              className="relative w-full max-w-5xl bg-[var(--paper)] text-[var(--ink)] border-2 border-[var(--ink)] rounded-xs shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
             >
               {/* Corner Registration Ticks */}
               <span className="absolute top-2 left-2 text-[var(--ink)]/40 font-mono text-xs">┌</span>
@@ -1458,9 +1458,6 @@ export default function App() {
               <div className="px-6 py-4 border-b-2 border-[var(--ink)] bg-[var(--paper-2)] flex items-start justify-between gap-4 shrink-0">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs bg-emerald-600 text-white">
-                      OPTION 1 FORMAT
-                    </span>
                     <span className="text-xs font-mono font-bold text-[var(--ink-2)]">
                       CSE110: Programming Language I
                     </span>
@@ -1486,147 +1483,166 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Scrollable Form Body */}
-              <div className="p-6 space-y-4 overflow-y-auto text-xs">
-                {/* Row 1: Student Name & ID */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                      Student Name *
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Tanvir Ahmed"
-                      value={composerName}
-                      onChange={(e) => setComposerName(e.target.value)}
-                      className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
-                    />
-                  </div>
+              {/* Scrollable Form & Preview Body (Side-by-Side) */}
+              <div className="p-4 sm:p-6 overflow-y-auto text-xs flex-1">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+                  {/* Left Column: Form Inputs (7 cols on lg) */}
+                  <div className="lg:col-span-7 space-y-3.5">
+                    {/* Row 1: Student Name & ID */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                          Student Name *
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Tanvir Ahmed"
+                          value={composerName}
+                          onChange={(e) => setComposerName(e.target.value)}
+                          className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                      Student ID *
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 23101234"
-                      value={composerId}
-                      onChange={(e) => setComposerId(e.target.value)}
-                      className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
-                    />
-                  </div>
-                </div>
-
-                {/* Row 2: Selected Consultation Slot */}
-                <div>
-                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                    Requested Time / Slot *
-                  </label>
-                  <select
-                    value={composerSlot}
-                    onChange={(e) => setComposerSlot(e.target.value)}
-                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
-                  >
-                    {CONSULTATION_SLOT_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Row 3: Java Topic / Concept with Quick Selection Chips */}
-                <div>
-                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                    Java Topic / Concept *
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Module 7: Iterations (Nested) or Module 9: Array"
-                    value={composerTopic}
-                    onChange={(e) => setComposerTopic(e.target.value)}
-                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors mb-2"
-                  />
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="font-mono text-[10px] text-[var(--ink-3)] uppercase mr-1">Quick Chips:</span>
-                    {JAVA_TOPIC_PRESETS.map((preset) => (
-                      <button
-                        key={preset}
-                        type="button"
-                        onClick={() => setComposerTopic(preset)}
-                        className={`px-2 py-0.5 rounded-xs font-mono text-[10px] transition-all cursor-pointer ${
-                          composerTopic === preset
-                            ? 'bg-[#1d49a7] text-white border-2 border-[#163a86] dark:bg-blue-600 dark:border-blue-300 font-bold shadow-xs'
-                            : 'bg-[var(--paper-2)] hover:bg-[var(--blue)]/15 text-[var(--ink)] border border-[var(--ink)]/30'
-                        }`}
-                      >
-                        {preset}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Row 4: Question / Issue */}
-                <div>
-                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                    Question / Issue (Problem description) *
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder="Describe where you are stuck, runtime ArrayIndexOutOfBoundsException, infinite loop, etc."
-                    value={composerQuestion}
-                    onChange={(e) => setComposerQuestion(e.target.value)}
-                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
-                  />
-                </div>
-
-                {/* Row 5: What I Have Tried So Far */}
-                <div>
-                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
-                    What I Have Tried So Far *
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder="Dry run on paper, checking loop termination condition, printing array lengths..."
-                    value={composerAttempts}
-                    onChange={(e) => setComposerAttempts(e.target.value)}
-                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
-                  />
-                </div>
-
-                {/* Live Message Preview Box */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="font-mono font-bold uppercase text-[11px] text-[var(--ink)]">
-                        Option 1 Live Output Preview
-                      </span>
+                      <div>
+                        <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                          Student ID *
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 23101234"
+                          value={composerId}
+                          onChange={(e) => setComposerId(e.target.value)}
+                          className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
+                        />
+                      </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={handleCopyOption1Text}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink-2)] hover:text-[var(--ink)] bg-[var(--paper-2)] hover:bg-[var(--ink)]/5 border border-[var(--ink)]/30 hover:border-[var(--ink)] transition-colors cursor-pointer"
-                      title="Copy raw formatted text"
-                    >
-                      {copiedRawText ? (
-                        <>
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">COPIED!</span>
-                        </>
-                      ) : (
-                        <>
-                          <svg className="w-3 h-3 text-[var(--ink-3)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
-                          </svg>
-                          <span>Copy text</span>
-                        </>
-                      )}
-                    </button>
+
+                    {/* Row 2: Selected Consultation Slot */}
+                    <div>
+                      <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                        Requested Time / Slot *
+                      </label>
+                      <select
+                        value={composerSlot}
+                        onChange={(e) => setComposerSlot(e.target.value)}
+                        className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
+                      >
+                        {CONSULTATION_SLOT_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Row 3: Java Topic / Concept with Quick Selection Chips */}
+                    <div>
+                      <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                        Java Topic / Concept *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Module 7: Iterations (Nested) or Module 9: Array"
+                        value={composerTopic}
+                        onChange={(e) => setComposerTopic(e.target.value)}
+                        className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors mb-2"
+                      />
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="font-mono text-[10px] text-[var(--ink-3)] uppercase mr-1">Quick Chips:</span>
+                        {JAVA_TOPIC_PRESETS.map((preset) => (
+                          <button
+                            key={preset}
+                            type="button"
+                            onClick={() => setComposerTopic(preset)}
+                            className={`px-2 py-0.5 rounded-xs font-mono text-[10px] transition-all cursor-pointer ${
+                              composerTopic === preset
+                                ? 'bg-[#1d49a7] text-white border-2 border-[#163a86] dark:bg-blue-600 dark:border-blue-300 font-bold shadow-xs'
+                                : 'bg-[var(--paper-2)] hover:bg-[var(--blue)]/15 text-[var(--ink)] border border-[var(--ink)]/30'
+                            }`}
+                          >
+                            {preset}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Row 4: Question / Issue */}
+                    <div>
+                      <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                        Question / Issue (Problem description) *
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Describe where you are stuck, runtime ArrayIndexOutOfBoundsException, infinite loop, etc."
+                        value={composerQuestion}
+                        onChange={(e) => setComposerQuestion(e.target.value)}
+                        className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                      />
+                    </div>
+
+                    {/* Row 5: What I Have Tried So Far */}
+                    <div>
+                      <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                        What I Have Tried So Far *
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="Dry run on paper, checking loop termination condition, printing array lengths..."
+                        value={composerAttempts}
+                        onChange={(e) => setComposerAttempts(e.target.value)}
+                        className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                      />
+                    </div>
                   </div>
-                  <pre className="p-3.5 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 rounded-xs font-mono text-[11px] text-[var(--ink)] whitespace-pre-wrap leading-relaxed select-all overflow-x-auto shadow-inner">
-                    {generateOption1Message()}
-                  </pre>
+
+                  {/* Right Column: Highlighted Live Output Preview (5 cols on lg) */}
+                  <div className="lg:col-span-5 flex flex-col">
+                    <div className="h-full flex flex-col border-2 border-[#1d49a7] dark:border-blue-400 bg-[var(--paper-2)] dark:bg-[#0c162b] rounded-xs shadow-md overflow-hidden ring-1 ring-[#1d49a7]/30">
+                      {/* Highlighted Header */}
+                      <div className="px-3.5 py-2.5 bg-[#1d49a7] dark:bg-[#163a86] text-white flex items-center justify-between border-b-2 border-[#163a86] dark:border-blue-500 shrink-0">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          <span className="font-mono font-bold uppercase text-[11px] tracking-wider text-white">
+                            LIVE OUTPUT PREVIEW
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleCopyConsultationText}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs font-mono text-[11px] font-bold uppercase tracking-wider text-white bg-white/15 hover:bg-white/25 border border-white/40 hover:border-white transition-all cursor-pointer shadow-xs active:scale-95"
+                          title="Copy raw formatted text"
+                        >
+                          {copiedRawText ? (
+                            <>
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-ping" />
+                              <span className="text-emerald-200 font-bold">COPIED!</span>
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                              </svg>
+                              <span>Copy text</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Highlighted Body Preview Content */}
+                      <pre className="flex-1 p-3.5 bg-[var(--paper)] dark:bg-[#070e1c] font-mono text-[11px] text-[var(--ink)] whitespace-pre-wrap leading-relaxed select-all overflow-y-auto min-h-[220px]">
+                        {generateConsultationMessage()}
+                      </pre>
+
+                      {/* Technical Footer Indicator */}
+                      <div className="px-3 py-1.5 bg-[var(--paper-2)] border-t border-[var(--ink)]/20 flex items-center justify-between text-[10px] font-mono text-[var(--ink-3)] shrink-0">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          <span>SYNCHRONIZED LIVE</span>
+                        </span>
+                        <span>DISCORD / SLACK / EMAIL</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1650,7 +1666,7 @@ export default function App() {
                   {/* Copy Raw Text */}
                   <button
                     type="button"
-                    onClick={handleCopyOption1Text}
+                    onClick={handleCopyConsultationText}
                     className="px-3.5 py-2 bg-[var(--paper-2)] hover:bg-[var(--ink)] text-[var(--ink)] hover:text-[var(--paper)] border-2 border-[var(--ink)]/60 hover:border-[var(--ink)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 active:scale-95 cursor-pointer"
                     title="Copy formatted consultation request text"
                   >

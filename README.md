@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  ST_Imtiaz_T07 provides instant consultation lookup, 3D interactive reacting schedule cards, one-click room copying, direct Discord and Slack channels, and an interactive Option 1 consultation message composer for Fall 2026.
+  ST_Imtiaz_T07 provides instant consultation lookup, 3D interactive reacting schedule cards, one-click room copying, direct Discord and Slack channels, and an interactive consultation request composer for Fall 2026.
 </p>
 
 <p align="center">
@@ -23,7 +23,7 @@
 
 <p align="center">
   <a href="#how-a-student-actually-uses-it">How It Works</a> ·
-  <a href="#option-1-consultation-request-template">Option 1 Composer</a> ·
+  <a href="#consultation-request-template">Consultation Composer</a> ·
   <a href="#weekly-consultation-routine">Schedule Matrix</a> ·
   <a href="#slack--discord-communication-channels">Slack & Discord</a> ·
   <a href="#key-architectural-highlights">Architecture</a> ·
@@ -34,7 +34,7 @@
 
 | The Routine | The Inspector | The Composer |
 | :---: | :---: | :---: |
-| <img src="./showcase_schedule.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Option 1 Consultation Composer" width="100%" /> |
+| <img src="./showcase_schedule.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Consultation Request Composer" width="100%" /> |
 
 ---
 
@@ -44,15 +44,15 @@ A student enrolled in BRAC University CSE110 Section 07 needs guidance debugging
 
 With a single glance, they check the day's routine to see whether Imtiaz Hossain is available for in-person consultation in room **10G-33L**, supervising the laboratory section in room **09B-09L**, or hosting evening online office hours on Discord. 
 
-Tapping any session card reveals the interactive **Session Inspector**, allowing students to copy the room code to their clipboard with one tap, copy the tutor's personal Discord handle (`bloodrayne_`), or click **"Draft Request for this Slot"** to automatically load the slot into the Option 1 message composer.
+Tapping any session card reveals the interactive **Session Inspector**, allowing students to copy the room code to their clipboard with one tap, copy the tutor's personal Discord handle (`bloodrayne_`), or click **"Draft Request for this Slot"** to automatically load the slot into the consultation message composer.
 
 From the composer, the student selects their Java concept, types a brief note about their attempts and runtime exceptions, and clicks one button to copy the template and jump directly to Discord, Slack, or Email.
 
 ---
 
-## Option 1 Consultation Request Template
+## Consultation Request Template
 
-To keep consultation inquiries structured and ensure quick resolution, the application integrates an interactive **Option 1 Message Composer**.
+To keep consultation inquiries structured and ensure quick resolution, the application integrates an interactive **Consultation Request Composer**.
 
 ### Message Format Specification
 
@@ -88,9 +88,9 @@ Students can select their current syllabus module with a single click in the com
 
 ### One-Click Redirection Workflow
 
-* **Discord**: Copies the Option 1 message to the student's clipboard, triggers a visual toast confirmation, and redirects directly to the [CSE ST Discord Server](https://discord.gg/S6qrvUVrgF) (`#cse110`). Students can paste the formatted block in `#cse110` or direct message personal handle `bloodrayne_`.
-* **Slack**: Copies the Option 1 message to the clipboard, displays confirmation, and redirects directly to the tutor's profile on the [CSE110 Fall 2026 Slack Workspace](https://cse110fall2026.slack.com/team/U0CDM29USQ7) (Display Name: `ST_Imtiaz_T07`, Member ID: `U0CDM29USQ7`).
-* **Official Academic Email**: Generates a pre-filled `mailto:` link with student credentials in the subject line and the complete Option 1 template in the email body, opening the student's preferred email client instantly.
+* **Discord**: Copies the formatted request message to the student's clipboard, triggers a visual toast confirmation, and redirects directly to the [CSE ST Discord Server](https://discord.gg/S6qrvUVrgF) (`#cse110`). Students can paste the formatted block in `#cse110` or direct message personal handle `bloodrayne_`.
+* **Slack**: Copies the formatted request message to the clipboard, displays confirmation, and redirects directly to the tutor's profile on the [CSE110 Fall 2026 Slack Workspace](https://cse110fall2026.slack.com/team/U0CDM29USQ7) (Display Name: `ST_Imtiaz_T07`, Member ID: `U0CDM29USQ7`).
+* **Official Academic Email**: Generates a pre-filled `mailto:` link with student credentials in the subject line and the complete formatted template in the email body, opening the student's preferred email client instantly.
 
 ---
 
@@ -143,7 +143,7 @@ Student consultations and technical queries are supported through dedicated plat
 
 * **Archival Technical Blueprint Aesthetic**: Styled after technical shop manuals, precision engineering coordinates, and archival print paper (`#1d49a7` blueprint blue, `#0c162b` deep night, `#eceeeb` archival document paper).
 * **Framer Motion 3D Tilt Physics**: Schedule cards dynamically calculate cursor delta and apply spring tilt physics with `translateZ` multi-layer parallax depth and specular sheen.
-* **Option 1 Interactive Composer**: Integrated modal drawer with instant input synchronization, Java concept quick-chips, live Markdown preview, and multi-platform one-click redirection.
+* **Interactive Consultation Composer**: Integrated modal drawer with instant input synchronization, Java concept quick-chips, live Markdown preview, and multi-platform one-click redirection.
 * **Tactile Dual-Theme Architecture**: Persistent toggle between Light Mode (technical paper) and Dark Mode (carbon blueprint night) with zero layout shift.
 * **Bulletproof Asset Bundling**: Profile photos, icons, and badges are bundled and hashed via Vite for seamless deployment across GitHub Pages and custom subpaths.
 
