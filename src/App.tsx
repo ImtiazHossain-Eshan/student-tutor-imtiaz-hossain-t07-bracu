@@ -1446,7 +1446,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 15 }}
               transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-              className="relative w-full max-w-2xl bg-[var(--paper)] text-[var(--ink)] border-2 border-[var(--ink)] rounded-xs shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
+              className="relative w-full max-w-4xl bg-[var(--paper)] text-[var(--ink)] border-2 border-[var(--ink)] rounded-xs shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
             >
               {/* Corner Registration Ticks */}
               <span className="absolute top-2 left-2 text-[var(--ink)]/40 font-mono text-xs">┌</span>
@@ -1606,20 +1606,20 @@ export default function App() {
                     <button
                       type="button"
                       onClick={handleCopyOption1Text}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xs font-display font-black text-xs uppercase tracking-wider bg-[#1d49a7] hover:bg-[#163a86] dark:bg-blue-600 dark:hover:bg-blue-500 text-white border-2 border-[#163a86] dark:border-blue-300 shadow-md active:scale-95 transition-all cursor-pointer"
-                      title="Copy raw formatted template to clipboard"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs font-mono text-[11px] font-bold uppercase tracking-wider text-[var(--ink-2)] hover:text-[var(--ink)] bg-[var(--paper-2)] hover:bg-[var(--ink)]/5 border border-[var(--ink)]/30 hover:border-[var(--ink)] transition-colors cursor-pointer"
+                      title="Copy raw formatted text"
                     >
                       {copiedRawText ? (
                         <>
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                          <span className="text-emerald-200">COPIED TO CLIPBOARD!</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">COPIED!</span>
                         </>
                       ) : (
                         <>
-                          <svg className="w-3.5 h-3.5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <svg className="w-3 h-3 text-[var(--ink-3)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                           </svg>
-                          <span>COPY RAW TEXT</span>
+                          <span>Copy text</span>
                         </>
                       )}
                     </button>
@@ -1631,66 +1631,70 @@ export default function App() {
               </div>
 
               {/* Action Buttons Row */}
-              <div className="p-4 sm:px-6 border-t-2 border-[var(--ink)] bg-[var(--paper-2)] flex flex-wrap items-center justify-between gap-3 shrink-0">
-                <div className="flex items-center gap-2 text-xs font-mono text-[var(--ink-2)]">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Choose Platform to Send:</span>
-                </div>
+              <div className="p-3.5 sm:px-6 border-t-2 border-[var(--ink)] bg-[var(--paper-2)] flex items-center justify-between gap-2 sm:gap-3 shrink-0">
+                {/* Most Left: Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsComposerOpen(false)}
+                  className="px-4 py-2 bg-[var(--paper-2)] hover:bg-[var(--ink)] text-[var(--ink)] hover:text-[var(--paper)] border-2 border-[var(--ink)] text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                  <span>Close</span>
+                </button>
 
-                <div className="flex flex-wrap items-center gap-2">
-                  {/* Copy Raw Text (Bottom Action Bar) */}
+                {/* Right Cluster: Copy Text, Discord, Slack, and Email on Most Right */}
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-end gap-2">
+                  {/* Copy Raw Text */}
                   <button
                     type="button"
                     onClick={handleCopyOption1Text}
-                    className="px-3.5 py-2 bg-[#163a86] hover:bg-[#122e6b] dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer border border-white/20"
+                    className="px-3.5 py-2 bg-[var(--paper-2)] hover:bg-[var(--ink)] text-[var(--ink)] hover:text-[var(--paper)] border-2 border-[var(--ink)]/60 hover:border-[var(--ink)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                    title="Copy formatted consultation request text"
                   >
-                    <svg className="w-3.5 h-3.5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                     </svg>
-                    <span>{copiedRawText ? 'Copied Raw Text!' : 'Copy Raw Text'}</span>
+                    <span>{copiedRawText ? 'Copied!' : 'Copy Text'}</span>
                   </button>
 
                   {/* Send via Discord */}
                   <button
                     type="button"
                     onClick={handleSendDiscord}
-                    className="px-3.5 py-2 bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                    className="px-3.5 py-2 bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer border border-[#4752c4]"
                   >
                     <img src={DISCORD_LOGO} alt="Discord" className="w-3.5 h-3.5 object-contain brightness-200" />
-                    <span>Copy &amp; Open Discord</span>
+                    <span>Copy &amp; Discord</span>
                   </button>
 
                   {/* Send via Slack */}
                   <button
                     type="button"
                     onClick={handleSendSlack}
-                    className="px-3.5 py-2 bg-[#4A154B] hover:bg-[#611f69] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                    className="px-3.5 py-2 bg-[#4A154B] hover:bg-[#611f69] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer border border-[#611f69]"
                   >
                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                      <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.52-2.523h-6.313z"/>
                     </svg>
-                    <span>Copy &amp; Open Slack</span>
+                    <span>Copy &amp; Slack</span>
                   </button>
 
-                  {/* Send via Email */}
+                  {/* Send via Email - Most Right Side */}
                   <button
                     type="button"
                     onClick={handleSendEmail}
-                    className="px-3.5 py-2 bg-[var(--blue)] hover:bg-[var(--blue-deep)] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                    className="px-4 py-2 bg-[var(--blue)] hover:bg-[var(--blue-deep)] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer border border-blue-400/30"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                     </svg>
                     <span>Open in Email</span>
-                  </button>
-
-                  {/* Close */}
-                  <button
-                    type="button"
-                    onClick={() => setIsComposerOpen(false)}
-                    className="px-3.5 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
-                  >
-                    Close
+                    <svg className="w-3 h-3 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
                   </button>
                 </div>
               </div>
