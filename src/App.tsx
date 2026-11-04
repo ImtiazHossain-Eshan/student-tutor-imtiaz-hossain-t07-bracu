@@ -23,6 +23,11 @@ interface DaySchedule {
   }[];
 }
 
+const BASE = import.meta.env.BASE_URL;
+const LOGO_128 = `${BASE}rounded-logo-128.png`;
+const LOGO_256 = `${BASE}rounded-logo-256.png`;
+const DISCORD_LOGO = `${BASE}discord-logo-64.png`;
+
 /* 5 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
 const TIME_COLUMNS = [
   { id: 1, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
@@ -223,7 +228,7 @@ function Session3DCell({
               </span>
               <span className="mt-1 px-2 py-0.5 rounded-xs text-[10px] font-mono font-black bg-[#4338ca] text-white dark:bg-indigo-400 dark:text-black flex items-center gap-1.5 shadow-xs">
                 <img
-                  src="/discord-logo-64.png"
+                  src={DISCORD_LOGO}
                   alt="Discord"
                   className="w-3.5 h-3.5 object-contain shrink-0"
                 />
@@ -342,9 +347,16 @@ export default function App() {
             <a href="#" className="relative group shrink-0" title="Imtiaz Hossain (T07)">
               <div className="w-10 h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] to-[#aa771c] shadow-[0_2px_10px_rgba(191,149,63,0.35)] group-hover:scale-105 transition-transform">
                 <img
-                  src="/rounded-logo-128.png"
+                  src={LOGO_128}
                   alt="Imtiaz Hossain"
                   className="w-full h-full rounded-full object-cover"
+                  onError={(e) => {
+                    const t = e.currentTarget;
+                    if (!t.dataset.fallback) {
+                      t.dataset.fallback = '1';
+                      t.src = 'rounded-logo-128.png';
+                    }
+                  }}
                 />
               </div>
               <span className="absolute -bottom-1 -right-1 px-1 py-0.2 text-[9px] font-mono font-bold bg-[#16181d] text-[#cdd9f3] border border-white/40 rounded">
@@ -403,7 +415,7 @@ export default function App() {
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm text-xs font-display font-extrabold uppercase tracking-wider text-[#16181d] bg-white hover:bg-[#dce3f1] transition-all shadow-sm active:scale-95 shrink-0 border border-white"
             >
               <img
-                src="/discord-logo-64.png"
+                src={DISCORD_LOGO}
                 alt="Discord"
                 className="w-4 h-4 object-contain shrink-0"
               />
@@ -475,9 +487,16 @@ export default function App() {
                     <div className="relative shrink-0">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] via-[#fbf5b7] to-[#aa771c] shadow-[0_4px_22px_rgba(191,149,63,0.38)]">
                         <img
-                          src="/rounded-logo-256.png"
+                          src={LOGO_256}
                           alt="Imtiaz Hossain"
                           className="w-full h-full rounded-full object-cover"
+                          onError={(e) => {
+                            const t = e.currentTarget;
+                            if (!t.dataset.fallback) {
+                              t.dataset.fallback = '1';
+                              t.src = 'rounded-logo-256.png';
+                            }
+                          }}
                         />
                       </div>
                     </div>
@@ -582,7 +601,7 @@ export default function App() {
                       aria-label="Join CSE ST Discord Server"
                     >
                       <img
-                        src="/discord-logo-64.png"
+                        src={DISCORD_LOGO}
                         alt="Discord Server"
                         className="w-full h-full object-contain"
                       />
@@ -1180,7 +1199,7 @@ export default function App() {
                       className="px-5 py-2.5 bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-colors inline-flex items-center gap-2 shadow-sm"
                     >
                       <img
-                        src="/discord-logo-64.png"
+                        src={DISCORD_LOGO}
                         alt="Discord"
                         className="w-4 h-4 object-contain brightness-200"
                       />
