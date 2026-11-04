@@ -13,6 +13,7 @@ export const TUTOR_INFO: TutorProfileInfo = {
   termPeriod: '3rd November 2026 to 4th January 2027',
   maxHours: 'Max 15 hours per week',
   discordInviteUrl: 'https://discord.gg/S6qrvUVrgF',
+  discordUsername: 'bloodrayne_',
 };
 
 export const DAYS_OF_WEEK = [

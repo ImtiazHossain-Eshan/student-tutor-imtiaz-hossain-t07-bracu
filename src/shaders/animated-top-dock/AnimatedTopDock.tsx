@@ -122,7 +122,7 @@ type ShaderField = {
 /* both shader variants share the same host lifecycle: measure from the shell,
    pause off-screen and on a hidden tab, and hand the renderer a css-pixel box.
    The module is resolved in its own effect so the effect that owns the GL
-   context can create and tear it down synchronously — an async create survives
+   context can create and tear it down synchronously  -  an async create survives
    its own cleanup and leaves two renderers fighting over one canvas. */
 function useShaderField(active: boolean, load: () => Promise<(canvas: HTMLCanvasElement) => ShaderField>) {
   const hostRef = useRef<HTMLDivElement>(null);

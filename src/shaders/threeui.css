@@ -447,7 +447,7 @@
 
 /* The authored plume sits at the foot of its own canvas, where the terrain band
    buries it. Every scene keeps that exact gradient and only raises the canvas
-   until the glow clears the range — stopping below the far edge of the hatch so
+   until the glow clears the range - stopping below the far edge of the hatch so
    the ground line the eye reads as the horizon is also where the sky starts,
    and the canvas edge itself stays behind the terrain. */
 .terrain-plume-component[data-terrain-scene="river"] .terrain-plume-canvas,
@@ -1091,7 +1091,7 @@ img.sunset-valley-fallback {
   transform: translateX(-50%);
 }
 
-/* Command bar: the bar hugs its own content — brand, dock and actions sit in
+/* Command bar: the bar hugs its own content - brand, dock and actions sit in
    one flow with a gap between them rather than being pushed to the far edges of
    a full-bleed strip. That only holds because the dock's track is locked to its
    rest width (lockTrack in the controller): the spring then grows its items
@@ -1253,7 +1253,7 @@ img.sunset-valley-fallback {
 }
 
 /* :hover is carried alongside the proximity flag so the glass still lands when
-   the spring is off — reduced motion, a coarse pointer, a narrow viewport */
+   the spring is off - reduced motion, a coarse pointer, a narrow viewport */
 .atd-modern__item[data-dock-near="true"],
 .atd-modern__item:hover,
 .atd-modern__item:focus-visible {
@@ -1423,7 +1423,7 @@ img.sunset-valley-fallback {
 }
 
 /* Horizontal fit: the bar is one continuous strip and the menu cells own all of
-   it. There are no gaps and no rounded ends — every cell is separated by a rule
+   it. There are no gaps and no rounded ends - every cell is separated by a rule
    and runs the full height, and the controller renormalises the widths so
    opening one cell takes its room from the neighbours. */
 .atd-retro__bar {

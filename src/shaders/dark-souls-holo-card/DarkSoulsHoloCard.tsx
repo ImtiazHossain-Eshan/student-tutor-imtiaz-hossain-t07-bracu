@@ -11,8 +11,8 @@ const DARK_SOULS_DOCUMENTS: Record<DarkSoulsHoloCardVariant, string> = {
 };
 
 const DARK_SOULS_TITLES: Record<DarkSoulsHoloCardVariant, string> = {
-  "ashen-one": "Dark Souls Holo Card — The Ashen One",
-  cindermane: "Dark Souls Holo Card — Cindermane",
+  "ashen-one": "Dark Souls Holo Card  -  The Ashen One",
+  cindermane: "Dark Souls Holo Card  -  Cindermane",
 };
 
 export type DarkSoulsHoloCardProps = {

@@ -23,7 +23,7 @@ const MAX_COUNT = 34;
 const QUAD_VERTEX = "void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }";
 
 /* the backdrop is drawn twice each frame: once into the refraction target the
-   glass samples, once straight to the canvas — one cheap fullscreen pass is far
+   glass samples, once straight to the canvas  -  one cheap fullscreen pass is far
    less work than a second material that blits the target back */
 const BACKDROP_FRAGMENT = `precision highp float;
 uniform vec2 uRes;

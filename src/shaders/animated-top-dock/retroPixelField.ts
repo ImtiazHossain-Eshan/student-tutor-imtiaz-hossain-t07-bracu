@@ -16,7 +16,7 @@ const VERTEX_SHADER = "attribute vec2 aPos;\nvoid main(){ gl_Position = vec4(aPo
 
 /* everything is quantised before it reaches a colour: the scene is authored as a
    single luminance field, dithered with an ordered 8x8 Bayer threshold, snapped
-   to `uLevels` steps, and only then mapped through the eight-stop dusk ramp — so
+   to `uLevels` steps, and only then mapped through the eight-stop dusk ramp  -  so
    the bands are real palette steps rather than a gradient with noise on top */
 const FRAGMENT_SHADER = `precision highp float;
 uniform vec2 uRes;
@@ -69,7 +69,7 @@ void main(){
 
   /* the composition is three bands: a deep sky that warms downward, a hot
      horizon at y=0.30, and a dark ground the readout chrome can sit on. The
-     falloffs are deliberately wide — a steep ramp stacks the palette steps into
+     falloffs are deliberately wide  -  a steep ramp stacks the palette steps into
      thin horizontal bars the ordered dither is too small to break up */
   float sky = smoothstep(0.98, 0.20, uv.y) * 0.36;
   float heat = smoothstep(0.60, 0.16, uv.y) * 0.32;

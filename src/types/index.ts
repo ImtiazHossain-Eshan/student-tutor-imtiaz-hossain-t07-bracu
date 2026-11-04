@@ -42,5 +42,6 @@ export interface TutorProfileInfo {
   termPeriod: string;
   maxHours: string;
   discordInviteUrl: string;
+  discordUsername: string;
 }
 

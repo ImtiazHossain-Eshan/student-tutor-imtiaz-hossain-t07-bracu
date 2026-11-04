@@ -16,7 +16,7 @@ export type TopDockOptions = {
   distribute?: boolean;
   /* the opposite deal: the track is pinned to the width it has at rest and the
      magnified row is allowed to overflow it. A bar that hugs its own content
-     needs this — without it the growing row widens the bar, which both slides
+     needs this  -  without it the growing row widens the bar, which both slides
      the brand and the actions around and resizes the box this controller
      re-measures from, cancelling the spring on the next frame. */
   lockTrack?: boolean;
@@ -77,7 +77,7 @@ export function createTopDockController(
     pointerActive = false;
     dirty = false;
     /* a distributed strip has to fill its track even when the spring never runs
-       — reduced motion, a coarse pointer, or a narrow viewport */
+        -  reduced motion, a coarse pointer, or a narrow viewport */
     if (getOptions().distribute) applyLayout();
     if (getOptions().lockTrack) root.style.width = `${root.getBoundingClientRect().width.toFixed(2)}px`;
     root.dataset.dockState = enabled ? "idle" : "static";
@@ -213,7 +213,7 @@ export function createTopDockController(
   const onClick = () => reset();
 
   /* the spring writes an explicit pixel width onto every item, so the base
-     measurement has to happen after the label font is available — measured
+     measurement has to happen after the label font is available  -  measured
      against a fallback face, a variant with auto-width items locks in a box its
      own text then overflows */
   let released = false;

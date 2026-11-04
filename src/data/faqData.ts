@@ -12,7 +12,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'faq-2',
     question: 'How can I get online assistance?',
     answer:
-      'Join the official CSE Student Tutor Discord server (discord.gg/S6qrvUVrgF). Navigate to the #cse110 course channel to post your questions during online consultation hours (8:00 PM – 11:00 PM). A Student Tutor may also invite you to a voice channel for live walkthroughs.',
+      'Join the official CSE Student Tutor Discord server (discord.gg/S6qrvUVrgF). Navigate to the #cse110 course channel to post your questions during online consultation hours (9:30 PM - 10:50 PM). You can also directly reach out to Imtiaz on Discord using personal handle bloodrayne_.',
     category: 'Discord',
   },
   {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
-/* ─── Schedule Data (Regular Semester — Official BRACU Consultation Planner) ─── */
+/* ─── Schedule Data (Regular Semester  -  Official BRACU Consultation Planner) ─── */
 
 interface SlotData {
   time: string;
@@ -25,11 +25,11 @@ interface DaySchedule {
 
 /* 5 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
 const TIME_COLUMNS = [
-  { id: 1, label: '11:00 AM – 12:20 PM', sub: 'Lab / Class', hasSession: true },
-  { id: 2, label: '12:30 PM – 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
-  { id: 3, label: '2:00 PM – 3:20 PM', sub: 'Offline Session', hasSession: true },
-  { id: 4, label: '3:30 PM – 4:50 PM', sub: 'Offline Session', hasSession: true },
-  { id: 5, label: '9:30 PM – 10:50 PM', sub: 'Online Discord', hasSession: true },
+  { id: 1, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
+  { id: 2, label: '12:30 PM - 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
+  { id: 3, label: '2:00 PM - 3:20 PM', sub: 'Offline Session', hasSession: true },
+  { id: 4, label: '3:30 PM - 4:50 PM', sub: 'Offline Session', hasSession: true },
+  { id: 5, label: '9:30 PM - 10:50 PM', sub: 'Online Discord', hasSession: true },
 ];
 
 const SCHEDULE_ROWS: DaySchedule[] = [
@@ -37,16 +37,16 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Saturday',
     abbr: 'SAT',
     slots: [
-      { time: '11:00 AM – 12:20 PM', activity: 'class', title: 'Class', location: 'Student Slot' },
-      { time: '12:30 PM – 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Class', location: 'Student Slot' },
+      { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
       null,
     ],
     consultations: [
-      { time: '11:00 AM – 12:20 PM', activity: 'class', title: 'Student Class', location: 'Class' },
-      { time: '12:30 PM – 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Student Class', location: 'Class' },
+      { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
     ],
   },
   {
@@ -57,10 +57,10 @@ const SCHEDULE_ROWS: DaySchedule[] = [
       null,
       null,
       null,
-      { time: '9:30 PM – 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
     consultations: [
-      { time: '9:30 PM – 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
   },
   {
@@ -69,12 +69,12 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     slots: [
       null,
       null,
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
       null,
     ],
     consultations: [
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
     ],
   },
   {
@@ -90,29 +90,29 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     slots: [
       null,
       null,
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
-      { time: '9:30 PM – 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
     consultations: [
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      { time: '9:30 PM – 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
   },
   {
     day: 'Thursday',
     abbr: 'THU',
     slots: [
-      { time: '11:00 AM – 12:20 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
-      { time: '12:30 PM – 1:50 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      { time: '3:30 PM – 4:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '11:00 AM - 12:20 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
+      { time: '12:30 PM - 1:50 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '3:30 PM - 4:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
     ],
     consultations: [
-      { time: '11:00 AM – 1:50 PM', activity: 'lab', title: 'CSE110-07 Lab Class', location: '09B-09L' },
-      { time: '2:00 PM – 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      { time: '3:30 PM – 4:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '11:00 AM - 1:50 PM', activity: 'lab', title: 'CSE110-07 Lab Class', location: '09B-09L' },
+      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
+      { time: '3:30 PM - 4:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
     ],
   },
   {
@@ -275,9 +275,23 @@ export default function App() {
   });
 
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedDiscordId, setCopiedDiscordId] = useState(false);
+  const [copiedModalDiscordId, setCopiedModalDiscordId] = useState(false);
   const [copiedModalRoom, setCopiedModalRoom] = useState(false);
   const [mobileTab, setMobileTab] = useState<'cards' | 'table'>('cards');
   const [selectedSession, setSelectedSession] = useState<{ day: string; slot: SlotData } | null>(null);
+
+  const copyDiscordId = () => {
+    navigator.clipboard.writeText('bloodrayne_');
+    setCopiedDiscordId(true);
+    setTimeout(() => setCopiedDiscordId(false), 2000);
+  };
+
+  const copyModalDiscordId = () => {
+    navigator.clipboard.writeText('bloodrayne_');
+    setCopiedModalDiscordId(true);
+    setTimeout(() => setCopiedModalDiscordId(false), 2000);
+  };
 
   useEffect(() => {
     const root = document.documentElement;
@@ -558,21 +572,36 @@ export default function App() {
                       </svg>
                     </a>
 
-                    {/* 5. Discord */}
+                    {/* 5. Discord Server */}
                     <a
                       href="https://discord.gg/S6qrvUVrgF"
                       target="_blank"
                       rel="noopener noreferrer"
-                      title="CSE ST Discord (#cse110)"
+                      title="CSE ST Discord Server (#cse110)"
                       className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#5865F2] hover:bg-[#4752c4] border border-white/25 hover:border-white p-1.5 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
-                      aria-label="Join Discord Server"
+                      aria-label="Join CSE ST Discord Server"
                     >
                       <img
                         src="/discord-logo-64.png"
-                        alt="Discord"
+                        alt="Discord Server"
                         className="w-full h-full object-contain"
                       />
                     </a>
+
+                    {/* 6. Tutor Discord Handle (bloodrayne_) */}
+                    <button
+                      type="button"
+                      onClick={copyDiscordId}
+                      title={copiedDiscordId ? "Copied Tutor Discord ID: bloodrayne_" : "Copy Tutor Discord ID: bloodrayne_"}
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#2b2d31] hover:bg-[#1e1f22] text-white border border-white/25 hover:border-emerald-400 p-1 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs font-mono text-[9px] font-bold"
+                      aria-label="Copy Tutor Discord ID: bloodrayne_"
+                    >
+                      {copiedDiscordId ? (
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                      ) : (
+                        <span>@ID</span>
+                      )}
+                    </button>
                   </div>
                 </div>
 
@@ -587,7 +616,63 @@ export default function App() {
                   <div className="p-2.5 bg-white/10 rounded-xs border border-white/15">
                     <div className="text-[10px] text-[#cdd9f3] uppercase">Lab Class</div>
                     <div className="text-base font-bold text-white mt-0.5">09B-09L</div>
-                    <div className="text-[10px] text-white/70">Thu 11:00 AM – 1:50 PM</div>
+                    <div className="text-[10px] text-white/70">Thu 11:00 AM - 1:50 PM</div>
+                  </div>
+
+                  {/* Discord ID (Personal) */}
+                  <div className="p-2.5 bg-white/10 rounded-xs border border-white/15 flex flex-col justify-between">
+                    <div>
+                      <div className="text-[10px] text-[#cdd9f3] uppercase flex items-center justify-between">
+                        <span>Discord ID</span>
+                        <span className="text-[9px] text-emerald-400 font-bold uppercase">Personal</span>
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-white font-mono mt-0.5 truncate">
+                        bloodrayne_
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={copyDiscordId}
+                      className="mt-2 w-full py-1.5 bg-white/15 hover:bg-white text-white hover:text-[#163a86] text-[10px] font-display font-black uppercase tracking-wider rounded-xs transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs"
+                    >
+                      {copiedDiscordId ? (
+                        <>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span>Copied ID</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                          </svg>
+                          <span>Copy Discord ID</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Discord Server (CSE ST) */}
+                  <div className="p-2.5 bg-white/10 rounded-xs border border-white/15 flex flex-col justify-between">
+                    <div>
+                      <div className="text-[10px] text-[#cdd9f3] uppercase flex items-center justify-between">
+                        <span>Discord Server</span>
+                        <span className="text-[9px] text-indigo-300 font-bold uppercase">#cse110</span>
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-white font-mono mt-0.5 truncate">
+                        CSE ST Server
+                      </div>
+                    </div>
+                    <a
+                      href="https://discord.gg/S6qrvUVrgF"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 w-full py-1.5 bg-[#5865F2] hover:bg-[#4752c4] text-white text-[10px] font-display font-black uppercase tracking-wider rounded-xs transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs"
+                    >
+                      <span>Join Server</span>
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+                      </svg>
+                    </a>
                   </div>
 
                   {/* Moved Copy Email Button inside the Official Email box */}
@@ -863,7 +948,7 @@ export default function App() {
                   </div>
                 ) : (
                   <div className="pt-2 text-xs text-[var(--ink-2)] font-mono italic">
-                    Free day — no consultation hours scheduled.
+                    Free day  -  no consultation hours scheduled.
                   </div>
                 )}
               </div>
@@ -1040,6 +1125,37 @@ export default function App() {
                     )}
                   </div>
                 </div>
+
+                {/* For Online Sessions: Tutor Discord Handle Direct Callout */}
+                {selectedSession.slot.activity === 'online' && (
+                  <div className="p-3 bg-[#5865F2]/10 border-2 border-[#5865F2]/30 rounded-xs flex items-center justify-between gap-3">
+                    <div>
+                      <div className="text-[10px] font-mono font-bold text-[#5865F2] uppercase">
+                        Student Tutor Discord ID
+                      </div>
+                      <div className="text-sm font-bold font-mono text-[var(--ink)] mt-0.5">
+                        bloodrayne_
+                      </div>
+                      <div className="text-[10px] text-[var(--ink-2)] font-mono">
+                        Personal handle · Direct message for consult topics
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={copyModalDiscordId}
+                      className="px-3 py-1.5 bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-mono font-bold uppercase rounded-xs transition-colors shrink-0 flex items-center gap-1.5 shadow-xs active:scale-95"
+                    >
+                      {copiedModalDiscordId ? (
+                        <>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <span>Copy ID</span>
+                      )}
+                    </button>
+                  </div>
+                )}
 
                 {/* Pre-Session Advice Reminder with Sleek Technical Sign */}
                 <div className="p-3.5 bg-amber-500/10 border-2 border-amber-600/40 rounded-xs flex items-start gap-3">

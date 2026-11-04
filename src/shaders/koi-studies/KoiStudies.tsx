@@ -24,7 +24,7 @@ export function KoiStudies({ className = "", style }: KoiStudiesProps) {
       }}
     >
       <iframe
-        title="Koi Studies — Interactive Card Stack"
+        title="Koi Studies  -  Interactive Card Stack"
         src={KOI_STUDIES_SOURCE_URL}
         sandbox="allow-scripts allow-same-origin"
         allow="autoplay"

@@ -15,7 +15,7 @@ export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
     date: 'Fall 2026 · Community',
     category: 'Discord',
     description:
-      'Join the official CSE Student Tutor Discord server for real-time online consultation, academic discussions, and announcements. Online consultation hours are 8:00 PM – 11:00 PM.',
+      'Join the official CSE Student Tutor Discord server for real-time online consultation, academic discussions, and announcements. Online consultation hours are 9:30 PM - 10:50 PM. You can also DM Imtiaz on Discord at bloodrayne_.',
     linkText: 'Join Discord Server',
     linkUrl: 'https://discord.gg/S6qrvUVrgF',
   },
