@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #eceeeb;
+  --paper-2: #e0e3e0;
+  --paper-card: #f7f9f6;
+  --ink: #16181d;
+  --ink-2: #3d4048;
+  --ink-3: #626875;
+  --blue: #1d49a7;
+  --blue-deep: #163a86;
+  --blue-tint: #dce3f1;
+  --on-blue: #ffffff;
+  --on-blue-2: #cdd9f3;
+  --red: #c62f1f;
+  --grid-line: rgba(22, 24, 29, 0.2);
+
+  --display: "Archivo", "Helvetica Neue", sans-serif;
+  --body: "Atkinson Hyperlegible", "Helvetica Neue", sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
+
+.dark {
+  --paper: #0b111e;
+  --paper-2: #101828;
+  --paper-card: #141f33;
+  --ink: #f2f5f1;
+  --ink-2: #c2cbd7;
+  --ink-3: #8a96a7;
+  --blue: #235cd6;
+  --blue-deep: #163a86;
+  --blue-tint: #1c2b4a;
+  --on-blue: #ffffff;
+  --on-blue-2: #b8cefa;
+  --red: #e04336;
+  --grid-line: rgba(255, 255, 255, 0.16);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+  scrollbar-color: var(--ink-2) var(--paper-2);
+}
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+/* Tabular figures for schedules, times, codes */
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Offset-print grain texture for blueprint cover */
+.blueprint-grain {
+  position: relative;
+}
+
+.blueprint-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.085;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Blueprint subtle coordinate grid */
+.blueprint-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-2);
+  border: 2px solid var(--paper-2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blue);
+}
