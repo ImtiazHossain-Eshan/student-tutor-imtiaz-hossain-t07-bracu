@@ -26,7 +26,6 @@
   <a href="#option-1-consultation-request-template">Option 1 Composer</a> ·
   <a href="#weekly-consultation-routine">Schedule Matrix</a> ·
   <a href="#slack--discord-communication-channels">Slack & Discord</a> ·
-  <a href="#official-portals--links">Official Portals</a> ·
   <a href="#key-architectural-highlights">Architecture</a> ·
   <a href="#student-tutor-dossier">Tutor Dossier</a>
 </p>
@@ -137,17 +136,6 @@ Student consultations and technical queries are supported through dedicated plat
   * Course Channel: `#cse110` for real-time problem discussions, group peer debugging, screen-sharing, and voice consultations.
 * **Official Academic Email**: [imtiaz.hossain@g.bracu.ac.bd](mailto:imtiaz.hossain@g.bracu.ac.bd)
   * Used for formal course inquiries, grade or attendance documentation, and scheduled consultation requests.
-
----
-
-## Official Portals & Links
-
-A curated set of technical profiles, code repositories, and student study vault resources:
-
-* **GitHub**: [@ImtiazHossain-Eshan](https://github.com/ImtiazHossain-Eshan) - Open-source repositories and course utilities.
-* **Portfolio**: [imtiazhossain.dev](https://www.imtiazhossain.dev/) - Personal portfolio, engineering projects, and technical writings.
-* **LinkedIn**: [in/imtiazhossaineshan](https://www.linkedin.com/in/imtiazhossaineshan/) - Professional background and academic credentials.
-* **BRACU Vault**: [bracuvault.me](https://www.bracuvault.me/) - Academic archive, notes, and resource vault for BRAC University students.
 
 ---
 
