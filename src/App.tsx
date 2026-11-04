@@ -1016,12 +1016,13 @@ export default function App() {
           </div>
 
           {/* ── DESKTOP SPREADSHEET TABLE (Framer Motion 3D Interactive Reacting Cells) ── */}
-          <div className={`${mobileTab === 'cards' ? 'hidden md:block' : 'block'} border-2 border-[var(--ink)] bg-[var(--paper-card)] overflow-x-auto md:overflow-x-visible shadow-sm`}>
+          <div id="timetable-matrix-plate" className="space-y-3 p-1">
+            <div className={`${mobileTab === 'cards' ? 'hidden md:block' : 'block'} border-2 border-[var(--ink)] bg-[var(--paper-card)] overflow-x-auto md:overflow-x-visible shadow-sm`}>
             <table className="w-full table-fixed text-xs border-collapse min-w-[700px] md:min-w-full">
               <thead>
-                <tr className="bg-[var(--ink)] text-[var(--paper)]">
+                <tr className="bg-[#121c33] text-white">
                   {/* Day Column Header */}
-                  <th className="py-3.5 px-3 text-left font-display font-black uppercase tracking-wider text-xs border-r border-white/20 w-[13%]">
+                  <th className="py-3.5 px-3 text-left font-display font-black uppercase tracking-wider text-xs border-r border-white/20 w-[13%] bg-[#0a101d] text-white">
                     DAY
                   </th>
 
@@ -1185,6 +1186,7 @@ export default function App() {
             <div className="text-[11px] font-mono text-[var(--ink-3)]">
               * Tuesday &amp; Friday: No Scheduled Consultation
             </div>
+          </div>
           </div>
 
         </section>
