@@ -28,13 +28,14 @@ const LOGO_128 = `${BASE}rounded-logo-128.png`;
 const LOGO_256 = `${BASE}rounded-logo-256.png`;
 const DISCORD_LOGO = `${BASE}discord-logo-64.png`;
 
-/* 5 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
+/* 6 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
 const TIME_COLUMNS = [
-  { id: 1, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
-  { id: 2, label: '12:30 PM - 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
-  { id: 3, label: '2:00 PM - 3:20 PM', sub: 'Offline Session', hasSession: true },
-  { id: 4, label: '3:30 PM - 4:50 PM', sub: 'Offline Session', hasSession: true },
-  { id: 5, label: '9:30 PM - 10:50 PM', sub: 'Online Discord', hasSession: true },
+  { id: 1, label: '8:00 AM - 9:20 AM', sub: 'Student Class', hasSession: true },
+  { id: 2, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
+  { id: 3, label: '12:30 PM - 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
+  { id: 4, label: '2:00 PM - 3:20 PM', sub: 'Offline Session', hasSession: true },
+  { id: 5, label: '3:30 PM - 4:50 PM', sub: 'Offline Session', hasSession: true },
+  { id: 6, label: '9:30 PM - 10:50 PM', sub: 'Online Discord', hasSession: true },
 ];
 
 const SCHEDULE_ROWS: DaySchedule[] = [
@@ -42,6 +43,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Saturday',
     abbr: 'SAT',
     slots: [
+      { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Class', location: 'Student Slot' },
       { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Class', location: 'Student Slot' },
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
@@ -49,6 +51,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
       null,
     ],
     consultations: [
+      { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Student Class', location: 'Class' },
       { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Student Class', location: 'Class' },
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
@@ -58,6 +61,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Sunday',
     abbr: 'SUN',
     slots: [
+      null,
       null,
       null,
       null,
@@ -74,6 +78,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     slots: [
       null,
       null,
+      null,
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
       null,
@@ -86,13 +91,14 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Tuesday',
     abbr: 'TUE',
     isFree: true,
-    slots: [null, null, null, null, null],
+    slots: [null, null, null, null, null, null],
     consultations: [],
   },
   {
     day: 'Wednesday',
     abbr: 'WED',
     slots: [
+      null,
       null,
       null,
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
@@ -108,6 +114,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Thursday',
     abbr: 'THU',
     slots: [
+      null,
       { time: '11:00 AM - 12:20 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
       { time: '12:30 PM - 1:50 PM', activity: 'lab', title: 'CSE110-07 Lab', location: '09B-09L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
@@ -124,7 +131,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     day: 'Friday',
     abbr: 'FRI',
     isFree: true,
-    slots: [null, null, null, null, null],
+    slots: [null, null, null, null, null, null],
     consultations: [],
   },
 ];
@@ -203,16 +210,16 @@ function Session3DCell({
         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-tr from-transparent via-white/15 to-transparent" />
 
         {/* Floating 3D Contents with translateZ parallax */}
-        <div style={{ transform: 'translateZ(16px)' }} className="flex flex-col items-center justify-center pointer-events-none">
+        <div style={{ transform: 'translateZ(18px)' }} className="flex flex-col items-center justify-center pointer-events-none w-full px-1">
           {cell.activity === 'offline' && (
             <>
-              <span className="text-[11px] font-display font-black uppercase tracking-wider text-[#065f46] dark:text-emerald-300 leading-tight">
+              <span className="text-xs sm:text-sm lg:text-[15px] font-display font-black uppercase tracking-wider text-[#065f46] dark:text-emerald-300 leading-none">
                 OFFLINE
               </span>
-              <span className="text-[10px] font-sans font-bold text-[#047857] dark:text-emerald-400 leading-tight">
+              <span className="text-[11px] sm:text-xs font-sans font-extrabold text-[#047857] dark:text-emerald-400 leading-tight mt-1">
                 Consultation
               </span>
-              <span className="mt-1 px-2 py-0.5 rounded-xs text-[10px] font-mono font-black bg-[#065f46] text-white dark:bg-emerald-400 dark:text-black shadow-xs">
+              <span className="mt-1.5 px-2.5 py-1 rounded-xs text-xs sm:text-[13px] font-mono font-black bg-[#065f46] text-white dark:bg-emerald-400 dark:text-black shadow-xs tracking-tight">
                 {cell.location}
               </span>
             </>
@@ -220,17 +227,17 @@ function Session3DCell({
 
           {cell.activity === 'online' && (
             <>
-              <span className="text-[11px] font-display font-black uppercase tracking-wider text-[#3730a3] dark:text-indigo-200 leading-tight">
+              <span className="text-xs sm:text-sm lg:text-[15px] font-display font-black uppercase tracking-wider text-[#3730a3] dark:text-indigo-200 leading-none">
                 ONLINE
               </span>
-              <span className="text-[10px] font-sans font-bold text-[#4338ca] dark:text-indigo-300 leading-tight">
+              <span className="text-[11px] sm:text-xs font-sans font-extrabold text-[#4338ca] dark:text-indigo-300 leading-tight mt-1">
                 Consultation
               </span>
-              <span className="mt-1 px-2 py-0.5 rounded-xs text-[10px] font-mono font-black bg-[#4338ca] text-white dark:bg-indigo-400 dark:text-black flex items-center gap-1.5 shadow-xs">
+              <span className="mt-1.5 px-2.5 py-1 rounded-xs text-xs sm:text-[13px] font-mono font-black bg-[#4338ca] text-white dark:bg-indigo-400 dark:text-black flex items-center gap-1.5 shadow-xs tracking-tight">
                 <img
                   src={DISCORD_LOGO}
                   alt="Discord"
-                  className="w-3.5 h-3.5 object-contain shrink-0"
+                  className="w-4 h-4 object-contain shrink-0"
                 />
                 Discord
               </span>
@@ -239,13 +246,13 @@ function Session3DCell({
 
           {cell.activity === 'lab' && (
             <>
-              <span className="text-[11px] font-display font-black uppercase tracking-wider text-[#9a3412] dark:text-amber-200 leading-tight">
+              <span className="text-xs sm:text-sm lg:text-[15px] font-display font-black uppercase tracking-wider text-[#9a3412] dark:text-amber-200 leading-none">
                 CSE110 LAB
               </span>
-              <span className="text-[10px] font-sans font-bold text-[#c2410c] dark:text-amber-300 leading-tight">
+              <span className="text-[11px] sm:text-xs font-sans font-extrabold text-[#c2410c] dark:text-amber-300 leading-tight mt-1">
                 Section 07
               </span>
-              <span className="mt-1 px-2 py-0.5 rounded-xs text-[10px] font-mono font-black bg-[#9a3412] text-white dark:bg-amber-400 dark:text-black shadow-xs">
+              <span className="mt-1.5 px-2.5 py-1 rounded-xs text-xs sm:text-[13px] font-mono font-black bg-[#9a3412] text-white dark:bg-amber-400 dark:text-black shadow-xs tracking-tight">
                 {cell.location}
               </span>
             </>
@@ -253,10 +260,10 @@ function Session3DCell({
 
           {cell.activity === 'class' && (
             <>
-              <span className="text-xs font-display font-black uppercase tracking-wider text-[var(--ink)] leading-tight">
+              <span className="text-xs sm:text-sm lg:text-[15px] font-display font-black uppercase tracking-wider text-[var(--ink)] leading-none">
                 CLASS
               </span>
-              <span className="text-[10px] font-mono text-[var(--ink-2)] mt-0.5">
+              <span className="text-[11px] sm:text-xs font-mono font-bold text-[var(--ink-2)] mt-1">
                 Student Slot
               </span>
             </>
@@ -839,22 +846,22 @@ export default function App() {
               <thead>
                 <tr className="bg-[var(--ink)] text-[var(--paper)]">
                   {/* Day Column Header */}
-                  <th className="py-3.5 px-3 text-left font-display font-black uppercase tracking-wider text-xs border-r border-white/20 w-[14%]">
+                  <th className="py-3.5 px-3 text-left font-display font-black uppercase tracking-wider text-xs border-r border-white/20 w-[13%]">
                     DAY
                   </th>
 
-                  {/* 5 Time Columns */}
+                  {/* 6 Time Columns */}
                   {TIME_COLUMNS.map((col, idx) => (
                     <th
                       key={col.id}
-                      className={`py-3 px-2 text-center border-r border-white/20 last:border-r-0 w-[17.2%] ${
+                      className={`py-3.5 px-2 text-center border-r border-white/20 last:border-r-0 w-[14.5%] ${
                         col.hasSession ? 'bg-[#1d49a7] text-white' : ''
                       } ${idx === TIME_COLUMNS.length - 1 ? 'border-r-0' : ''}`}
                     >
-                      <div className="font-mono text-xs font-bold leading-tight">
+                      <div className="font-mono text-xs sm:text-sm font-bold leading-tight">
                         {col.label}
                       </div>
-                      <div className="text-[10px] font-mono opacity-80 truncate mt-0.5">
+                      <div className="text-[11px] sm:text-xs font-mono opacity-85 truncate mt-0.5 font-semibold">
                         {col.sub}
                       </div>
                     </th>
@@ -889,7 +896,7 @@ export default function App() {
                         return (
                           <td
                             key={`${row.day}-${idx}`}
-                            className={`p-1.5 text-center align-middle h-24 relative hover:z-30 overflow-visible ${!isLastCol ? 'border-r border-[var(--ink)]/25' : ''} ${!isLastRow ? 'border-b border-[var(--ink)]/25' : ''}`}
+                            className={`p-1.5 text-center align-middle h-28 sm:h-32 relative hover:z-30 overflow-visible ${!isLastCol ? 'border-r border-[var(--ink)]/25' : ''} ${!isLastRow ? 'border-b border-[var(--ink)]/25' : ''}`}
                           >
                             {cell ? (
                               <Session3DCell

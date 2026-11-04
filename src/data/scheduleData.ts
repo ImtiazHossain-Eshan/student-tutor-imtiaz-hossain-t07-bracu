@@ -1,4 +1,4 @@
-import { ScheduleSlot, TutorProfileInfo } from '../types';
+import { ScheduleSlot, TutorProfileInfo, SessionType } from '../types';
 
 export const TUTOR_INFO: TutorProfileInfo = {
   name: 'Imtiaz Hossain',
@@ -27,6 +27,22 @@ export const DAYS_OF_WEEK = [
 ] as const;
 
 export const REGULAR_SCHEDULE: ScheduleSlot[] = [
+  {
+    id: 'reg-sat-0',
+    day: 'Saturday',
+    time: '8:00 AM',
+    activity: 'Student Class',
+    location: 'Class',
+    type: 'class' as SessionType,
+  },
+  {
+    id: 'reg-sat-0b',
+    day: 'Saturday',
+    time: '11:00 AM',
+    activity: 'Student Class',
+    location: 'Class',
+    type: 'class' as SessionType,
+  },
   {
     id: 'reg-sat-1',
     day: 'Saturday',

@@ -1,4 +1,4 @@
-export type SessionType = 'offline' | 'online' | 'lab';
+export type SessionType = 'offline' | 'online' | 'lab' | 'class';
 
 export interface ScheduleSlot {
   id: string;
