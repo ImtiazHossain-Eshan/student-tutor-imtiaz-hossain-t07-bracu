@@ -43,5 +43,8 @@ export interface TutorProfileInfo {
   maxHours: string;
   discordInviteUrl: string;
   discordUsername: string;
+  slackUrl: string;
+  slackMemberId: string;
+  slackDisplayName: string;
 }
 

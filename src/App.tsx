@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import logo128 from './assets/rounded-logo-128.png';
+import logo256 from './assets/rounded-logo-256.png';
+import discordLogo from './assets/discord-logo-64.png';
 
 /* ─── Schedule Data (Regular Semester  -  Official BRACU Consultation Planner) ─── */
 
@@ -23,15 +26,36 @@ interface DaySchedule {
   }[];
 }
 
-const BASE = import.meta.env.BASE_URL;
-const LOGO_128 = `${BASE}rounded-logo-128.png`;
-const LOGO_256 = `${BASE}rounded-logo-256.png`;
-const DISCORD_LOGO = `${BASE}discord-logo-64.png`;
+const LOGO_128 = logo128;
+const LOGO_256 = logo256;
+const DISCORD_LOGO = discordLogo;
+
+const CONSULTATION_SLOT_OPTIONS = [
+  'Saturday · 12:30 PM - 1:50 PM (Offline 10G-33L)',
+  'Saturday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
+  'Sunday · 9:30 PM - 10:50 PM (Online Discord)',
+  'Monday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
+  'Wednesday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
+  'Wednesday · 9:30 PM - 10:50 PM (Online Discord)',
+  'Thursday · 11:00 AM - 1:50 PM (CSE110 Lab 09B-09L)',
+  'Thursday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
+  'Thursday · 3:30 PM - 4:50 PM (Offline 10G-33L)',
+];
+
+const JAVA_TOPIC_PRESETS = [
+  'Nested Loops & Patterns',
+  '1D & 2D Arrays',
+  'Methods & Scope',
+  'String Manipulation',
+  'Classes & Object Reference',
+  'Recursion & Tracing',
+  'Lab Assignment Debugging',
+];
 
 /* 6 Active Time Slots (Each slot is 1h 20m; 10 min breaks excluded) */
 const TIME_COLUMNS = [
   { id: 1, label: '8:00 AM - 9:20 AM', sub: 'Student Class', hasSession: true },
-  { id: 2, label: '11:00 AM - 12:20 PM', sub: 'Lab / Class', hasSession: true },
+  { id: 2, label: '11:00 AM - 12:20 PM', sub: 'CSE110 Lab', hasSession: true },
   { id: 3, label: '12:30 PM - 1:50 PM', sub: 'Consultation / Lab', hasSession: true },
   { id: 4, label: '2:00 PM - 3:20 PM', sub: 'Offline Session', hasSession: true },
   { id: 5, label: '3:30 PM - 4:50 PM', sub: 'Offline Session', hasSession: true },
@@ -44,7 +68,7 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     abbr: 'SAT',
     slots: [
       { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Class', location: 'Student Slot' },
-      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Class', location: 'Student Slot' },
+      null,
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
@@ -52,7 +76,6 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     ],
     consultations: [
       { time: '8:00 AM - 9:20 AM', activity: 'class', title: 'Student Class', location: 'Class' },
-      { time: '11:00 AM - 12:20 PM', activity: 'class', title: 'Student Class', location: 'Class' },
       { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
     ],
@@ -288,10 +311,21 @@ export default function App() {
 
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedDiscordId, setCopiedDiscordId] = useState(false);
+  const [copiedSlackId, setCopiedSlackId] = useState(false);
   const [copiedModalDiscordId, setCopiedModalDiscordId] = useState(false);
   const [copiedModalRoom, setCopiedModalRoom] = useState(false);
   const [mobileTab, setMobileTab] = useState<'cards' | 'table'>('cards');
   const [selectedSession, setSelectedSession] = useState<{ day: string; slot: SlotData } | null>(null);
+
+  // Option 1 Consultation Request Composer State
+  const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [composerName, setComposerName] = useState('');
+  const [composerId, setComposerId] = useState('');
+  const [composerSlot, setComposerSlot] = useState(CONSULTATION_SLOT_OPTIONS[0]);
+  const [composerTopic, setComposerTopic] = useState('');
+  const [composerQuestion, setComposerQuestion] = useState('');
+  const [composerAttempts, setComposerAttempts] = useState('');
+  const [composerCopiedToast, setComposerCopiedToast] = useState<string | null>(null);
 
   const copyDiscordId = () => {
     navigator.clipboard.writeText('bloodrayne_');
@@ -303,6 +337,63 @@ export default function App() {
     navigator.clipboard.writeText('bloodrayne_');
     setCopiedModalDiscordId(true);
     setTimeout(() => setCopiedModalDiscordId(false), 2000);
+  };
+
+  const copySlackMemberId = () => {
+    navigator.clipboard.writeText('U0CDM29USQ7');
+    setCopiedSlackId(true);
+    setTimeout(() => setCopiedSlackId(false), 2000);
+  };
+
+  const generateOption1Message = () => {
+    const name = composerName.trim() || '[Student Name]';
+    const id = composerId.trim() || '[Student ID]';
+    const topic = composerTopic.trim() || '[e.g. Nested Loops / 2D Arrays / Methods in Java]';
+    const slot = composerSlot || '[Selected Slot]';
+    const question = composerQuestion.trim() || '[Briefly describe the specific problem or error traceback]';
+    const attempts = composerAttempts.trim() || '[Mention your initial logic or attempts]';
+
+    return `Hello Imtiaz bhaiya,\n\n- Name: ${name}\n- Student ID: ${id}\n- Section: CSE110 Section 07\n- Topic / Concept: ${topic}\n- Requested Time: ${slot}\n\nQuestion / Issue:\n${question}\n\nWhat I have tried so far:\n${attempts}`;
+  };
+
+  const triggerToast = (msg: string) => {
+    setComposerCopiedToast(msg);
+    setTimeout(() => setComposerCopiedToast(null), 3500);
+  };
+
+  const handleCopyOption1Text = () => {
+    const text = generateOption1Message();
+    navigator.clipboard.writeText(text);
+    triggerToast('Copied Option 1 template to clipboard!');
+  };
+
+  const handleSendDiscord = () => {
+    const text = generateOption1Message();
+    navigator.clipboard.writeText(text);
+    triggerToast('Copied Option 1 template! Opening Discord server...');
+    window.open('https://discord.gg/S6qrvUVrgF', '_blank');
+  };
+
+  const handleSendSlack = () => {
+    const text = generateOption1Message();
+    navigator.clipboard.writeText(text);
+    triggerToast('Copied Option 1 template! Opening Slack profile...');
+    window.open('https://cse110fall2026.slack.com/team/U0CDM29USQ7', '_blank');
+  };
+
+  const handleSendEmail = () => {
+    const text = generateOption1Message();
+    const subject = encodeURIComponent(
+      `CSE110 Consultation Request - ${composerName.trim() || 'Student'} (${composerId.trim() || 'ID'})`
+    );
+    const body = encodeURIComponent(text);
+    window.open(`mailto:imtiaz.hossain@g.bracu.ac.bd?subject=${subject}&body=${body}`, '_blank');
+  };
+
+  const openComposerForSession = (day: string, slot: SlotData) => {
+    setSelectedSession(null);
+    setComposerSlot(`${day} · ${slot.time} (${slot.title}${slot.location ? ` - ${slot.location}` : ''})`);
+    setIsComposerOpen(true);
   };
 
   useEffect(() => {
@@ -374,7 +465,7 @@ export default function App() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-display font-black text-lg sm:text-xl tracking-tight uppercase text-white">
-                  ST_Imtiaz_07
+                  ST_Imtiaz_T07
                 </span>
               </div>
             </div>
@@ -464,7 +555,7 @@ export default function App() {
               </div>
 
               {/* Action Buttons Row */}
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap items-center gap-3">
                 <a
                   href="#routine"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-white text-[#163a86] hover:bg-[#dce3f1] transition-all border-2 border-white shadow-md active:scale-95"
@@ -474,6 +565,16 @@ export default function App() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
                   </svg>
                 </a>
+                <button
+                  type="button"
+                  onClick={() => setIsComposerOpen(true)}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-[#163a86] hover:bg-[#122e6b] text-white transition-all border-2 border-white/60 hover:border-white shadow-md active:scale-95 cursor-pointer"
+                >
+                  <svg className="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                  <span>Draft Consultation (Option 1)</span>
+                </button>
               </div>
 
             </div>
@@ -598,6 +699,20 @@ export default function App() {
                       </svg>
                     </a>
 
+                    {/* 4.5. Slack Profile */}
+                    <a
+                      href="https://cse110fall2026.slack.com/team/U0CDM29USQ7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Slack: ST_Imtiaz_T07 (U0CDM29USQ7)"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#4A154B] text-white hover:bg-[#611f69] border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      aria-label="Slack Profile"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                      </svg>
+                    </a>
+
                     {/* 5. Discord Server */}
                     <a
                       href="https://discord.gg/S6qrvUVrgF"
@@ -701,8 +816,45 @@ export default function App() {
                     </a>
                   </div>
 
+                  {/* Slack Channel & Profile */}
+                  <div className="p-2.5 bg-white/10 rounded-xs border border-white/15 flex flex-col justify-between col-span-2 sm:col-span-1">
+                    <div>
+                      <div className="text-[10px] text-[#cdd9f3] uppercase flex items-center justify-between">
+                        <span>Slack Profile</span>
+                        <span className="text-[9px] text-amber-300 font-bold uppercase">CSE110 Fall 26</span>
+                      </div>
+                      <div className="text-xs sm:text-sm font-bold text-white font-mono mt-0.5 truncate">
+                        ST_Imtiaz_T07
+                      </div>
+                      <div className="text-[10px] text-white/70 font-mono">
+                        Member ID: U0CDM29USQ7
+                      </div>
+                    </div>
+                    <div className="mt-2 flex items-center gap-1.5">
+                      <a
+                        href="https://cse110fall2026.slack.com/team/U0CDM29USQ7"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 py-1.5 bg-[#4A154B] hover:bg-[#611f69] text-white text-[10px] font-display font-black uppercase tracking-wider rounded-xs transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs"
+                      >
+                        <span>Open Slack</span>
+                        <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+                        </svg>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={copySlackMemberId}
+                        className="px-2 py-1.5 bg-white/15 hover:bg-white text-white hover:text-[#163a86] text-[10px] font-mono font-bold uppercase rounded-xs transition-all shrink-0 cursor-pointer"
+                        title="Copy Slack Member ID: U0CDM29USQ7"
+                      >
+                        {copiedSlackId ? 'Copied' : 'ID'}
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Moved Copy Email Button inside the Official Email box */}
-                  <div className="p-3 bg-white/10 rounded-xs border border-white/20 col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="p-3 bg-white/10 rounded-xs border border-white/20 col-span-2 sm:col-span-1 flex flex-col justify-between gap-2">
                     <div className="min-w-0">
                       <div className="text-[10px] text-[#cdd9f3] uppercase">Official Email</div>
                       <div className="text-xs sm:text-sm font-bold text-white font-mono break-all mt-0.5">
@@ -713,7 +865,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={copyEmail}
-                      className="px-3 py-1.5 bg-white text-[#163a86] hover:bg-[#dce3f1] text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all shrink-0 flex items-center gap-1.5 shadow-sm active:scale-95"
+                      className="w-full py-1.5 bg-white text-[#163a86] hover:bg-[#dce3f1] text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all shrink-0 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
                     >
                       {copiedEmail ? (
                         <>
@@ -728,6 +880,20 @@ export default function App() {
                           <span>Copy Email</span>
                         </>
                       )}
+                    </button>
+                  </div>
+
+                  {/* One-Click Draft Consultation Request Button */}
+                  <div className="col-span-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setIsComposerOpen(true)}
+                      className="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-display font-black text-xs uppercase tracking-wider rounded-xs shadow-md flex items-center justify-center gap-2 transition-all active:scale-[0.98] border border-emerald-300/40 cursor-pointer"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                      </svg>
+                      <span>Draft Consultation Request (Option 1)</span>
                     </button>
                   </div>
                 </div>
@@ -1014,6 +1180,147 @@ export default function App() {
 
         </section>
 
+        {/* ── OFFICIAL PORTALS & LINKS Section (Compact 4-Card Bar matching Image 3) ── */}
+        <section className="mt-12 pt-6 border-t-2 border-[var(--ink)]">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1 mb-4 pb-2 border-b border-[var(--ink)]/30">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-display font-black uppercase text-[var(--ink)] tracking-tight">
+                OFFICIAL PORTALS &amp; LINKS
+              </h2>
+              <p className="text-xs font-mono text-[var(--ink-2)] mt-0.5">
+                Portfolio, code repositories, professional profiles, and student resource vault.
+              </p>
+            </div>
+            <span className="text-[10px] font-mono uppercase font-bold text-[var(--ink-3)] tracking-wider">
+              EXTERNAL CHANNELS
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {/* Card 1: GITHUB */}
+            <a
+              href="https://github.com/ImtiazHossain-Eshan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)] hover:border-[var(--blue)] rounded-xs flex items-center justify-between gap-3 transition-all hover:-translate-y-0.5 shadow-2xs"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 rounded-xs bg-[#16181d] text-white flex items-center justify-center shrink-0 border border-black shadow-2xs group-hover:scale-105 transition-transform">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display font-black text-xs uppercase tracking-wider text-[var(--ink)] leading-tight">
+                    GITHUB
+                  </div>
+                  <div className="font-mono text-[11px] text-[var(--ink-2)] truncate">
+                    @ImtiazHossain-Eshan
+                  </div>
+                </div>
+              </div>
+              <svg className="w-4 h-4 text-[var(--ink-3)] group-hover:text-[var(--blue)] shrink-0 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+              </svg>
+            </a>
+
+            {/* Card 2: PORTFOLIO */}
+            <a
+              href="https://www.imtiazhossain.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)] hover:border-[var(--blue)] rounded-xs flex items-center justify-between gap-3 transition-all hover:-translate-y-0.5 shadow-2xs"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 rounded-xs bg-[#0b0d11] text-[#7cdfff] flex items-center justify-center shrink-0 border border-[#2a5d70] shadow-2xs group-hover:scale-105 transition-transform">
+                  <svg className="w-4 h-4" viewBox="0 0 32 32">
+                    <rect width="32" height="32" rx="4" fill="#0b0d11"/>
+                    <g stroke="#2a5d70" strokeWidth="1.2">
+                      <line x1="9.5" y1="21.5" x2="16" y2="9.5"/>
+                      <line x1="16" y1="9.5" x2="23" y2="18.5"/>
+                      <line x1="9.5" y1="21.5" x2="23" y2="18.5"/>
+                      <line x1="16" y1="9.5" x2="14" y2="15.8"/>
+                    </g>
+                    <circle cx="14" cy="15.8" r="1.4" fill="#7cdfff"/>
+                    <circle cx="9.5" cy="21.5" r="2" fill="#7cdfff"/>
+                    <circle cx="16" cy="9.5" r="2.6" fill="#7cdfff"/>
+                    <circle cx="23" cy="18.5" r="1.8" fill="#7cdfff"/>
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display font-black text-xs uppercase tracking-wider text-[var(--ink)] leading-tight">
+                    PORTFOLIO
+                  </div>
+                  <div className="font-mono text-[11px] text-[var(--ink-2)] truncate">
+                    imtiazhossain.dev
+                  </div>
+                </div>
+              </div>
+              <svg className="w-4 h-4 text-[var(--ink-3)] group-hover:text-[var(--blue)] shrink-0 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+              </svg>
+            </a>
+
+            {/* Card 3: LINKEDIN */}
+            <a
+              href="https://www.linkedin.com/in/imtiazhossaineshan/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)] hover:border-[#0077B5] rounded-xs flex items-center justify-between gap-3 transition-all hover:-translate-y-0.5 shadow-2xs"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 rounded-xs bg-[#0077B5] text-white flex items-center justify-center shrink-0 border border-[#005f93] shadow-2xs group-hover:scale-105 transition-transform">
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.65 1.65 0 1 0 0 3.3 1.65 1.65 0 0 0 0-3.3z"/>
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display font-black text-xs uppercase tracking-wider text-[var(--ink)] leading-tight">
+                    LINKEDIN
+                  </div>
+                  <div className="font-mono text-[11px] text-[var(--ink-2)] truncate">
+                    in/imtiazhossaineshan
+                  </div>
+                </div>
+              </div>
+              <svg className="w-4 h-4 text-[var(--ink-3)] group-hover:text-[#0077B5] shrink-0 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+              </svg>
+            </a>
+
+            {/* Card 4: BRACU VAULT */}
+            <a
+              href="https://www.bracuvault.me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)] hover:border-amber-600 rounded-xs flex items-center justify-between gap-3 transition-all hover:-translate-y-0.5 shadow-2xs"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 rounded-xs bg-gradient-to-br from-[#C2A878] via-[#A07A4A] to-[#6F5836] p-1 flex items-center justify-center shrink-0 border border-amber-600/40 shadow-2xs group-hover:scale-105 transition-transform">
+                  <svg viewBox="0 0 48 48" className="w-full h-full">
+                    <g fill="none" stroke="#F8F5F0" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M24 9 L37 16.5 L37 31.5 L24 39 L11 31.5 L11 16.5 Z"/>
+                      <path d="M16 20 L24 29 L32 20"/>
+                    </g>
+                    <circle cx="24" cy="29" r="3.2" fill="#F8F5F0"/>
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="font-display font-black text-xs uppercase tracking-wider text-[var(--ink)] leading-tight">
+                    BRACU VAULT
+                  </div>
+                  <div className="font-mono text-[11px] text-[var(--ink-2)] truncate">
+                    bracuvault.me · Resources
+                  </div>
+                </div>
+              </div>
+              <svg className="w-4 h-4 text-[var(--ink-3)] group-hover:text-amber-600 shrink-0 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5m0-4.5L7.5 16.5" />
+              </svg>
+            </a>
+          </div>
+        </section>
+
       </main>
 
       {/* ── 5. Clean, Minimal Footer ── */}
@@ -1229,8 +1536,19 @@ export default function App() {
 
                   <button
                     type="button"
+                    onClick={() => openComposerForSession(selectedSession.day, selectedSession.slot)}
+                    className="px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                    </svg>
+                    <span>Draft Request for this Slot</span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => setSelectedSession(null)}
-                    className="px-4 py-2.5 bg-[var(--paper-2)] border-2 border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-colors"
+                    className="px-4 py-2.5 bg-[var(--paper-2)] border-2 border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
                   >
                     Done
                   </button>
@@ -1238,6 +1556,261 @@ export default function App() {
               </div>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── 7. Option 1 Consultation Request Interactive Composer Modal ── */}
+      <AnimatePresence>
+        {isComposerOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsComposerOpen(false)}
+              className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              className="relative w-full max-w-2xl bg-[var(--paper)] text-[var(--ink)] border-2 border-[var(--ink)] rounded-xs shadow-2xl overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
+            >
+              {/* Corner Registration Ticks */}
+              <span className="absolute top-2 left-2 text-[var(--ink)]/40 font-mono text-xs">┌</span>
+              <span className="absolute top-2 right-2 text-[var(--ink)]/40 font-mono text-xs">┐</span>
+              <span className="absolute bottom-2 left-2 text-[var(--ink)]/40 font-mono text-xs">└</span>
+              <span className="absolute bottom-2 right-2 text-[var(--ink)]/40 font-mono text-xs">┘</span>
+
+              {/* Header */}
+              <div className="px-6 py-4 border-b-2 border-[var(--ink)] bg-[var(--paper-2)] flex items-start justify-between gap-4 shrink-0">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs bg-emerald-600 text-white">
+                      OPTION 1 FORMAT
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[var(--ink-2)]">
+                      CSE110: Programming Language I
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-display font-black uppercase text-[var(--ink)] tracking-tight mt-1">
+                    DRAFT CONSULTATION REQUEST
+                  </h3>
+                  <p className="text-xs font-mono text-[var(--ink-2)] mt-0.5">
+                    Fill your details below. 1-click copies the formatted message and redirects you to Discord, Slack, or Email.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsComposerOpen(false)}
+                  className="w-8 h-8 rounded-xs border-2 border-[var(--ink)] bg-[var(--paper)] hover:bg-[var(--ink)] hover:text-[var(--paper)] flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                  aria-label="Close composer"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Scrollable Form Body */}
+              <div className="p-6 space-y-4 overflow-y-auto text-xs">
+                {/* Row 1: Student Name & ID */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                      Student Name *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Tanvir Ahmed"
+                      value={composerName}
+                      onChange={(e) => setComposerName(e.target.value)}
+                      className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                      Student ID *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 23101234"
+                      value={composerId}
+                      onChange={(e) => setComposerId(e.target.value)}
+                      className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Selected Consultation Slot */}
+                <div>
+                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                    Requested Time / Slot *
+                  </label>
+                  <select
+                    value={composerSlot}
+                    onChange={(e) => setComposerSlot(e.target.value)}
+                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-mono text-xs text-[var(--ink)] outline-hidden transition-colors"
+                  >
+                    {CONSULTATION_SLOT_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Row 3: Java Topic / Concept with Quick Selection Chips */}
+                <div>
+                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                    Java Topic / Concept *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Nested Loops / 2D Arrays / Method Overloading"
+                    value={composerTopic}
+                    onChange={(e) => setComposerTopic(e.target.value)}
+                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors mb-2"
+                  />
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="font-mono text-[10px] text-[var(--ink-3)] uppercase mr-1">Quick Chips:</span>
+                    {JAVA_TOPIC_PRESETS.map((preset) => (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setComposerTopic(preset)}
+                        className="px-2 py-0.5 rounded-xs bg-[var(--paper-2)] hover:bg-[var(--blue)] hover:text-white border border-[var(--ink)]/30 font-mono text-[10px] transition-colors cursor-pointer"
+                      >
+                        {preset}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 4: Question / Issue */}
+                <div>
+                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                    Question / Issue (Problem description) *
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Describe where you are stuck, runtime ArrayIndexOutOfBoundsException, infinite loop, etc."
+                    value={composerQuestion}
+                    onChange={(e) => setComposerQuestion(e.target.value)}
+                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                  />
+                </div>
+
+                {/* Row 5: What I Have Tried So Far */}
+                <div>
+                  <label className="block font-mono font-bold uppercase text-[11px] text-[var(--ink)] mb-1">
+                    What I Have Tried So Far *
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Dry run on paper, checking loop termination condition, printing array lengths..."
+                    value={composerAttempts}
+                    onChange={(e) => setComposerAttempts(e.target.value)}
+                    className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors"
+                  />
+                </div>
+
+                {/* Live Message Preview Box */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-mono font-bold uppercase text-[11px] text-[var(--ink-2)]">
+                      Option 1 Live Output Preview
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleCopyOption1Text}
+                      className="text-[10px] font-mono font-bold uppercase text-[var(--blue)] hover:underline cursor-pointer"
+                    >
+                      Copy Raw Text
+                    </button>
+                  </div>
+                  <pre className="p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)]/30 rounded-xs font-mono text-[11px] text-[var(--ink)] whitespace-pre-wrap leading-relaxed select-all overflow-x-auto">
+                    {generateOption1Message()}
+                  </pre>
+                </div>
+              </div>
+
+              {/* Action Buttons Row */}
+              <div className="p-4 sm:px-6 border-t-2 border-[var(--ink)] bg-[var(--paper-2)] flex flex-wrap items-center justify-between gap-3 shrink-0">
+                <div className="flex items-center gap-2 text-xs font-mono text-[var(--ink-2)]">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Choose Platform to Send:</span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Send via Discord */}
+                  <button
+                    type="button"
+                    onClick={handleSendDiscord}
+                    className="px-3.5 py-2 bg-[#5865F2] hover:bg-[#4752c4] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    <img src={DISCORD_LOGO} alt="Discord" className="w-3.5 h-3.5 object-contain brightness-200" />
+                    <span>Copy &amp; Open Discord</span>
+                  </button>
+
+                  {/* Send via Slack */}
+                  <button
+                    type="button"
+                    onClick={handleSendSlack}
+                    className="px-3.5 py-2 bg-[#4A154B] hover:bg-[#611f69] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+                    </svg>
+                    <span>Copy &amp; Open Slack</span>
+                  </button>
+
+                  {/* Send via Email */}
+                  <button
+                    type="button"
+                    onClick={handleSendEmail}
+                    className="px-3.5 py-2 bg-[var(--blue)] hover:bg-[var(--blue-deep)] text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                    <span>Open in Email</span>
+                  </button>
+
+                  {/* Close */}
+                  <button
+                    type="button"
+                    onClick={() => setIsComposerOpen(false)}
+                    className="px-3.5 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)] text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] text-xs font-display font-bold uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Toast Notification Floating Pill ── */}
+      <AnimatePresence>
+        {composerCopiedToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-60 bg-[#16181d] text-white border-2 border-emerald-400 px-4 py-3 rounded-xs shadow-2xl flex items-center gap-3 font-mono text-xs"
+          >
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="font-bold">{composerCopiedToast}</span>
+          </motion.div>
         )}
       </AnimatePresence>
 

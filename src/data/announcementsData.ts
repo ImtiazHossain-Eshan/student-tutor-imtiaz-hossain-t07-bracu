@@ -7,7 +7,7 @@ export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
     date: 'Fall 2026 · Semester Start',
     category: 'General',
     description:
-      'Welcome to the BRAC University CSE Student Tutor Program for Fall 2026. Student Tutors are here to support your learning journey in CSE110 throughout the semester.',
+      'Welcome to the BRAC University CSE Student Tutor Program for Fall 2026. Student Tutors are here to support your learning journey in CSE110: Programming Language I (Java) throughout the semester.',
   },
   {
     id: 'ann-2',

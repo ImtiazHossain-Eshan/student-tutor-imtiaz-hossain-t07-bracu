@@ -3,7 +3,7 @@ import { ScheduleSlot, TutorProfileInfo, SessionType } from '../types';
 export const TUTOR_INFO: TutorProfileInfo = {
   name: 'Imtiaz Hossain',
   role: 'Student Tutor (ST)',
-  course: 'CSE110-07',
+  course: 'CSE110: Programming Language I',
   initial: 'T07',
   email: 'imtiaz.hossain@g.bracu.ac.bd',
   offlineRoom: '10G-33L',
@@ -14,6 +14,9 @@ export const TUTOR_INFO: TutorProfileInfo = {
   maxHours: 'Max 15 hours per week',
   discordInviteUrl: 'https://discord.gg/S6qrvUVrgF',
   discordUsername: 'bloodrayne_',
+  slackUrl: 'https://cse110fall2026.slack.com/team/U0CDM29USQ7',
+  slackMemberId: 'U0CDM29USQ7',
+  slackDisplayName: 'ST_Imtiaz_T07',
 };
 
 export const DAYS_OF_WEEK = [
@@ -31,14 +34,6 @@ export const REGULAR_SCHEDULE: ScheduleSlot[] = [
     id: 'reg-sat-0',
     day: 'Saturday',
     time: '8:00 AM',
-    activity: 'Student Class',
-    location: 'Class',
-    type: 'class' as SessionType,
-  },
-  {
-    id: 'reg-sat-0b',
-    day: 'Saturday',
-    time: '11:00 AM',
     activity: 'Student Class',
     location: 'Class',
     type: 'class' as SessionType,
