@@ -318,6 +318,7 @@ export default function App() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedDiscordId, setCopiedDiscordId] = useState(false);
   const [copiedSlackId, setCopiedSlackId] = useState(false);
+  const [copiedRawText, setCopiedRawText] = useState(false);
   const [copiedModalDiscordId, setCopiedModalDiscordId] = useState(false);
   const [copiedModalRoom, setCopiedModalRoom] = useState(false);
   const [mobileTab, setMobileTab] = useState<'cards' | 'table'>('cards');
@@ -370,7 +371,9 @@ export default function App() {
   const handleCopyOption1Text = () => {
     const text = generateOption1Message();
     navigator.clipboard.writeText(text);
+    setCopiedRawText(true);
     triggerToast('Copied Option 1 template to clipboard!');
+    setTimeout(() => setCopiedRawText(false), 2200);
   };
 
   const handleSendDiscord = () => {
@@ -1593,19 +1596,35 @@ export default function App() {
 
                 {/* Live Message Preview Box */}
                 <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-mono font-bold uppercase text-[11px] text-[var(--ink-2)]">
-                      Option 1 Live Output Preview
-                    </span>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="font-mono font-bold uppercase text-[11px] text-[var(--ink)]">
+                        Option 1 Live Output Preview
+                      </span>
+                    </div>
                     <button
                       type="button"
                       onClick={handleCopyOption1Text}
-                      className="text-[10px] font-mono font-bold uppercase text-[var(--blue)] hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xs font-display font-black text-xs uppercase tracking-wider bg-[#1d49a7] hover:bg-[#163a86] dark:bg-blue-600 dark:hover:bg-blue-500 text-white border-2 border-[#163a86] dark:border-blue-300 shadow-md active:scale-95 transition-all cursor-pointer"
+                      title="Copy raw formatted template to clipboard"
                     >
-                      Copy Raw Text
+                      {copiedRawText ? (
+                        <>
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                          <span className="text-emerald-200">COPIED TO CLIPBOARD!</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-3.5 h-3.5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                          </svg>
+                          <span>COPY RAW TEXT</span>
+                        </>
+                      )}
                     </button>
                   </div>
-                  <pre className="p-3 bg-[var(--paper-2)] border-2 border-[var(--ink)]/30 rounded-xs font-mono text-[11px] text-[var(--ink)] whitespace-pre-wrap leading-relaxed select-all overflow-x-auto">
+                  <pre className="p-3.5 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 rounded-xs font-mono text-[11px] text-[var(--ink)] whitespace-pre-wrap leading-relaxed select-all overflow-x-auto shadow-inner">
                     {generateOption1Message()}
                   </pre>
                 </div>
@@ -1619,6 +1638,18 @@ export default function App() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
+                  {/* Copy Raw Text (Bottom Action Bar) */}
+                  <button
+                    type="button"
+                    onClick={handleCopyOption1Text}
+                    className="px-3.5 py-2 bg-[#163a86] hover:bg-[#122e6b] dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-display font-black uppercase tracking-wider rounded-xs transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer border border-white/20"
+                  >
+                    <svg className="w-3.5 h-3.5 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                    </svg>
+                    <span>{copiedRawText ? 'Copied Raw Text!' : 'Copy Raw Text'}</span>
+                  </button>
+
                   {/* Send via Discord */}
                   <button
                     type="button"
