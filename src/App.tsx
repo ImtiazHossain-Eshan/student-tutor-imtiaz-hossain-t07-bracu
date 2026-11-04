@@ -334,6 +334,48 @@ export default function App() {
   const [composerAttempts, setComposerAttempts] = useState('');
   const [composerCopiedToast, setComposerCopiedToast] = useState<string | null>(null);
 
+  // Real-Time Site View Counter State & Polling
+  const [viewCount, setViewCount] = useState<number | null>(() => {
+    const cached = localStorage.getItem('st_imtiaz_view_count');
+    return cached ? parseInt(cached, 10) : null;
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    const COUNTER_KEY = 'st-imtiaz-t07-bracu-views';
+    const hasVisited = sessionStorage.getItem('st_has_visited_session');
+    const initialMode = hasVisited ? 'get' : 'hit';
+
+    const fetchViewCount = async (mode: 'hit' | 'get') => {
+      try {
+        const res = await fetch(`https://countapi.mileshilliard.com/api/v1/${mode}/${COUNTER_KEY}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && typeof data.value === 'number' && isMounted) {
+          setViewCount(data.value);
+          localStorage.setItem('st_imtiaz_view_count', String(data.value));
+          if (mode === 'hit') {
+            sessionStorage.setItem('st_has_visited_session', 'true');
+          }
+        }
+      } catch {
+        // Fallback silently to cached count
+      }
+    };
+
+    fetchViewCount(initialMode);
+
+    // Live real-time polling every 12 seconds
+    const interval = setInterval(() => {
+      fetchViewCount('get');
+    }, 12000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   const copyDiscordId = () => {
     navigator.clipboard.writeText('bloodrayne_');
     setCopiedDiscordId(true);
@@ -487,8 +529,31 @@ export default function App() {
             </a>
           </nav>
 
-          {/* Header Controls: Tactile Theme Switch & Discord */}
+          {/* Header Controls: Live Counter, Tactile Theme Switch & Discord */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Real-Time Live View Counter Pill */}
+            <div
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm text-xs font-mono bg-white/10 hover:bg-white/15 text-white border border-white/25 shadow-xs backdrop-blur-xs select-none transition-all cursor-default"
+              title="Real-time verified site views (live syncing)"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-white/80 hidden sm:inline">
+                Views:
+              </span>
+              <motion.span
+                key={viewCount ?? 'init'}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2 }}
+                className="font-mono font-black text-xs text-emerald-300 drop-shadow-xs"
+              >
+                {viewCount !== null ? viewCount.toLocaleString() : '...'}
+              </motion.span>
+            </div>
+
             {/* Dark / Light Mode Switch */}
             <button
               type="button"
@@ -1215,7 +1280,12 @@ export default function App() {
             </span>
           </div>
 
-          <div className="text-[11px] text-[var(--ink-3)] font-mono flex items-center gap-2">
+          <div className="text-[11px] text-[var(--ink-3)] font-mono flex flex-wrap items-center justify-center sm:justify-end gap-2.5">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--paper-card)] border border-[var(--ink)]/20 rounded-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Real-time Views: <strong className="font-bold text-[var(--ink)]">{viewCount !== null ? viewCount.toLocaleString() : '...'}</strong></span>
+            </span>
+            <span className="hidden sm:inline">·</span>
             <span>BRAC University</span>
             <span>·</span>
             <span>Dept. of CSE</span>
