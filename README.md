@@ -63,7 +63,7 @@ Hello Imtiaz bhaiya,
 - Name: [Student Name]
 - Student ID: [Student ID]
 - Section: CSE110 Section 07
-- Topic / Concept: [e.g. Nested Loops / 2D Arrays / Methods in Java]
+- Topic / Concept: [e.g. Module 7: Iterations (Nested) / Module 9: Array]
 - Requested Time: [Selected Slot]
 
 Question / Issue:
@@ -72,6 +72,20 @@ Question / Issue:
 What I have tried so far:
 [Mention your initial logic or attempts]
 ```
+
+### Official CSE110 Course Modules (Interactive Quick Chips)
+Students can select their current syllabus module with a single click in the composer:
+* **Module 1**: Flowchart
+* **Module 2**: Variables & Data types
+* **Module 3**: Operators
+* **Module 4**: User Input & Errors in Java
+* **Module 5**: Branching
+* **Module 6**: Iterations
+* **Module 7**: Iterations (Nested)
+* **Module 8**: String
+* **Module 9**: Array
+* **Module 10**: Method
+* **Module 11**: Recursive Method
 
 ### One-Click Redirection Workflow
 

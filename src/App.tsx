@@ -43,12 +43,17 @@ const CONSULTATION_SLOT_OPTIONS = [
 ];
 
 const JAVA_TOPIC_PRESETS = [
-  'Nested Loops & Patterns',
-  '1D & 2D Arrays',
-  'Methods & Scope',
-  'String Manipulation',
-  'Classes & Object Reference',
-  'Recursion & Tracing',
+  'Module 1: Flowchart',
+  'Module 2: Variables & Data types',
+  'Module 3: Operators',
+  'Module 4: User Input & Errors in Java',
+  'Module 5: Branching',
+  'Module 6: Iterations',
+  'Module 7: Iterations (Nested)',
+  'Module 8: String',
+  'Module 9: Array',
+  'Module 10: Method',
+  'Module 11: Recursive Method',
   'Lab Assignment Debugging',
 ];
 
@@ -349,7 +354,7 @@ export default function App() {
   const generateOption1Message = () => {
     const name = composerName.trim() || '[Student Name]';
     const id = composerId.trim() || '[Student ID]';
-    const topic = composerTopic.trim() || '[e.g. Nested Loops / 2D Arrays / Methods in Java]';
+    const topic = composerTopic.trim() || '[e.g. Module 7: Iterations (Nested) / Module 9: Array]';
     const slot = composerSlot || '[Selected Slot]';
     const question = composerQuestion.trim() || '[Briefly describe the specific problem or error traceback]';
     const attempts = composerAttempts.trim() || '[Mention your initial logic or attempts]';
@@ -1675,7 +1680,7 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Nested Loops / 2D Arrays / Method Overloading"
+                    placeholder="e.g. Module 7: Iterations (Nested) or Module 9: Array"
                     value={composerTopic}
                     onChange={(e) => setComposerTopic(e.target.value)}
                     className="w-full px-3 py-2 bg-[var(--paper-2)] border-2 border-[var(--ink)]/40 focus:border-[var(--blue)] rounded-xs font-sans text-xs text-[var(--ink)] outline-hidden transition-colors mb-2"
@@ -1687,7 +1692,11 @@ export default function App() {
                         key={preset}
                         type="button"
                         onClick={() => setComposerTopic(preset)}
-                        className="px-2 py-0.5 rounded-xs bg-[var(--paper-2)] hover:bg-[var(--blue)] hover:text-white border border-[var(--ink)]/30 font-mono text-[10px] transition-colors cursor-pointer"
+                        className={`px-2 py-0.5 rounded-xs font-mono text-[10px] transition-all cursor-pointer ${
+                          composerTopic === preset
+                            ? 'bg-[#1d49a7] text-white border-2 border-[#163a86] dark:bg-blue-600 dark:border-blue-300 font-bold shadow-xs'
+                            : 'bg-[var(--paper-2)] hover:bg-[var(--blue)]/15 text-[var(--ink)] border border-[var(--ink)]/30'
+                        }`}
                       >
                         {preset}
                       </button>
