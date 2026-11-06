@@ -29,18 +29,6 @@ export interface FaqItem {
   category?: string;
 }
 
-export interface AnonymousQuestion {
-  id: string;
-  topic: string;
-  question: string;
-  codeSnippet?: string;
-  answer?: string;
-  answeredAt?: string;
-  isAnswered: boolean;
-  upvotes: number;
-  createdAt: string;
-}
-
 export interface TutorProfileInfo {
   name: string;
   role: string;
