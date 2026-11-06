@@ -227,3 +227,4 @@ export const upvoteQuestion = async (questionId: string): Promise<AnonymousQuest
 
   return updated;
 };
+
