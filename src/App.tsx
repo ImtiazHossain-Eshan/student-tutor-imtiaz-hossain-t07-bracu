@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import logo128 from './assets/rounded-logo-128.png';
 import logo256 from './assets/rounded-logo-256.png';
 import discordLogo from './assets/discord-logo-64.png';
+import { AnonymousQASection } from './components/AnonymousQASection';
 
 /* ─── Schedule Data (Regular Semester  -  Official BRACU Consultation Planner) ─── */
 
@@ -527,6 +528,9 @@ export default function App() {
             <a href="#routine" className="hover:text-white transition-colors">
               Timetable Routine
             </a>
+            <a href="#qa" className="hover:text-white transition-colors">
+              Anonymous Q&amp;A
+            </a>
           </nav>
 
           {/* Header Controls: Live Counter, Tactile Theme Switch & Discord */}
@@ -649,6 +653,15 @@ export default function App() {
                   </svg>
                   <span>Draft Consultation Request</span>
                 </button>
+                <a
+                  href="#qa"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-amber-400 hover:bg-amber-300 text-[#0c162b] transition-all border-2 border-amber-300 shadow-md active:scale-95 cursor-pointer font-bold"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-1.074-.85 5.978 5.978 0 011.523-2.733C4.195 16.036 3 14.116 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                  </svg>
+                  <span>Anonymous Q&amp;A</span>
+                </a>
               </div>
 
             </div>
@@ -1255,6 +1268,9 @@ export default function App() {
           </div>
 
         </section>
+
+        {/* ── Anonymous Student Q&A Board ── */}
+        <AnonymousQASection avatarUrl={LOGO_128} triggerToast={triggerToast} />
 
       </main>
 

@@ -24,6 +24,7 @@
 <p align="center">
   <a href="#how-a-student-actually-uses-it">How It Works</a> ·
   <a href="#consultation-request-template">Consultation Composer</a> ·
+  <a href="#anonymous-student-qa-board">Anonymous Q&amp;A</a> ·
   <a href="#weekly-consultation-routine">Schedule Matrix</a> ·
   <a href="#slack--discord-communication-channels">Slack & Discord</a> ·
   <a href="#key-architectural-highlights">Architecture</a> ·
@@ -32,9 +33,9 @@
 
 ---
 
-| The Routine | The Inspector | The Composer |
-| :---: | :---: | :---: |
-| <img src="./showcase_schedule.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Consultation Request Composer" width="100%" /> |
+| The Routine | The Inspector | The Composer | The Anonymous Q&amp;A |
+| :---: | :---: | :---: | :---: |
+| <img src="./showcase_schedule.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Consultation Request Composer" width="100%" /> | <img src="./showcase_qa.png" alt="Anonymous Q&amp;A Board" width="100%" /> |
 
 ---
 
@@ -119,6 +120,18 @@ Students can select their current syllabus module with a single click in the com
 | **Friday** | *Free* | *Free* | *Free* | *Free* | *Free* | *Free* |
 
 *Note: Tuesday and Friday have no scheduled consultations.*
+
+---
+
+## Anonymous Student Q&A Board
+
+Students can submit Java and lab questions 100% anonymously without revealing their identity or student ID.
+
+* **100% Anonymous Submissions**: No login or personal information required for students. Questions include topic selection, question prompt, and optional Java code snippet.
+* **Topic-Based Filtering & Search**: Instant filtering across all 11 syllabus modules, lab exam debugging, and general course advice.
+* **Passcode-Protected Tutor Answer Mode**: The Student Tutor (Imtiaz Hossain, T07) unlocks inline answer and editing capabilities directly on the web interface by entering their tutor passcode (`23101137` or `T07`).
+* **Verified Tutor Badge**: Answers published by the tutor feature an official verified badge and timestamp.
+* **Community Upvoting & Persistence**: Helpful questions can be upvoted by peers with real-time local persistence and optional Supabase backend sync.
 
 ---
 

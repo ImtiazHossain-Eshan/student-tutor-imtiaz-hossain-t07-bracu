@@ -1,4 +1,4 @@
-import { ScheduleSlot, TutorProfileInfo, SessionType } from '../types';
+import { ScheduleSlot, TutorProfileInfo, SessionType, AnonymousQuestion } from '../types';
 
 export const TUTOR_INFO: TutorProfileInfo = {
   name: 'Imtiaz Hossain',
@@ -210,4 +210,73 @@ export const RAMADAN_SCHEDULE: ScheduleSlot[] = [
     type: 'offline',
   },
 ];
+
+export const QA_TOPIC_OPTIONS = [
+  'All Topics',
+  'Module 1-4: Java Basics & Scanner',
+  'Module 5: Branching & Conditions',
+  'Module 6-7: Loops & Patterns',
+  'Module 8: String Manipulation',
+  'Module 9: Arrays (1D & 2D)',
+  'Module 10-11: Methods & Recursion',
+  'Lab Exam & Debugging',
+  'General Course Advice',
+] as const;
+
+export const INITIAL_ANONYMOUS_QUESTIONS: AnonymousQuestion[] = [
+  {
+    id: 'qa-1',
+    topic: 'Module 8: String Manipulation',
+    question: 'Why does str1 == str2 return false even when both strings have identical text in Java?',
+    codeSnippet: 'String s1 = in.next();\nString s2 = "hello";\nif (s1 == s2) {\n    System.out.println("Match"); // Never prints!\n}',
+    answer: 'In Java, the == operator compares object memory references (addresses), NOT the actual character contents. When a string is created dynamically or read via Scanner, it resides at a distinct memory location. To compare text values, always use .equals() or .equalsIgnoreCase():\n\nif (s1.equals(s2)) {\n    System.out.println("Match");\n}',
+    answeredAt: 'Nov 4, 2026',
+    isAnswered: true,
+    upvotes: 14,
+    createdAt: 'Nov 4, 2026',
+  },
+  {
+    id: 'qa-2',
+    topic: 'Module 9: Arrays (1D & 2D)',
+    question: 'I keep getting ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5. What causes this?',
+    codeSnippet: 'int[] arr = new int[5];\nfor (int i = 0; i <= arr.length; i++) {\n    arr[i] = i * 2;\n}',
+    answer: 'Java arrays are 0-indexed. An array of length 5 has valid indices 0, 1, 2, 3, and 4. Accessing index 5 is illegal. In your loop condition, writing i <= arr.length causes the loop to attempt accessing arr[5]. Change the condition to i < arr.length.',
+    answeredAt: 'Nov 4, 2026',
+    isAnswered: true,
+    upvotes: 19,
+    createdAt: 'Nov 4, 2026',
+  },
+  {
+    id: 'qa-3',
+    topic: 'Module 6-7: Loops & Patterns',
+    question: 'My while loop runs infinitely and freezes my terminal. What is the standard way to debug it?',
+    answer: 'An infinite loop happens when the loop termination condition never becomes false. Check that your counter variable is being updated inside the loop body (e.g. i++). A helpful debugging step is to add a temporary print statement: System.out.println("Debug i: " + i); to trace how the variable changes on each iteration.',
+    answeredAt: 'Nov 3, 2026',
+    isAnswered: true,
+    upvotes: 9,
+    createdAt: 'Nov 3, 2026',
+  },
+  {
+    id: 'qa-4',
+    topic: 'Lab Exam & Debugging',
+    question: 'Can I ask for help during the Thursday lab sessions in room 09B-09L if I get stuck on a task?',
+    answer: 'Yes, absolutely. I am present in room 09B-09L during the scheduled lab hours on Thursdays from 11:00 AM to 1:50 PM specifically to help you debug errors, understand compiler messages, and guide your logic. Feel free to call me over anytime during lab.',
+    answeredAt: 'Nov 3, 2026',
+    isAnswered: true,
+    upvotes: 22,
+    createdAt: 'Nov 3, 2026',
+  },
+  {
+    id: 'qa-5',
+    topic: 'Module 1-4: Java Basics & Scanner',
+    question: 'Why does scanner.nextLine() get skipped right after scanner.nextInt()?',
+    codeSnippet: 'int age = sc.nextInt();\nString name = sc.nextLine(); // This gets skipped immediately!',
+    answer: 'nextInt() reads only the integer value and leaves the trailing newline character (\\n) in the input buffer. When nextLine() is subsequently called, it immediately consumes that leftover newline and returns an empty string. To resolve this, insert an extra sc.nextLine(); after sc.nextInt() to consume the dangling newline character.',
+    answeredAt: 'Nov 2, 2026',
+    isAnswered: true,
+    upvotes: 16,
+    createdAt: 'Nov 2, 2026',
+  },
+];
+
 
