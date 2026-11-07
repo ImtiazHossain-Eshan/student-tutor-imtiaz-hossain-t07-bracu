@@ -651,82 +651,80 @@ export default function App() {
 
       {/* ── 2. Blueprint Cover / Hero Section ── */}
       <section className="relative bg-[#1d49a7] dark:bg-[#0c162b] text-white blueprint-grain blueprint-grid border-b-2 border-[#16181d] dark:border-[#1e2e4a] overflow-hidden py-8 sm:py-14">
-        <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Course Portals  -  Far Left Hand Side Icons */}
+        <div className="absolute left-2.5 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-3">
+          {COURSE_PORTALS.map((portal) => (
+            <a
+              key={portal.id}
+              href={portal.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={portal.name}
+              aria-label={portal.name}
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-xs flex items-center justify-center p-2 bg-white/10 hover:bg-white/20 border border-white/40 hover:border-white shadow-md hover:scale-110 active:scale-95 transition-all duration-150 backdrop-blur-xs cursor-pointer group"
+              style={{
+                boxShadow: `0 0 10px ${portal.glowColor}`,
+              }}
+            >
+              <img
+                src={portal.icon}
+                alt={portal.name}
+                className="w-full h-full object-contain filter drop-shadow-sm group-hover:drop-shadow-md"
+              />
+            </a>
+          ))}
+        </div>
+
+        <div className="max-w-[1560px] mx-auto px-4 pl-16 sm:pl-20 lg:pl-24 sm:pr-6 lg:pr-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Column: Left-hand Site Icons + Clean Title and Essential CTA */}
-            <div className="lg:col-span-7 flex items-start gap-4 sm:gap-6">
+            {/* Left Column: Clean Title and Essential CTA */}
+            <div className="lg:col-span-7 space-y-6">
               
-              {/* Left-Hand Course Portal Icons Only */}
-              <div className="flex flex-col items-center gap-3 shrink-0 pt-1">
-                {COURSE_PORTALS.map((portal) => (
-                  <a
-                    key={portal.id}
-                    href={portal.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={portal.name}
-                    aria-label={portal.name}
-                    className="w-12 h-12 sm:w-14 sm:h-14 rounded-xs flex items-center justify-center p-2.5 bg-white/10 hover:bg-white/20 border-2 border-white/40 hover:border-white shadow-md hover:scale-105 active:scale-95 transition-all duration-150 backdrop-blur-xs cursor-pointer group"
-                    style={{
-                      boxShadow: `0 0 10px ${portal.glowColor}`,
-                    }}
-                  >
-                    <img
-                      src={portal.icon}
-                      alt={portal.name}
-                      className="w-full h-full object-contain filter drop-shadow-sm group-hover:drop-shadow-md"
-                    />
-                  </a>
-                ))}
+              {/* Category Eyebrow */}
+              <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-[#cdd9f3]">
+                <span className="px-2 py-0.5 rounded-xs bg-white/15 text-white border border-white/25">
+                  BRAC UNIVERSITY
+                </span>
+                <span>/</span>
+                <span>DEPT. OF COMPUTER SCIENCE &amp; ENGINEERING</span>
+                <span>/</span>
+                <span className="text-white">SECTION 07</span>
               </div>
 
-              {/* Title & Action Buttons */}
-              <div className="space-y-6 flex-1 min-w-0">
-                {/* Category Eyebrow */}
-                <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-[#cdd9f3]">
-                  <span className="px-2 py-0.5 rounded-xs bg-white/15 text-white border border-white/25">
-                    BRAC UNIVERSITY
-                  </span>
-                  <span>/</span>
-                  <span>DEPT. OF COMPUTER SCIENCE &amp; ENGINEERING</span>
-                  <span>/</span>
-                  <span className="text-white">SECTION 07</span>
-                </div>
+              {/* Clean Noticeable Title */}
+              <div className="space-y-1.5">
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
+                  CSE110 CONSULTATION <em className="not-italic text-[#cdd9f3] block">MANUAL &amp; TIMETABLE</em>
+                </h1>
+                <p className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#dce3f1] pt-1">
+                  FALL 2026 SEMESTER · STUDENT TUTOR: IMTIAZ HOSSAIN (T07)
+                </p>
+              </div>
 
-                {/* Clean Noticeable Title */}
-                <div className="space-y-1.5">
-                  <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
-                    CSE110 CONSULTATION <em className="not-italic text-[#cdd9f3] block">MANUAL &amp; TIMETABLE</em>
-                  </h1>
-                  <p className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#dce3f1] pt-1">
-                    FALL 2026 SEMESTER · STUDENT TUTOR: IMTIAZ HOSSAIN (T07)
-                  </p>
-                </div>
-
-                {/* Action Buttons Row */}
-                <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#routine"
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-white text-[#163a86] hover:bg-[#dce3f1] transition-all border-2 border-white shadow-md active:scale-95"
-                  >
-                    <span>Inspect Weekly Schedule</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-                    </svg>
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setIsComposerOpen(true)}
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-[#163a86] hover:bg-[#122e6b] text-white transition-all border-2 border-white/60 hover:border-white shadow-md active:scale-95 cursor-pointer"
-                  >
-                    <svg className="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                    </svg>
-                    <span>Draft Consultation Request</span>
-                  </button>
-                </div>
+              {/* Action Buttons Row */}
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="#routine"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-white text-[#163a86] hover:bg-[#dce3f1] transition-all border-2 border-white shadow-md active:scale-95"
+                >
+                  <span>Inspect Weekly Schedule</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                  </svg>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setIsComposerOpen(true)}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-[#163a86] hover:bg-[#122e6b] text-white transition-all border-2 border-white/60 hover:border-white shadow-md active:scale-95 cursor-pointer"
+                >
+                  <svg className="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                  <span>Draft Consultation Request</span>
+                </button>
               </div>
 
             </div>
