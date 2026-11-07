@@ -678,10 +678,10 @@ export default function App() {
 
         <div className="max-w-[1560px] mx-auto px-4 pl-16 sm:pl-20 lg:pl-24 sm:pr-6 lg:pr-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
             
             {/* Left Column: Clean Title and Essential CTA */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-5 xl:col-span-5 space-y-6">
               
               {/* Category Eyebrow */}
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-[#cdd9f3]">
@@ -696,7 +696,7 @@ export default function App() {
 
               {/* Clean Noticeable Title */}
               <div className="space-y-1.5">
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
+                <h1 className="text-4xl sm:text-5xl xl:text-6xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
                   CSE110 CONSULTATION <em className="not-italic text-[#cdd9f3] block">MANUAL &amp; TIMETABLE</em>
                 </h1>
                 <p className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#dce3f1] pt-1">
@@ -729,9 +729,9 @@ export default function App() {
 
             </div>
 
-            {/* Right Column: Profile Card with Moved Copy Email Button */}
-            <div className="lg:col-span-5">
-              <div className="relative border-2 border-white/60 dark:border-white/30 bg-[#163a86]/90 dark:bg-[#0e1c36]/90 p-6 sm:p-7 rounded-sm shadow-2xl backdrop-blur-xs">
+            {/* Right Column: Profile Card with Increased Right Border */}
+            <div className="lg:col-span-7 xl:col-span-7">
+              <div className="relative border-2 border-white/60 dark:border-white/30 bg-[#163a86]/90 dark:bg-[#0e1c36]/90 p-5 sm:p-6 lg:p-7 rounded-sm shadow-2xl backdrop-blur-xs">
                 
                 {/* Vintage Corner Registration Ticks */}
                 <span className="absolute -top-2.5 -left-2.5 text-white/70 font-mono text-sm font-bold">┌</span>
@@ -739,9 +739,9 @@ export default function App() {
                 <span className="absolute -bottom-2.5 -left-2.5 text-white/70 font-mono text-sm font-bold">└</span>
                 <span className="absolute -bottom-2.5 -right-2.5 text-white/70 font-mono text-sm font-bold">┘</span>
 
-                {/* Profile Portrait & Identifiers with Clickable Portal Logos */}
-                <div className="pb-5 border-b border-white/20 space-y-4">
-                  <div className="flex items-center gap-4 sm:gap-5">
+                {/* Profile Portrait & Identifiers with Clickable Portal Logos (Side-by-side) */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/20">
+                  <div className="flex items-center gap-4 sm:gap-5 min-w-0">
                     <div className="relative shrink-0">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] via-[#fbf5b7] to-[#aa771c] shadow-[0_4px_22px_rgba(191,149,63,0.38)]">
                         <img
@@ -759,11 +759,11 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="space-y-1 min-w-0 flex-1">
+                    <div className="space-y-1 min-w-0">
                       <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
                         STUDENT TUTOR · BRACU CSE
                       </div>
-                      <div className="text-2xl sm:text-3xl font-display font-black uppercase text-white tracking-tight truncate">
+                      <div className="text-2xl sm:text-3xl font-display font-black uppercase text-white tracking-tight">
                         IMTIAZ HOSSAIN
                       </div>
                       <div className="flex flex-wrap items-center gap-1.5 pt-0.5 text-xs font-mono">
@@ -777,8 +777,8 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Clickable Logos Cluster Toolbar (Full-width, zero overflow) */}
-                  <div className="flex flex-wrap items-center justify-between gap-1.5 bg-white/10 p-1.5 sm:p-2 rounded-xs border border-white/20 shadow-xs">
+                  {/* Clickable Logos Cluster (Side-by-side with name on right) */}
+                  <div className="flex items-center gap-1.5 self-start sm:self-center bg-white/10 p-1.5 rounded-xs border border-white/20 shadow-xs shrink-0">
                     {/* 1. GitHub */}
                     <a
                       href="https://github.com/ImtiazHossain-Eshan"
