@@ -139,6 +139,16 @@ Student consultations and technical queries are supported through dedicated plat
 
 ---
 
+## Important Course Portals & Learning Resources
+
+Direct 1-click access to official BRAC University CSE110 courseware, judges, and video archives:
+
+* **buX Course Portal**: [buX CSE110 Fall 2026](https://apps.bux-home.bracu.ac.bd/learning/course/course-v1:buX+CSE110+2026_Fall/home) - Official BRAC University Open edX learning management system, lecture handouts, quizzes, and course announcements.
+* **beecrowd Online Judge**: [beecrowd Problem Index](https://judge.beecrowd.com/en/problems/index/1) - Java programming problem set, automated evaluation, and lab exam practice archive.
+* **YouTube Lecture Playlist**: [CSE110 Video Playlist](https://www.youtube.com/playlist?list=PLr9he3UyIy3mOj-ehFpODvCS1U2d2RtRQ) - Comprehensive recorded theory lecture archives for review and concept revision.
+
+---
+
 ## Key Architectural Highlights
 
 * **Archival Technical Blueprint Aesthetic**: Styled after technical shop manuals, precision engineering coordinates, and archival print paper (`#1d49a7` blueprint blue, `#0c162b` deep night, `#eceeeb` archival document paper).

@@ -3,6 +3,9 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import logo128 from './assets/rounded-logo-128.png';
 import logo256 from './assets/rounded-logo-256.png';
 import discordLogo from './assets/discord-logo-64.png';
+import buxLogo from './assets/bux-logo.png';
+import beecrowdLogo from './assets/beecrowd-logo.svg';
+import youtubeLogo from './assets/youtube-playlist-logo.svg';
 
 /* ─── Schedule Data (Regular Semester  -  Official BRACU Consultation Planner) ─── */
 
@@ -29,6 +32,54 @@ interface DaySchedule {
 const LOGO_128 = logo128;
 const LOGO_256 = logo256;
 const DISCORD_LOGO = discordLogo;
+
+interface CoursePortal {
+  id: string;
+  name: string;
+  badge: string;
+  description: string;
+  url: string;
+  icon: string;
+  glowColor: string;
+  borderColor: string;
+  bgTint: string;
+}
+
+const COURSE_PORTALS: CoursePortal[] = [
+  {
+    id: 'bux',
+    name: 'buX Portal',
+    badge: 'LMS / Courseware',
+    description: 'BRACU official Open edX course modules, quizzes, and digital materials.',
+    url: 'https://apps.bux-home.bracu.ac.bd/learning/course/course-v1:buX+CSE110+2026_Fall/home',
+    icon: buxLogo,
+    glowColor: 'rgba(0, 163, 224, 0.45)',
+    borderColor: '#00a3e0',
+    bgTint: '#002147',
+  },
+  {
+    id: 'beecrowd',
+    name: 'beecrowd Judge',
+    badge: 'Online Judge',
+    description: 'Competitive programming problems and lab evaluation practice archive.',
+    url: 'https://judge.beecrowd.com/en/problems/index/1',
+    icon: beecrowdLogo,
+    glowColor: 'rgba(168, 85, 247, 0.45)',
+    borderColor: '#a855f7',
+    bgTint: '#1a0b2e',
+  },
+  {
+    id: 'youtube',
+    name: 'YouTube Playlist',
+    badge: 'Video Lectures',
+    description: 'Official BRAC University CSE110 theory lecture video playlist.',
+    url: 'https://www.youtube.com/playlist?list=PLr9he3UyIy3mOj-ehFpODvCS1U2d2RtRQ',
+    icon: youtubeLogo,
+    glowColor: 'rgba(239, 68, 68, 0.45)',
+    borderColor: '#ef4444',
+    bgTint: '#2b0c0c',
+  },
+];
 
 const CONSULTATION_SLOT_OPTIONS = [
   'Saturday · 12:30 PM - 1:50 PM (Offline 10G-33L)',
@@ -487,6 +538,58 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] font-sans antialiased selection:bg-[var(--blue)] selection:text-white transition-colors duration-200">
 
+      {/* ── Fixed Left Quick-Access Course Portals Dock ── */}
+      <aside
+        aria-label="Important Course Portals"
+        className="fixed left-2 sm:left-3.5 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-2 p-1.5 bg-[#0c162b]/95 dark:bg-[#070d1a]/95 backdrop-blur-md border-2 border-[#1d49a7]/60 dark:border-blue-900/60 rounded-xs shadow-[0_8px_30px_rgba(0,0,0,0.5)] blueprint-grain select-none"
+      >
+        <span className="text-[8px] font-mono font-black uppercase tracking-widest text-[#93c5fd] px-1 py-0.5 border-b border-white/15">
+          PORTALS
+        </span>
+
+        {COURSE_PORTALS.map((portal) => (
+          <div key={`dock-${portal.id}`} className="relative group">
+            <a
+              href={portal.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${portal.name} (${portal.badge})`}
+              className="w-11 h-11 rounded-xs flex items-center justify-center p-2 border-2 transition-all duration-200 group-hover:scale-110 active:scale-95 shadow-sm block"
+              style={{
+                backgroundColor: portal.bgTint,
+                borderColor: portal.borderColor,
+                boxShadow: `0 0 10px ${portal.glowColor}`,
+              }}
+            >
+              <img
+                src={portal.icon}
+                alt={portal.name}
+                className="w-full h-full object-contain filter drop-shadow-sm"
+              />
+            </a>
+
+            {/* Flyout Tooltip to the right */}
+            <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 hidden group-hover:flex flex-col w-56 p-2.5 bg-[#0a101d] text-white border-2 border-[#1d49a7] rounded-xs shadow-2xl z-50 pointer-events-none">
+              <div className="flex items-center justify-between gap-1 mb-1">
+                <span className="font-display font-black text-xs uppercase tracking-tight text-white">
+                  {portal.name}
+                </span>
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-xs bg-[#1d49a7] text-white uppercase shrink-0">
+                  {portal.badge}
+                </span>
+              </div>
+              <p className="text-[11px] font-sans text-slate-300 leading-snug">
+                {portal.description}
+              </p>
+              <div className="mt-1.5 pt-1 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-cyan-300 font-bold">
+                <span>Click to Open</span>
+                <span>↗</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </aside>
+
       {/* ── 1. Top Blueprint Masthead ── */}
       <header className="sticky top-0 z-50 bg-[#1d49a7] dark:bg-[#0b1426] text-white border-b-2 border-[#163a86] dark:border-[#1e2e4a] shadow-md blueprint-grain">
         <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
@@ -649,6 +752,58 @@ export default function App() {
                   </svg>
                   <span>Draft Consultation Request</span>
                 </button>
+              </div>
+
+              {/* Important Course Portals Row */}
+              <div className="pt-4 border-t border-white/15 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
+                      Important Course Portals
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-white/60 uppercase hidden sm:inline">
+                    Direct Access
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {COURSE_PORTALS.map((portal) => (
+                    <a
+                      key={`hero-${portal.id}`}
+                      href={portal.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-2.5 p-2 rounded-xs border transition-all duration-200 active:scale-95 bg-white/5 hover:bg-white/10 border-white/20 hover:border-white shadow-xs backdrop-blur-xs"
+                    >
+                      <div
+                        className="w-9 h-9 rounded-xs p-1.5 shrink-0 flex items-center justify-center border shadow-xs transition-transform group-hover:scale-105"
+                        style={{
+                          backgroundColor: portal.bgTint,
+                          borderColor: portal.borderColor,
+                        }}
+                      >
+                        <img
+                          src={portal.icon}
+                          alt={portal.name}
+                          className="w-full h-full object-contain filter drop-shadow-xs"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="font-display font-black text-xs uppercase tracking-tight text-white group-hover:text-cyan-200 truncate">
+                            {portal.name}
+                          </span>
+                          <span className="text-white/60 group-hover:text-white text-xs font-mono">↗</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-slate-300 block truncate">
+                          {portal.badge}
+                        </span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
 
             </div>
