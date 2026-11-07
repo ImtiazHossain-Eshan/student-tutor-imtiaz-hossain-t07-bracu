@@ -740,7 +740,7 @@ export default function App() {
                 <span className="absolute -bottom-2.5 -right-2.5 text-white/70 font-mono text-sm font-bold">┘</span>
 
                 {/* Profile Portrait & Identifiers with Clickable Portal Logos */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/20">
+                <div className="pb-5 border-b border-white/20 space-y-4">
                   <div className="flex items-center gap-4 sm:gap-5">
                     <div className="relative shrink-0">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] via-[#fbf5b7] to-[#aa771c] shadow-[0_4px_22px_rgba(191,149,63,0.38)]">
@@ -759,11 +759,11 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="space-y-1">
+                    <div className="space-y-1 min-w-0 flex-1">
                       <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
                         STUDENT TUTOR · BRACU CSE
                       </div>
-                      <div className="text-2xl sm:text-3xl font-display font-black uppercase text-white tracking-tight">
+                      <div className="text-2xl sm:text-3xl font-display font-black uppercase text-white tracking-tight truncate">
                         IMTIAZ HOSSAIN
                       </div>
                       <div className="flex flex-wrap items-center gap-1.5 pt-0.5 text-xs font-mono">
@@ -777,15 +777,15 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Clickable Logos Cluster (GitHub, Portfolio, LinkedIn, BRACU Vault, Discord) */}
-                  <div className="flex items-center gap-1.5 self-start sm:self-center bg-white/10 p-1.5 rounded-xs border border-white/20 shadow-xs">
+                  {/* Clickable Logos Cluster Toolbar (Full-width, zero overflow) */}
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 bg-white/10 p-1.5 sm:p-2 rounded-xs border border-white/20 shadow-xs">
                     {/* 1. GitHub */}
                     <a
                       href="https://github.com/ImtiazHossain-Eshan"
                       target="_blank"
                       rel="noopener noreferrer"
                       title="GitHub: @ImtiazHossain-Eshan"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#16181d] text-white hover:bg-black border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#16181d] text-white hover:bg-black border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="GitHub Profile"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -799,7 +799,7 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title="Portfolio: imtiazhossain.dev"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#0b0d11] text-[#7cdfff] hover:bg-black border border-[#2a5d70] hover:border-[#7cdfff] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#0b0d11] text-[#7cdfff] hover:bg-black border border-[#2a5d70] hover:border-[#7cdfff] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="Personal Portfolio"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 32 32">
@@ -823,7 +823,7 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title="LinkedIn: in/imtiazhossaineshan"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#0077B5] text-white hover:bg-[#005f93] border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#0077B5] text-white hover:bg-[#005f93] border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="LinkedIn Profile"
                     >
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -837,7 +837,7 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title="BRACU Vault: bracuvault.me"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-gradient-to-br from-[#C2A878] via-[#A07A4A] to-[#6F5836] p-1 border border-amber-300/40 hover:border-amber-300 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-gradient-to-br from-[#C2A878] via-[#A07A4A] to-[#6F5836] p-1 border border-amber-300/40 hover:border-amber-300 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="BRACU Vault"
                     >
                       <svg viewBox="0 0 48 48" className="w-full h-full">
@@ -855,7 +855,7 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title="Slack: ST_Imtiaz_T07 (U0CDM29USQ7)"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#4A154B] text-white hover:bg-[#611f69] border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#4A154B] text-white hover:bg-[#611f69] border border-white/25 hover:border-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="Slack Profile"
                     >
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -869,7 +869,7 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       title="CSE ST Discord Server (#cse110)"
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#5865F2] hover:bg-[#4752c4] border border-white/25 hover:border-white p-1.5 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#5865F2] hover:bg-[#4752c4] border border-white/25 hover:border-white p-1.5 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs shrink-0"
                       aria-label="Join CSE ST Discord Server"
                     >
                       <img
@@ -884,7 +884,7 @@ export default function App() {
                       type="button"
                       onClick={copyDiscordId}
                       title={copiedDiscordId ? "Copied Tutor Discord ID: bloodrayne_" : "Copy Tutor Discord ID: bloodrayne_"}
-                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#2b2d31] hover:bg-[#1e1f22] text-white border border-white/25 hover:border-emerald-400 p-1 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs font-mono text-[9px] font-bold"
+                      className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#2b2d31] hover:bg-[#1e1f22] text-white border border-white/25 hover:border-emerald-400 p-1 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-xs font-mono text-[9px] font-bold shrink-0"
                       aria-label="Copy Tutor Discord ID: bloodrayne_"
                     >
                       {copiedDiscordId ? (
