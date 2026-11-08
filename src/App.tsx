@@ -533,12 +533,12 @@ export default function App() {
 
       {/* ── 1. Top Blueprint Masthead ── */}
       <header className="sticky top-0 z-50 bg-[#1d49a7] dark:bg-[#0b1426] text-white border-b-2 border-[#163a86] dark:border-[#1e2e4a] shadow-md blueprint-grain">
-        <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+        <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-3.5 flex items-center justify-between gap-1.5 sm:gap-4">
           
           {/* Masthead Wordmark with Profile Avatar */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 min-w-0">
             <a href="#" className="relative group shrink-0" title="Imtiaz Hossain (T07)">
-              <div className="w-10 h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] to-[#aa771c] shadow-[0_2px_10px_rgba(191,149,63,0.35)] group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] to-[#aa771c] shadow-[0_2px_10px_rgba(191,149,63,0.35)] group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center bg-[#16181d]">
                 <img
                   src={LOGO_128}
                   alt="Imtiaz Hossain"
@@ -547,19 +547,22 @@ export default function App() {
                     const t = e.currentTarget;
                     if (!t.dataset.fallback) {
                       t.dataset.fallback = '1';
-                      t.src = 'rounded-logo-128.png';
+                      t.src = '/rounded-logo-128.png';
+                    } else if (t.dataset.fallback === '1') {
+                      t.dataset.fallback = '2';
+                      t.src = '/logo-128.jpg';
                     }
                   }}
                 />
               </div>
-              <span className="absolute -bottom-1 -right-1 px-1 py-0.2 text-[9px] font-mono font-bold bg-[#16181d] text-[#cdd9f3] border border-white/40 rounded">
+              <span className="absolute -bottom-1 -right-1 px-1 py-0.2 text-[8px] sm:text-[9px] font-mono font-bold bg-[#16181d] text-[#cdd9f3] border border-white/40 rounded">
                 T07
               </span>
             </a>
 
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-display font-black text-lg sm:text-xl tracking-tight uppercase text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="font-display font-black text-sm sm:text-lg lg:text-xl tracking-tight uppercase text-white truncate max-w-[125px] sm:max-w-none">
                   ST_Imtiaz_T07
                 </span>
               </div>
@@ -574,13 +577,13 @@ export default function App() {
           </nav>
 
           {/* Header Controls: Live Counter, Tactile Theme Switch & Discord */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Real-Time Live View Counter Pill */}
             <div
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm text-xs font-mono bg-white/10 hover:bg-white/15 text-white border border-white/25 shadow-xs backdrop-blur-xs select-none transition-all cursor-default"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-sm text-xs font-mono bg-white/10 hover:bg-white/15 text-white border border-white/25 shadow-xs backdrop-blur-xs select-none transition-all cursor-default"
               title="Real-time verified site views (live syncing)"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
@@ -592,7 +595,7 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.2 }}
-                className="font-mono font-black text-xs text-emerald-300 drop-shadow-xs"
+                className="font-mono font-black text-[11px] sm:text-xs text-emerald-300 drop-shadow-xs"
               >
                 {viewCount !== null ? viewCount.toLocaleString() : '...'}
               </motion.span>
@@ -602,7 +605,7 @@ export default function App() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="px-3 py-1.5 rounded-sm text-xs font-display font-bold uppercase tracking-wider transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/30 active:scale-95 shadow-sm"
+              className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-sm text-xs font-display font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/30 active:scale-95 shadow-sm shrink-0"
               title={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
               aria-label="Toggle theme"
             >
@@ -611,14 +614,14 @@ export default function App() {
                   <svg className="w-3.5 h-3.5 text-amber-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                   </svg>
-                  <span className="text-[11px]">Light Mode</span>
+                  <span className="text-[11px] hidden sm:inline">Light Mode</span>
                 </>
               ) : (
                 <>
                   <svg className="w-3.5 h-3.5 text-blue-100 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                   </svg>
-                  <span className="text-[11px]">Dark Mode</span>
+                  <span className="text-[11px] hidden sm:inline">Dark Mode</span>
                 </>
               )}
             </button>
@@ -628,14 +631,14 @@ export default function App() {
               href="https://discord.gg/S6qrvUVrgF"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm text-xs font-display font-extrabold uppercase tracking-wider text-[#16181d] bg-white hover:bg-[#dce3f1] transition-all shadow-sm active:scale-95 shrink-0 border border-white"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-sm text-xs font-display font-extrabold uppercase tracking-wider text-[#16181d] bg-white hover:bg-[#dce3f1] transition-all shadow-sm active:scale-95 shrink-0 border border-white"
             >
               <img
                 src={DISCORD_LOGO}
                 alt="Discord"
-                className="w-4 h-4 object-contain shrink-0"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
               />
-              <span>Discord</span>
+              <span className="text-[11px] sm:text-xs hidden min-[400px]:inline">Discord</span>
             </a>
           </div>
 
@@ -643,19 +646,19 @@ export default function App() {
       </header>
 
       {/* ── 2. Blueprint Cover / Hero Section ── */}
-      <section className="relative bg-[#1d49a7] dark:bg-[#0c162b] text-white blueprint-grain blueprint-grid border-b-2 border-[#16181d] dark:border-[#1e2e4a] overflow-hidden py-8 sm:py-14">
+      <section className="relative bg-[#1d49a7] dark:bg-[#0c162b] text-white blueprint-grain blueprint-grid border-b-2 border-[#16181d] dark:border-[#1e2e4a] overflow-hidden py-6 sm:py-12 lg:py-14">
         
-        {/* Course Portals  -  Far Left Hand Side Icons */}
-        <div className="absolute left-2.5 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-3">
+        {/* Desktop Course Portals  -  Far Left Rail (lg and up only) */}
+        <div className="hidden lg:flex absolute left-4 xl:left-6 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-3">
           {COURSE_PORTALS.map((portal) => (
             <a
-              key={portal.id}
+              key={`desk-${portal.id}`}
               href={portal.url}
               target="_blank"
               rel="noopener noreferrer"
               title={portal.name}
               aria-label={portal.name}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-xs flex items-center justify-center p-2 bg-white/10 hover:bg-white/20 border border-white/40 hover:border-white shadow-md hover:scale-110 active:scale-95 transition-all duration-150 backdrop-blur-xs cursor-pointer group"
+              className="w-11 h-11 xl:w-12 xl:h-12 rounded-xs flex items-center justify-center p-2 bg-white/10 hover:bg-white/20 border border-white/40 hover:border-white shadow-md hover:scale-110 active:scale-95 transition-all duration-150 backdrop-blur-xs cursor-pointer group"
               style={{
                 boxShadow: `0 0 10px ${portal.glowColor}`,
               }}
@@ -664,44 +667,53 @@ export default function App() {
                 src={portal.icon}
                 alt={portal.name}
                 className="w-full h-full object-contain filter drop-shadow-sm group-hover:drop-shadow-md"
+                onError={(e) => {
+                  const t = e.currentTarget;
+                  if (!t.dataset.fallback) {
+                    t.dataset.fallback = '1';
+                    if (portal.id === 'bux') t.src = '/bux-logo.png';
+                    else if (portal.id === 'beecrowd') t.src = '/beecrowd-logo.svg';
+                    else if (portal.id === 'youtube') t.src = '/youtube-playlist-logo.svg';
+                  }
+                }}
               />
             </a>
           ))}
         </div>
 
-        <div className="max-w-[1560px] mx-auto px-4 pl-16 sm:pl-20 lg:pl-24 sm:pr-6 lg:pr-8">
+        <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:pl-24 lg:pr-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 xl:gap-12 items-center">
             
             {/* Left Column: Clean Title and Essential CTA */}
-            <div className="lg:col-span-5 xl:col-span-5 space-y-6">
+            <div className="lg:col-span-5 xl:col-span-5 space-y-5 sm:space-y-6">
               
               {/* Category Eyebrow */}
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono font-bold tracking-wider uppercase text-[#cdd9f3]">
-                <span className="px-2 py-0.5 rounded-xs bg-white/15 text-white border border-white/25">
+                <span className="px-2 py-0.5 rounded-xs bg-white/15 text-white border border-white/25 text-[10px] sm:text-xs">
                   BRAC UNIVERSITY
                 </span>
+                <span className="hidden min-[400px]:inline">/</span>
+                <span className="hidden min-[400px]:inline text-[10px] sm:text-xs">DEPT. OF CSE</span>
                 <span>/</span>
-                <span>DEPT. OF COMPUTER SCIENCE &amp; ENGINEERING</span>
-                <span>/</span>
-                <span className="text-white">SECTION 07</span>
+                <span className="text-white text-[10px] sm:text-xs font-extrabold">SECTION 07</span>
               </div>
 
               {/* Clean Noticeable Title */}
-              <div className="space-y-1.5">
-                <h1 className="text-4xl sm:text-5xl xl:text-6xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
+              <div className="space-y-1 sm:space-y-1.5">
+                <h1 className="text-3xl sm:text-5xl xl:text-6xl font-display font-black tracking-tighter uppercase leading-[0.95] text-white">
                   CSE110 CONSULTATION <em className="not-italic text-[#cdd9f3] block">MANUAL &amp; TIMETABLE</em>
                 </h1>
-                <p className="text-sm sm:text-base font-mono uppercase tracking-widest text-[#dce3f1] pt-1">
+                <p className="text-xs sm:text-base font-mono uppercase tracking-widest text-[#dce3f1] pt-1">
                   FALL 2026 SEMESTER · STUDENT TUTOR: IMTIAZ HOSSAIN (T07)
                 </p>
               </div>
 
               {/* Action Buttons Row */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
                 <a
                   href="#routine"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-white text-[#163a86] hover:bg-[#dce3f1] transition-all border-2 border-white shadow-md active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-white text-[#163a86] hover:bg-[#dce3f1] transition-all border-2 border-white shadow-md active:scale-95"
                 >
                   <span>Inspect Weekly Schedule</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -711,13 +723,60 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsComposerOpen(true)}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-[#163a86] hover:bg-[#122e6b] text-white transition-all border-2 border-white/60 hover:border-white shadow-md active:scale-95 cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xs text-xs font-display font-black uppercase tracking-wider bg-[#163a86] hover:bg-[#122e6b] text-white transition-all border-2 border-white/60 hover:border-white shadow-md active:scale-95 cursor-pointer"
                 >
                   <svg className="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                   </svg>
                   <span>Draft Consultation Request</span>
                 </button>
+              </div>
+
+              {/* Mobile & Tablet Course Portals  -  Clean Dedicated Responsive Grid (lg:hidden) */}
+              <div className="lg:hidden pt-2 space-y-2">
+                <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Important Course Portals</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                  {COURSE_PORTALS.map((portal) => (
+                    <a
+                      key={`mob-${portal.id}`}
+                      href={portal.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 sm:p-2.5 rounded-xs flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-2.5 bg-white/10 hover:bg-white/20 border border-white/30 hover:border-white shadow-sm transition-all active:scale-95 group text-center sm:text-left"
+                      style={{
+                        boxShadow: `0 0 8px ${portal.glowColor}`,
+                      }}
+                    >
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 flex items-center justify-center p-0.5">
+                        <img
+                          src={portal.icon}
+                          alt={portal.name}
+                          className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform"
+                          onError={(e) => {
+                            const t = e.currentTarget;
+                            if (!t.dataset.fallback) {
+                              t.dataset.fallback = '1';
+                              if (portal.id === 'bux') t.src = '/bux-logo.png';
+                              else if (portal.id === 'beecrowd') t.src = '/beecrowd-logo.svg';
+                              else if (portal.id === 'youtube') t.src = '/youtube-playlist-logo.svg';
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[11px] sm:text-xs font-display font-black uppercase text-white truncate group-hover:text-cyan-200 transition-colors">
+                          {portal.id === 'bux' ? 'buX' : portal.id === 'beecrowd' ? 'beecrowd' : 'YouTube'}
+                        </div>
+                        <div className="text-[9px] font-mono text-[#cdd9f3] truncate hidden sm:block">
+                          {portal.badge}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
 
             </div>
@@ -734,9 +793,9 @@ export default function App() {
 
                 {/* Profile Portrait & Identifiers with Clickable Portal Logos (Side-by-side) */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-white/20">
-                  <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+                  <div className="flex items-center gap-3.5 sm:gap-5 min-w-0">
                     <div className="relative shrink-0">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[2px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] via-[#fbf5b7] to-[#aa771c] shadow-[0_4px_22px_rgba(191,149,63,0.38)]">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full p-[2px] bg-gradient-to-tr from-[#bf953f] via-[#fcf6ba] via-[#b38728] via-[#fbf5b7] to-[#aa771c] shadow-[0_4px_22px_rgba(191,149,63,0.38)] overflow-hidden flex items-center justify-center bg-[#16181d]">
                         <img
                           src={LOGO_256}
                           alt="Imtiaz Hossain"
@@ -745,7 +804,10 @@ export default function App() {
                             const t = e.currentTarget;
                             if (!t.dataset.fallback) {
                               t.dataset.fallback = '1';
-                              t.src = 'rounded-logo-256.png';
+                              t.src = '/rounded-logo-256.png';
+                            } else if (t.dataset.fallback === '1') {
+                              t.dataset.fallback = '2';
+                              t.src = '/logo-256.jpg';
                             }
                           }}
                         />
@@ -753,17 +815,17 @@ export default function App() {
                     </div>
 
                     <div className="space-y-1 min-w-0">
-                      <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
+                      <div className="text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider text-[#cdd9f3]">
                         STUDENT TUTOR · BRACU CSE
                       </div>
-                      <div className="text-2xl sm:text-3xl font-display font-black uppercase text-white tracking-tight">
+                      <div className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase text-white tracking-tight truncate">
                         IMTIAZ HOSSAIN
                       </div>
                       <div className="flex flex-wrap items-center gap-1.5 pt-0.5 text-xs font-mono">
-                        <span className="px-2 py-0.5 bg-white/20 text-white font-bold rounded-xs border border-white/30">
+                        <span className="px-2 py-0.5 bg-white/20 text-white font-bold rounded-xs border border-white/30 text-[10px] sm:text-xs">
                           INITIAL: T07
                         </span>
-                        <span className="px-2 py-0.5 bg-white/20 text-white font-bold rounded-xs border border-white/30">
+                        <span className="px-2 py-0.5 bg-white/20 text-white font-bold rounded-xs border border-white/30 text-[10px] sm:text-xs">
                           SEC: 07
                         </span>
                       </div>
@@ -771,7 +833,7 @@ export default function App() {
                   </div>
 
                   {/* Clickable Logos Cluster (Side-by-side with name on right) */}
-                  <div className="flex items-center gap-1.5 self-start sm:self-center bg-white/10 p-1.5 rounded-xs border border-white/20 shadow-xs shrink-0">
+                  <div className="flex flex-wrap items-center gap-1.5 self-start sm:self-center bg-white/10 p-1.5 rounded-xs border border-white/20 shadow-xs shrink-0 max-w-full">
                     {/* 1. GitHub */}
                     <a
                       href="https://github.com/ImtiazHossain-Eshan"
@@ -890,16 +952,16 @@ export default function App() {
                 </div>
 
                 {/* Location & Contact Grid */}
-                <div className="pt-4 grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 text-xs font-mono">
                   <div className="p-2.5 bg-white/10 rounded-xs border border-white/15">
                     <div className="text-[10px] text-[#cdd9f3] uppercase">Offline Room</div>
-                    <div className="text-base font-bold text-white mt-0.5">10G-33L</div>
+                    <div className="text-sm sm:text-base font-bold text-white mt-0.5">10G-33L</div>
                     <div className="text-[10px] text-white/70">Building UB10 · 10th Fl</div>
                   </div>
 
                   <div className="p-2.5 bg-white/10 rounded-xs border border-white/15">
                     <div className="text-[10px] text-[#cdd9f3] uppercase">Lab Class</div>
-                    <div className="text-base font-bold text-white mt-0.5">09B-09L</div>
+                    <div className="text-sm sm:text-base font-bold text-white mt-0.5">09B-09L</div>
                     <div className="text-[10px] text-white/70">Thu 11:00 AM - 1:50 PM</div>
                   </div>
 
@@ -960,7 +1022,7 @@ export default function App() {
                   </div>
 
                   {/* Slack Channel & Profile */}
-                  <div className="p-2.5 bg-white/10 rounded-xs border border-white/15 flex flex-col justify-between col-span-2 sm:col-span-1">
+                  <div className="p-2.5 bg-white/10 rounded-xs border border-white/15 flex flex-col justify-between col-span-1">
                     <div>
                       <div className="text-[10px] text-[#cdd9f3] uppercase flex items-center justify-between">
                         <span>Slack Profile</span>
@@ -997,7 +1059,7 @@ export default function App() {
                   </div>
 
                   {/* Moved Copy Email Button inside the Official Email box */}
-                  <div className="p-3 bg-white/10 rounded-xs border border-white/20 col-span-2 sm:col-span-1 flex flex-col justify-between gap-2">
+                  <div className="p-3 bg-white/10 rounded-xs border border-white/20 col-span-1 flex flex-col justify-between gap-2">
                     <div className="min-w-0">
                       <div className="text-[10px] text-[#cdd9f3] uppercase">Official Email</div>
                       <div className="text-xs sm:text-sm font-bold text-white font-mono break-all mt-0.5">
@@ -1027,7 +1089,7 @@ export default function App() {
                   </div>
 
                   {/* One-Click Draft Consultation Request Button */}
-                  <div className="col-span-2 pt-1">
+                  <div className="col-span-1 sm:col-span-2 pt-1">
                     <button
                       type="button"
                       onClick={() => setIsComposerOpen(true)}
@@ -1050,14 +1112,14 @@ export default function App() {
       </section>
 
       {/* ── 3. High-Contrast Strip ── */}
-      <div className="bg-[#16181d] text-[#eceeeb] border-b-2 border-[#16181d] py-3 px-4 sm:px-6 lg:px-8 text-xs font-display font-bold uppercase tracking-wider overflow-x-auto">
-        <div className="max-w-[1560px] mx-auto flex items-center justify-between gap-6 min-w-[700px]">
-          <div className="flex items-center gap-2">
+      <div className="bg-[#16181d] text-[#eceeeb] border-b-2 border-[#16181d] py-2.5 sm:py-3 px-4 sm:px-6 lg:px-8 text-xs font-display font-bold uppercase tracking-wider overflow-x-auto no-scrollbar">
+        <div className="max-w-[1560px] mx-auto flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-6">
+          <div className="flex items-center gap-2 shrink-0">
             <span className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse" />
-            <span>CSE110 SECTION 07 · FALL 2026</span>
+            <span className="text-xs">CSE110 SECTION 07 · FALL 2026</span>
           </div>
 
-          <div className="flex items-center gap-6 font-mono text-[11px] text-[#cdd9f3]">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 font-mono text-[10px] sm:text-[11px] text-[#cdd9f3]">
             <span>OFFLINE: <strong className="text-white">10G-33L</strong></span>
             <span>LAB: <strong className="text-white">09B-09L</strong></span>
             <span>ONLINE: <strong className="text-white">DISCORD (#cse110)</strong></span>
