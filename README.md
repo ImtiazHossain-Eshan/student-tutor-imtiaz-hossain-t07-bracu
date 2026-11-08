@@ -111,14 +111,14 @@ Students can select their current syllabus module with a single click in the com
 | Day | 8:00 AM - 9:20 AM | 11:00 AM - 12:20 PM | 12:30 PM - 1:50 PM | 2:00 PM - 3:20 PM | 3:30 PM - 4:50 PM | 9:30 PM - 10:50 PM |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Saturday** | Student Class | Student Class | **Offline (10G-33L)** | **Offline (10G-33L)** | *Free* | *Free* |
-| **Sunday** | *Free* | *Free* | *Free* | *Free* | *Free* | **Online (Discord)** |
-| **Monday** | *Free* | *Free* | *Free* | **Offline (10G-33L)** | *Free* | *Free* |
-| **Tuesday** | *Free* | *Free* | *Free* | *Free* | *Free* | *Free* |
-| **Wednesday** | *Free* | *Free* | *Free* | **Offline (10G-33L)** | *Free* | **Online (Discord)** |
+| **Sunday** | *Free* | *Free* | *Free* | *Free* | *Free* | *Free* |
+| **Monday** | *Free* | *Free* | *Free* | *Free* | *Free* | *Free* |
+| **Tuesday** | *Free* | *Free* | *Free* | *Free* | *Free* | **Online (Discord)** |
+| **Wednesday** | *Free* | *Free* | **Offline (10G-33L)** | **Offline (10G-33L)** | *Free* | **Online (Discord)** |
 | **Thursday** | *Free* | **Lab (09B-09L)** | **Lab (09B-09L)** | **Offline (10G-33L)** | **Offline (10G-33L)** | *Free* |
 | **Friday** | *Free* | *Free* | *Free* | *Free* | *Free* | *Free* |
 
-*Note: Tuesday and Friday have no scheduled consultations.*
+*Note: Sunday, Monday, and Friday have no scheduled consultations.*
 
 ---
 

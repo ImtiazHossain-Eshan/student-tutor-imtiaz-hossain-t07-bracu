@@ -84,8 +84,8 @@ const COURSE_PORTALS: CoursePortal[] = [
 const CONSULTATION_SLOT_OPTIONS = [
   'Saturday · 12:30 PM - 1:50 PM (Offline 10G-33L)',
   'Saturday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
-  'Sunday · 9:30 PM - 10:50 PM (Online Discord)',
-  'Monday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
+  'Tuesday · 9:30 PM - 10:50 PM (Online Discord)',
+  'Wednesday · 12:30 PM - 1:50 PM (Offline 10G-33L)',
   'Wednesday · 2:00 PM - 3:20 PM (Offline 10G-33L)',
   'Wednesday · 9:30 PM - 10:50 PM (Online Discord)',
   'Thursday · 11:00 AM - 1:50 PM (CSE110 Lab 09B-09L)',
@@ -140,39 +140,31 @@ const SCHEDULE_ROWS: DaySchedule[] = [
   {
     day: 'Sunday',
     abbr: 'SUN',
-    slots: [
-      null,
-      null,
-      null,
-      null,
-      null,
-      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
-    ],
-    consultations: [
-      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
-    ],
+    isFree: true,
+    slots: [null, null, null, null, null, null],
+    consultations: [],
   },
   {
     day: 'Monday',
     abbr: 'MON',
-    slots: [
-      null,
-      null,
-      null,
-      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-      null,
-      null,
-    ],
-    consultations: [
-      { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
-    ],
+    isFree: true,
+    slots: [null, null, null, null, null, null],
+    consultations: [],
   },
   {
     day: 'Tuesday',
     abbr: 'TUE',
-    isFree: true,
-    slots: [null, null, null, null, null, null],
-    consultations: [],
+    slots: [
+      null,
+      null,
+      null,
+      null,
+      null,
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+    ],
+    consultations: [
+      { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
+    ],
   },
   {
     day: 'Wednesday',
@@ -180,12 +172,13 @@ const SCHEDULE_ROWS: DaySchedule[] = [
     slots: [
       null,
       null,
-      null,
+      { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       null,
       { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
     consultations: [
+      { time: '12:30 PM - 1:50 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '2:00 PM - 3:20 PM', activity: 'offline', title: 'Offline Consultation', location: '10G-33L' },
       { time: '9:30 PM - 10:50 PM', activity: 'online', title: 'Online Consultation', location: 'Discord' },
     ],
@@ -1325,7 +1318,7 @@ export default function App() {
             </div>
 
             <div className="text-[11px] font-mono text-[var(--ink-3)]">
-              * Tuesday &amp; Friday: No Scheduled Consultation
+              * Sunday, Monday &amp; Friday: No Scheduled Consultation
             </div>
           </div>
           </div>
