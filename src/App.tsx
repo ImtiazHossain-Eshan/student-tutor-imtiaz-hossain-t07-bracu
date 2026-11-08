@@ -1124,30 +1124,32 @@ export default function App() {
             </div>
           </div>
 
-          {/* Prominent Pre-Session Note Banner with Glowing NOTE badge & 3D Icon */}
-          <div className="p-3 sm:p-3.5 bg-[var(--paper-card)] border-2 border-[var(--ink)] text-xs text-[var(--ink)] flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm rounded-xs relative overflow-hidden">
-            <div className="flex items-center gap-3">
-              {/* Glowing NOTE badge */}
-              <span className="relative inline-flex items-center justify-center px-2.5 py-1 rounded-xs bg-[#1d49a7] dark:bg-[#2563eb] text-white font-display font-black text-[11px] uppercase tracking-widest shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.9),0_0_30px_rgba(59,130,246,0.55)] border border-blue-400">
-                <span className="relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,1)]">
-                  NOTE
+          {/* Full Announcement Graphic Plate (Note Banner + Matrix Table + Legend) */}
+          <div id="timetable-full-graphic" className="space-y-3.5 p-2 sm:p-3 rounded-xs bg-[var(--paper)]">
+            {/* Prominent Pre-Session Note Banner with Glowing NOTE badge & 3D Icon */}
+            <div className="p-3 sm:p-3.5 bg-[var(--paper-card)] border-2 border-[var(--ink)] text-xs text-[var(--ink)] flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm rounded-xs relative overflow-hidden">
+              <div className="flex items-center gap-3">
+                {/* Glowing NOTE badge */}
+                <span className="relative inline-flex items-center justify-center px-2.5 py-1 rounded-xs bg-[#1d49a7] dark:bg-[#2563eb] text-white font-display font-black text-[11px] uppercase tracking-widest shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.9),0_0_30px_rgba(59,130,246,0.55)] border border-blue-400">
+                  <span className="relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,1)]">
+                    NOTE
+                  </span>
+                  <span className="absolute inset-0 rounded-xs bg-blue-400/40 animate-pulse pointer-events-none" />
                 </span>
-                <span className="absolute inset-0 rounded-xs bg-blue-400/40 animate-pulse pointer-events-none" />
-              </span>
 
-              <span className="font-sans font-bold text-xs sm:text-sm text-[var(--ink)]">
-                “Please email or DM me your topic before dropping by so we can make the most out of our session.”
-              </span>
-            </div>
+                <span className="font-sans font-bold text-xs sm:text-sm text-[var(--ink)]">
+                  “Please email or DM me your topic before dropping by so we can make the most out of our session.”
+                </span>
+              </div>
 
-            {/* 3D Physics Hint with Isometric 3D Cube Icon */}
-            <div className="hidden md:flex items-center gap-2 text-[11px] font-mono text-[var(--ink-2)] shrink-0 bg-[var(--paper-2)] px-2.5 py-1 rounded-xs border border-[var(--ink)]/20 shadow-2xs">
-              <svg className="w-3.5 h-3.5 text-[var(--blue)] shrink-0 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-              </svg>
-              <span className="font-semibold">Hover / Tap cards for 3D physics</span>
+              {/* 3D Physics Hint with Isometric 3D Cube Icon */}
+              <div className="hidden md:flex items-center gap-2 text-[11px] font-mono text-[var(--ink-2)] shrink-0 bg-[var(--paper-2)] px-2.5 py-1 rounded-xs border border-[var(--ink)]/20 shadow-2xs">
+                <svg className="w-3.5 h-3.5 text-[var(--blue)] shrink-0 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                </svg>
+                <span className="font-semibold">Hover / Tap cards for 3D physics</span>
+              </div>
             </div>
-          </div>
 
           {/* ── DESKTOP SPREADSHEET TABLE (Framer Motion 3D Interactive Reacting Cells) ── */}
           <div id="timetable-matrix-plate" className="space-y-3 p-1">
@@ -1320,6 +1322,7 @@ export default function App() {
             <div className="text-[11px] font-mono text-[var(--ink-3)]">
               * Sunday, Monday &amp; Friday: No Scheduled Consultation
             </div>
+          </div>
           </div>
           </div>
 
