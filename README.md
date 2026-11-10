@@ -32,9 +32,9 @@
 
 ---
 
-| The Routine | The Inspector | The Composer |
-| :---: | :---: | :---: |
-| <img src="./showcase_schedule.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Consultation Request Composer" width="100%" /> |
+| Routine Matrix | Session Inspector | Consultation Composer | Mobile View |
+| :---: | :---: | :---: | :---: |
+| <img src="./showcase_timetable_matrix.png" alt="Weekly Schedule Matrix" width="100%" /> | <img src="./showcase_modal.png" alt="Session Inspector Modal" width="100%" /> | <img src="./showcase_composer.png" alt="Consultation Request Composer" width="100%" /> | <img src="./showcase_mobile.png" alt="Mobile Responsive View" width="100%" /> |
 
 ---
 
@@ -99,6 +99,11 @@ Students can select their current syllabus module with a single click in the com
 <p align="center">
   <img src="./showcase_timetable_matrix.png" alt="Official Weekly Consultation Timetable Matrix - BRAC University CSE110 Section 07" width="100%" />
 </p>
+
+> [!TIP]
+> Download the official high-resolution consultation routine cards:
+> - [Dark Blueprint Edition (JPEG)](./timetable_routine_dark.jpg)
+> - [Light Technical Paper Edition (JPEG)](./timetable_routine_light.jpg)
 
 ### Active Time Matrix (80-Minute Academic Blocks)
 * **Slot 1 (8:00 AM - 9:20 AM)**: Student Class
@@ -196,6 +201,7 @@ npm run preview
 ## Student Tutor Dossier
 
 * **Tutor Name**: Imtiaz Hossain
+* **Student ID**: 23101137
 * **Initial**: T07
 * **Role**: Student Tutor (ST)
 * **Department**: Department of Computer Science and Engineering, BRAC University
