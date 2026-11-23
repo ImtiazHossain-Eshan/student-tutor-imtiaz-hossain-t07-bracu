@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSE110 Tutor</title>
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600&family=Atkinson+Hyperlegible+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+:root {
+  --bg: #f5f5f2;
+  --bubble: #e8e8e3;
+  --field: #ffffff;
+  --seam: #dcdcd5;
+  --seam-2: #c6c6bf;
+  --text: #16181d;
+  --text-2: #4a4e5c;
+  --text-3: #6a6f7d;
+  --accent: #2f55d4;
+  --well: #ffffff;
+  --sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Atkinson Hyperlegible Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --col: 720px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+}
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+* { scrollbar-color: var(--seam-2) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: var(--seam-2); border-radius: 10px; border: 3px solid var(--bg); }
+button { font: inherit; color: inherit; }
+svg.i { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+.app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+
+.top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+.top b { font-weight: 600; font-size: 15px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.pick { position: relative; }
+.pick-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px 6px 12px; border-radius: 10px; border: 0;
+  background: transparent; color: var(--text-2); font: 500 15px var(--sans); cursor: pointer; transition: background .15s, color .15s;
+}
+.pick-btn:hover, .pick-btn[aria-expanded="true"] { background: var(--bubble); color: var(--text); }
+.pick-btn svg.i { width: 15px; height: 15px; color: var(--text-3); transform: rotate(90deg); transition: transform .2s var(--ease); }
+.pick-btn[aria-expanded="true"] svg.i { transform: rotate(-90deg); }
+.menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 20; width: 320px; max-width: calc(100vw - 32px);
+  padding: 6px; border-radius: 16px; background: var(--field); border: 1px solid var(--seam);
+  box-shadow: 0 16px 40px rgba(22, 24, 29, 0.12), 0 2px 6px rgba(22, 24, 29, 0.05);
+  transform-origin: top left; animation: pop .18s var(--ease) both;
+}
+.menu[hidden] { display: none; }
+@keyframes pop { from { opacity: 0; transform: translateY(-4px) scale(.98); } to { opacity: 1; transform: none; } }
+.menu .grp { padding: 10px 10px 4px; font-size: 12.5px; font-weight: 500; color: var(--text-3); }
+.menu .grp:first-child { padding-top: 6px; }
+.opt {
+  display: grid; grid-template-columns: 1fr 18px; align-items: center; gap: 2px 12px; padding: 9px 10px; border-radius: 10px;
+  cursor: pointer; outline: none;
+}
+.opt:hover, .opt.active { background: var(--bg); }
+.opt b { font-weight: 500; font-size: 15px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.opt small { grid-column: 1; font-size: 13px; color: var(--text-3); line-height: 1.4; }
+.opt .tag { font: 500 11.5px/1 var(--sans); padding: 3px 7px; border-radius: 999px; background: var(--bubble); color: var(--text-2); }
+.opt svg.i { grid-row: 1 / span 2; grid-column: 2; width: 18px; height: 18px; color: var(--accent); visibility: hidden; }
+.opt[aria-selected="true"] svg.i { visibility: visible; }
+.new {
+  display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 9px; border: 0;
+  background: transparent; color: var(--text-2); font-size: 14px; cursor: pointer; transition: background .15s;
+}
+.new:hover { background: var(--bubble); color: var(--text); }
+.new svg.i { width: 16px; height: 16px; }
+
+.scroll { flex: 1; overflow-y: auto; }
+.thread { max-width: var(--col); margin: 0 auto; padding: 12px 20px 32px; }
+.me { display: flex; justify-content: flex-end; margin: 28px 0 18px; }
+.me p { margin: 0; max-width: 80%; padding: 10px 16px; border-radius: 18px; background: var(--bubble); white-space: pre-wrap; word-break: break-word; }
+.bot { margin-bottom: 8px; }
+.answer { line-height: 1.7; }
+.answer p { margin: 0 0 14px; }
+.answer ul, .answer ol { margin: 0 0 14px; padding-left: 22px; }
+.answer li { margin: 4px 0; }
+.answer strong { font-weight: 600; }
+.answer h3 { font-size: 16px; font-weight: 600; margin: 20px 0 6px; }
+.answer :not(pre) > code { font: 0.88em var(--mono); background: var(--bubble); padding: 2px 5px; border-radius: 5px; }
+.code { margin: 4px 0 18px; border-radius: 12px; overflow: hidden; background: #1e1e1e; box-shadow: 0 6px 18px rgba(22, 24, 29, 0.12); }
+.code-head { display: flex; align-items: center; justify-content: space-between; padding: 7px 8px 7px 14px; background: #2d2d2d; color: #c5c5c5; font: 12.5px/1 var(--mono); }
+.code-head .lang { display: inline-flex; align-items: center; gap: 8px; }
+.code-head .lang i { width: 8px; height: 8px; border-radius: 50%; background: #569cd6; }
+.code-head .lang i.python { background: #f1c94b; }
+.code-head .lang i.java { background: #e8834e; }
+.code pre { margin: 0; padding: 14px 16px; overflow-x: auto; font: 14px/1.6 var(--mono); color: #d4d4d4; background: #1e1e1e; }
+.code pre code.hljs { padding: 0; background: transparent; font: inherit; }
+.copy { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px; border: 0; border-radius: 6px; background: transparent; color: #c5c5c5; font: 12.5px var(--sans); cursor: pointer; }
+.copy:hover { background: #3a3a3a; color: #fff; }
+.copy svg.i { width: 14px; height: 14px; }
+
+/* tables */
+.table { margin: 4px 0 18px; border: 1px solid var(--seam); border-radius: 12px; overflow: auto; background: var(--field); }
+.table table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.table th, .table td { padding: 10px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--seam); }
+.table th { font-weight: 600; background: color-mix(in srgb, var(--bubble) 60%, var(--field)); }
+.table tr:last-child td { border-bottom: 0; }
+.table td:first-child { font-weight: 500; }
+
+/* follow-up suggestions */
+.next { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+.next button { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--seam); background: var(--field); color: var(--text-2); font-size: 14px; cursor: pointer; transition: border-color .15s, color .15s, transform .2s var(--ease); }
+.next button:hover { border-color: var(--seam-2); color: var(--text); transform: translateY(-1px); }
+.next button svg.i { width: 14px; height: 14px; color: var(--accent); }
+.next button:disabled { opacity: .5; cursor: default; transform: none; }
+.cite {
+  display: inline-grid; place-items: center; min-width: 19px; height: 18px; padding: 0 4px; margin: 0 1px;
+  font: 500 11px/1 var(--mono); color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 0; border-radius: 5px; vertical-align: 2px; cursor: pointer;
+}
+.cite:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+.more { margin-top: 4px; font-size: 13.5px; color: var(--text-3); }
+.srcs { list-style: none; margin: 0 0 6px; padding: 0; }
+.srcs li { display: flex; gap: 8px; padding: 2px 6px; margin: 0 -6px; border-radius: 6px; transition: background .3s; }
+.srcs li.hot { background: var(--bubble); }
+.srcs .n { font-family: var(--mono); color: var(--accent); flex: none; }
+details { margin-top: 2px; }
+summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 4px; color: var(--text-3); border-radius: 6px; }
+summary::-webkit-details-marker { display: none; }
+summary:hover { color: var(--text); }
+summary svg.i { width: 14px; height: 14px; transition: transform .2s var(--ease); }
+details[open] summary svg.i { transform: rotate(90deg); }
+.steps { list-style: none; margin: 6px 0 0; padding: 0; font-family: var(--mono); font-size: 12.5px; }
+.steps li { display: flex; justify-content: space-between; gap: 16px; padding: 2px 0; max-width: 420px; }
+.steps span:last-child { color: var(--text-3); }
+
+.live .answer > :last-child::after { content: ""; display: inline-block; width: 8px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--text); border-radius: 1px; animation: caret 1s steps(1) infinite; }
+.live .code::after, .live .table::after { display: none; }
+@keyframes caret { 50% { opacity: 0; } }
+.checking { display: flex; align-items: center; gap: 8px; margin-top: 2px; font-size: 13.5px; color: var(--text-3); }
+.checking .spin { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--seam-2); border-top-color: var(--text-3); animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.thinking { display: flex; align-items: center; gap: 10px; color: var(--text-3); }
+.dots { display: inline-flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--text-3); animation: blink 1.2s infinite both; }
+.dots i:nth-child(2) { animation-delay: .2s; }
+.dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+.enter { animation: enter .45s var(--ease) both; }
+@keyframes enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.hello { max-width: var(--col); margin: 0 auto; padding: 18vh 20px 0; text-align: center; }
+.hello[hidden] { display: none; }
+.hello h1 { margin: 0 0 22px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+.ideas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+.idea { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--seam); background: transparent; color: var(--text-2); font-size: 14px; cursor: pointer; transition: background .15s, color .15s; }
+.idea:hover { background: var(--field); color: var(--text); }
+
+.dock { padding: 8px 20px 14px; }
+.app.empty .dock .foot { display: none; }
+.box {
+  max-width: var(--col); margin: 0 auto; display: flex; align-items: flex-end; gap: 8px;
+  padding: 8px 8px 8px 18px; border-radius: 24px; background: var(--field); border: 1px solid var(--seam);
+  box-shadow: 0 2px 10px rgba(22, 24, 29, 0.05); transition: border-color .2s; text-align: left;
+}
+.box:focus-within { border-color: var(--seam-2); }
+.box textarea {
+  flex: 1; resize: none; border: 0; outline: 0; background: transparent; color: var(--text);
+  font: 16px/1.5 var(--sans); padding: 8px 0; max-height: 200px; caret-color: var(--accent);
+}
+.box textarea::placeholder { color: var(--text-3); }
+.send { width: 38px; height: 38px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--text); color: var(--bg); cursor: pointer; transition: opacity .15s; }
+.send:disabled { opacity: .25; cursor: default; }
+.foot { max-width: var(--col); margin: 8px auto 0; text-align: center; font-size: 12.5px; color: var(--text-3); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@media (max-width: 600px) {
+  .top { padding: 12px 16px; }
+  .thread { padding: 8px 16px 24px; }
+  .dock { padding: 6px 12px 12px; }
+  .hello { padding-top: 12vh; }
+  .hello h1 { font-size: 24px; }
+  .me p { max-width: 88%; }
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: A plain, familiar chat: one question, one cited answer. Grounding stays visible only as small sources and an optional "Show steps".
+OWN-WORLD: Paper ground (#f5f5f2), ink text, grey user bubbles, one strong blue for citations and focus; Atkinson Hyperlegible Next for text, its Mono for code and citation numbers.
+STORY: A student asks, reads a short cited answer, and can check the source; a reviewer can open the steps.
+FIRST VIEWPORT: Centred greeting with the question box and four example questions; after the first question the box docks at the bottom.
+FORM: The category standard (chat window), chosen by the user after trying the Pipeline Inspector; seed key 939c2602.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-new" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 4v4M12 16v4M4 12h4M16 12h4M7 7l2 2M15 15l2 2M17 7l-2 2M9 15l-2 2"/></symbol>
+</svg>
+
+<div class="app empty" id="app">
+  <header class="top">
+    <div class="brand"><b>CSE110 Tutor</b>
+      <div class="pick" id="pick" hidden>
+        <button type="button" class="pick-btn" id="pickBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="menu"><span id="pickName">Model</span><svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="menu" id="menu" role="listbox" aria-label="Choose a model" tabindex="-1" hidden></div>
+      </div>
+    </div>
+    <button class="new" id="new" type="button"><svg class="i"><use href="#i-new"/></svg>New chat</button>
+  </header>
+  <div class="scroll" id="scroll">
+    <div class="hello" id="hello">
+      <h1>What do you need help with in CSE110?</h1>
+      <div id="helloSlot"></div>
+      <div class="ideas" id="ideas"></div>
+    </div>
+    <div class="thread" id="thread" aria-live="polite"></div>
+  </div>
+  <div class="dock" id="dock">
+    <form class="box" id="form">
+      <textarea id="q" rows="1" placeholder="Ask about CSE110" aria-label="Your question" maxlength="2000"></textarea>
+      <button class="send" id="send" type="submit" disabled aria-label="Send"><svg class="i"><use href="#i-up"/></svg></button>
+    </form>
+    <p class="foot">Answers come only from the CSE110 course material. Lab questions get hints, not solutions.</p>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const app = $('#app'), form = $('#form'), q = $('#q'), send = $('#send'), thread = $('#thread'), scroller = $('#scroll');
+const IDEAS = [
+  'Difference between a tuple and a list?',
+  'How does a while loop work?',
+  'Hint for the prime number lab task',
+  'When can I meet my ST on Saturday?',
+];
+const LABEL = {
+  guard: 'Checking the question', classify: 'Understanding the question', retrieve: 'Searching the course material',
+  hours: 'Checking consultation hours', answer: 'Writing the answer', grade: 'Checking it against the sources',
+  rewrite: 'Searching again', finalize: 'Finishing up', off_topic: 'Finishing up',
+};
+const NEXT = { guard: 'classify', retrieve: 'answer', hours: 'answer', answer: 'grade', rewrite: 'retrieve' };
+let busy = false;
+
+/* model picker: the server lists only models it has a key for */
+const MODEL_INFO = {
+  'groq:qwen/qwen3.8-27b': ['Qwen 3.8', 'Fastest. Answers in a few seconds.', 'Fast'],
+  'gemini:gemini-3.5-flash-lite': ['Gemini 3.5 Flash-Lite', 'Can be slow when Google is busy.'],
+  'gemini:gemini-3.6-flash': ['Gemini 3.6 Flash', 'Google\'s standard Flash model.'],
+  'gemini:gemini-3.1-flash-lite': ['Gemini 3.1 Flash-Lite', 'Older, lighter Google model.'],
+  'gemini:gemini-3.5-flash': ['Gemini 3.5 Flash', 'Google\'s standard Flash model.'],
+};
+const GROUP = { groq: 'Groq', gemini: 'Google Gemini' };
+const pick = $('#pick'), pickBtn = $('#pickBtn'), menu = $('#menu');
+let choices = [], model = '', activeIdx = -1;
+const info = c => MODEL_INFO[c.id] || [c.name, ''];
+function renderMenu() {
+  let html = '', last = '';
+  choices.forEach((c, i) => {
+    if (c.provider !== last) { html += `<div class="grp" role="presentation">${GROUP[c.provider] || c.provider}</div>`; last = c.provider; }
+    const [name, note, tag] = info(c);
+    html += `<div class="opt" role="option" id="opt-${i}" data-i="${i}" aria-selected="${c.id === model}"><b>${esc(name)}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</b>${note ? `<small>${esc(note)}</small>` : ''}<svg class="i"><use href="#i-check"/></svg></div>`;
+  });
+  menu.innerHTML = html;
+  menu.querySelectorAll('.opt').forEach(o => {
+    o.addEventListener('click', () => choose(+o.dataset.i));
+    o.addEventListener('mousemove', () => setActive(+o.dataset.i));
+  });
+}
+function setActive(i) {
+  activeIdx = i;
+  menu.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', +o.dataset.i === i));
+  if (i >= 0) { menu.setAttribute('aria-activedescendant', 'opt-' + i); menu.querySelector('#opt-' + i)?.scrollIntoView({ block: 'nearest' }); }
+}
+function choose(i) {
+  model = choices[i].id; $('#pickName').textContent = info(choices[i])[0];
+  try { localStorage.setItem('tutor.model', model); } catch {}
+  renderMenu(); closeMenu();
+}
+function openMenu() { menu.hidden = false; pickBtn.setAttribute('aria-expanded', 'true'); setActive(Math.max(0, choices.findIndex(c => c.id === model))); menu.focus(); }
+function closeMenu(focusBtn = true) { if (menu.hidden) return; menu.hidden = true; pickBtn.setAttribute('aria-expanded', 'false'); if (focusBtn) pickBtn.focus(); }
+pickBtn.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu());
+pickBtn.addEventListener('keydown', e => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); openMenu(); } });
+menu.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); setActive((activeIdx + 1) % choices.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((activeIdx - 1 + choices.length) % choices.length); }
+  else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+  else if (e.key === 'End') { e.preventDefault(); setActive(choices.length - 1); }
+  else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (activeIdx >= 0) choose(activeIdx); }
+  else if (e.key === 'Escape' || e.key === 'Tab') { closeMenu(e.key === 'Escape'); }
+});
+document.addEventListener('pointerdown', e => { if (!pick.contains(e.target)) closeMenu(false); });
+fetch('/api/info').then(r => r.json()).then(d => {
+  choices = d.choices || [];
+  let saved = ''; try { saved = localStorage.getItem('tutor.model') || ''; } catch {}
+  model = choices.some(c => c.id === saved) ? saved : (choices[0] || {}).id || '';
+  const cur = choices.find(c => c.id === model);
+  if (cur) $('#pickName').textContent = info(cur)[0];
+  renderMenu();
+  pick.hidden = choices.length < 2;
+}).catch(() => {});
+let previous = '';  // the last question, sent along so follow-ups make sense
+
+/* the question box sits in the centre until the first question, then docks at the bottom */
+const helloSlot = $('#helloSlot'), dock = $('#dock');
+function placeBox() {
+  const empty = !thread.children.length;
+  app.classList.toggle('empty', empty);
+  $('#hello').hidden = !empty;
+  (empty ? helloSlot : dock).prepend(form);
+}
+$('#ideas').innerHTML = IDEAS.map(t => `<button type="button" class="idea">${t}</button>`).join('');
+document.querySelectorAll('.idea').forEach(b => b.addEventListener('click', () => { if (!busy) ask(b.textContent); }));
+$('#new').addEventListener('click', () => { if (busy) return; thread.innerHTML = ''; previous = ''; placeBox(); q.value = ''; grow(); q.focus(); });
+
+function lockChips(on) { document.querySelectorAll('.next button, .idea').forEach(b => b.disabled = on); }
+function grow() { q.style.height = 'auto'; q.style.height = Math.min(q.scrollHeight, 200) + 'px'; send.disabled = busy || !q.value.trim(); }
+q.addEventListener('input', grow);
+q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); } });
+form.addEventListener('submit', e => { e.preventDefault(); const v = q.value.trim(); if (v && !busy) ask(v); });
+
+/* markdown: escape first, then a small safe subset */
+const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const inline = s => s
+  .replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`)
+  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  .replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>')
+  .replace(/\s*(\[\d+\])+/g, '');  // citations stay in the model's answer for grading, not on screen
+function md(src) {
+  try { return renderMd(src); } catch { return `<p>${esc(src)}</p>`; }  // never let formatting break the page
+}
+function renderMd(src) {
+  const parts = src.split(/```(\w*)\n?([\s\S]*?)```/g);
+  let html = '';
+  for (let i = 0; i < parts.length; i += 3) {
+    html += blocks(parts[i]);
+    if (i + 2 < parts.length) {
+      const lang = (parts[i + 1] || '').toLowerCase(), code = parts[i + 2].replace(/\n$/, '');
+      let body = esc(code);
+      try { if (window.hljs) body = (lang && hljs.getLanguage(lang)) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code, ['python', 'java']).value; } catch {}
+      html += `<div class="code"><div class="code-head"><span class="lang"><i class="${esc(lang)}"></i>${esc(lang || 'code')}</span><button type="button" class="copy" aria-label="Copy code"><svg class="i"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre><code class="hljs">${body}</code></pre></div>`;
+    }
+  }
+  return html;
+}
+function blocks(text) {
+  let html = '', para = [], list = null, table = [];
+  const cells = r => r.replace(/^\|/, '').replace(/\|\s*$/, '').split('|').map(c => inline(c.trim()));
+  const flushT = () => {
+    if (!table.length) return;
+    const rows = table.filter(r => !/^[\s|:\-]+$/.test(r));  // drop the |---|---| separator row
+    const [head, ...body] = rows;
+    if (!head) { table = []; return; }  // a table still streaming in may have no header row yet
+    html += `<div class="table"><table><thead><tr>${cells(head).map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr>${cells(r).map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    table = [];
+  };
+  const fp = () => { if (para.length) { html += `<p>${inline(para.join(' '))}</p>`; para = []; } };
+  const fl = () => { if (list) { html += `<${list.t}>${list.items.map(x => `<li>${inline(x)}</li>`).join('')}</${list.t}>`; list = null; } };
+  for (const raw of esc(text).split('\n')) {
+    const line = raw.trim(); let m;
+    if (!line) { fp(); fl(); flushT(); continue; }
+    if ((m = line.match(/^#{1,4}\s+(.*)/))) { fp(); fl(); html += `<h3>${inline(m[1])}</h3>`; continue; }
+    if (line.startsWith('|')) { fp(); fl(); table.push(line); continue; }
+    if (table.length) flushT();
+    if ((m = line.match(/^[-*]\s+(.*)/)) || (m = line.match(/^\d+[.)]\s+(.*)/))) {
+      const t = /^\d/.test(line) ? 'ol' : 'ul'; fp(); if (list && list.t !== t) fl(); list = list || { t, items: [] }; list.items.push(m[1]); continue;
+    }
+    if (list) { list.items[list.items.length - 1] += ' ' + line; continue; }
+    para.push(line);
+  }
+  fp(); fl(); flushT();
+  return html;
+}
+const secs = ms => ms < 1000 ? `${ms} ms` : `${(ms / 1000).toFixed(1)} s`;
+const toBottom = () => scroller.scrollTo({ top: scroller.scrollHeight, behavior: 'smooth' });
+
+function renderAnswer(box, ev, steps) {
+  const id = Math.random().toString(36).slice(2, 7);
+  const sources = (ev.sources || []).map(s => {
+    const m = s.match(/^\[(\d+)\]\s*(.*)$/) || [null, '', s];
+    return `<li data-src="${id}-${m[1]}"><span class="n">[${m[1]}]</span><span>${esc(m[2])}</span></li>`;
+  }).join('');
+  const stepRows = steps.map(s => `<li><span>${esc(s.node)}</span><span>${secs(s.ms)}</span></li>`).join('');
+  const followups = ev.outcome === 'grounded' ? ['Show me a code example', 'Explain it more simply', 'What are common mistakes?']
+    : ev.outcome === 'hint' ? ['Give me another hint', 'What should I try first?'] : [];
+  box.innerHTML = `<div class="answer enter">${md(ev.answer || '')}</div>
+    ${followups.length ? `<div class="next">${followups.map(f => `<button type="button"><svg class="i"><use href="#i-spark"/></svg>${f}</button>`).join('')}</div>` : ''}
+    <div class="more">${steps.length ? `<details><summary><svg class="i"><use href="#i-chev"/></svg>Show steps · ${secs(ev.total_ms)}</summary><ol class="steps">${stepRows}</ol>${sources ? `<ol class="srcs">${sources}</ol>` : ''}</details>` : ''}</div>`;
+  box.querySelectorAll('.next button').forEach(b => b.addEventListener('click', () => { if (!busy) ask(b.textContent.trim()); }));
+  box.querySelectorAll('.cite').forEach(b => b.addEventListener('click', () => {
+    const li = box.querySelector(`[data-src="${id}-${b.dataset.n}"]`); if (!li) return;
+    li.classList.add('hot'); setTimeout(() => li.classList.remove('hot'), 1400);
+  }));
+  box.querySelectorAll('.copy').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.closest('.code').querySelector('pre code').textContent);
+      b.innerHTML = '<svg class="i"><use href="#i-check"/></svg><span>Copied</span>'; setTimeout(() => b.innerHTML = '<svg class="i"><use href="#i-copy"/></svg><span>Copy</span>', 1400); } catch {}
+  }));
+}
+
+async function ask(question) {
+  busy = true; lockChips(true); q.value = ''; grow();
+  thread.insertAdjacentHTML('beforeend', `<div class="me enter"><p>${esc(question)}</p></div>`);
+  const box = document.createElement('div'); box.className = 'bot';
+  const thinking = text => `<div class="thinking"><span class="dots"><i></i><i></i><i></i></span><span class="label">${esc(text)}…</span></div>`;
+  box.innerHTML = thinking(LABEL.guard);
+  thread.appendChild(box); placeBox(); toBottom();
+  const steps = [];
+  let draft = '', painting = false, hintMode = false;
+  // re-render the growing draft about every 30 ms, keeping the view pinned to the bottom
+  const paintDraft = (now = false) => {
+    const go = () => {
+      painting = false;
+      const stick = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 160;
+      if (now) { box.innerHTML = `<div class="answer">${md(draft)}</div>`; }
+      else { box.classList.add('live'); box.innerHTML = `<div class="answer">${md(draft)}</div>`; }
+      if (stick) scroller.scrollTop = scroller.scrollHeight;
+    };
+    if (now) return go();
+    if (!painting) { painting = true; setTimeout(go, 30); }  // a timer, not rAF: rAF pauses in background tabs
+  };
+  try {
+    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, previous, model: model || undefined }) });
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `Server answered ${res.status}`); }
+    const reader = res.body.getReader(), dec = new TextDecoder(); let buf = '';
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true }); let nl;
+      while ((nl = buf.indexOf('\n')) >= 0) {
+        const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (!line.trim()) continue;
+        const ev = JSON.parse(line);
+        if (ev.type === 'token') {
+          draft += ev.text;
+          // the answer model's "not in the material" signal is never shown as text
+          // Lab help is never streamed: a draft can contain a solution the grader is about to reject.
+          if (!hintMode && (!'NOT_IN_MATERIAL'.startsWith(draft.trim().slice(0, 15)) || draft.trim().length > 15)) paintDraft();
+        } else if (ev.type === 'step') {
+          steps.push(ev);
+          if (ev.node === 'classify' && ev.detail && ev.detail.intent === 'lab_help') {
+            hintMode = true; const l = box.querySelector('.label'); if (l) l.textContent = 'Writing a hint and checking it…';
+          }
+          if (hintMode && ev.node !== 'classify') { continue; }
+          if (ev.node === 'rewrite') { draft = ''; box.classList.remove('live'); box.innerHTML = thinking('Searching again'); }
+          if (ev.node === 'answer' && draft && !draft.trim().startsWith('NOT_IN_MATERIAL')) {
+            box.classList.remove('live'); paintDraft(true);  // drafted; now the grounding check runs
+            box.insertAdjacentHTML('beforeend', '<div class="checking"><span class="spin" aria-hidden="true"></span>Checking it against the course material…</div>');
+          } else if (ev.node === 'answer') { draft = ''; }
+          const next = NEXT[ev.node], label = box.querySelector('.label');
+          if (label && next) label.textContent = LABEL[next] + '…';
+        } else if (ev.type === 'done') {
+          box.classList.remove('live');
+          renderAnswer(box, ev, steps);
+          if (draft) box.querySelector('.answer')?.classList.remove('enter');  // it streamed in already
+          toBottom();
+          if (ev.outcome !== 'busy') previous = question;
+        }
+      }
+    }
+  } catch (err) {
+    box.innerHTML = `<div class="answer"><p>${esc(err.message || 'The request failed.')} Check that tutor-web is still running, then ask again.</p></div>`;
+  } finally { busy = false; lockChips(false); grow(); q.focus(); }
+}
+
+placeBox(); grow();
+</script>
+</body>
+</html>

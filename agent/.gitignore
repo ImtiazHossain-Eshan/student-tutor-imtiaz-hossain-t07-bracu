@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Secrets (the website's root .gitignore also ignores .env.*, so re-include the template)
+.env
+!.env.example
+
+# Built index (rebuild with `tutor-ingest`) and the embedding cache
+index/
+cache/
+
+# Course material belongs to BRAC University: keep it local, never publish it.
+data/course/**
+!data/course/theory/
+!data/course/lab/
+!data/course/**/.gitkeep
+
+# Evaluation runs (the latest summary is copied into the README by hand)
+evals/results/
+
+# design-tool workspace (decision rounds)
+.impeccable/

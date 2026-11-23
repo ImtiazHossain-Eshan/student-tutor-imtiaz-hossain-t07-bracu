@@ -1,0 +1,13 @@
+# Never in the image: secrets, raw course files, caches, local environments, results
+.env
+.env.*
+!.env.example
+.venv/
+**/__pycache__/
+cache/
+data/course/
+data/sample/
+evals/results/
+.impeccable/
+tests/
+*.log

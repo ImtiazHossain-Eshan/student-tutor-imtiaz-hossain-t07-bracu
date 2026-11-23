@@ -1,0 +1,281 @@
+{
+  "source": "ST_BRACU_T07/src/data",
+  "exported_at": "2026-11-23T10:12:10.757Z",
+  "DAYS_OF_WEEK": [
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+  ],
+  "FAQ_ITEMS": [
+    {
+      "id": "faq-1",
+      "question": "Where can I meet my Student Tutor?",
+      "answer": "You can meet Imtiaz Hossain in person at Room 10G-33L during offline consultation hours, or in Room 09B-09L during the Thursday CSE110-07 lab sessions. For online consultations, join the official CSE ST Discord server.",
+      "category": "Consultation"
+    },
+    {
+      "id": "faq-2",
+      "question": "How can I get online assistance?",
+      "answer": "Join the official CSE Student Tutor Discord server (discord.gg/S6qrvUVrgF). Navigate to the #cse110 course channel to post your questions during online consultation hours (9:30 PM - 10:50 PM). You can also directly reach out to Imtiaz on Discord using personal handle bloodrayne_.",
+      "category": "Discord"
+    },
+    {
+      "id": "faq-3",
+      "question": "What should I do before joining a consultation?",
+      "answer": "Attempt the exercise or task first, identify the specific concept or bug causing difficulty, and have your code and error tracebacks ready. Bringing targeted questions helps your tutor assist you much more efficiently.",
+      "category": "Preparation"
+    },
+    {
+      "id": "faq-4",
+      "question": "Can I contact my ST through email?",
+      "answer": "Yes, you can email imtiaz.hossain@g.bracu.ac.bd for general inquiries or if you cannot attend scheduled sessions. For real-time code debugging, attending scheduled offline or Discord sessions is recommended.",
+      "category": "Contact"
+    },
+    {
+      "id": "faq-5",
+      "question": "Where can I find the consultation schedule?",
+      "answer": "The full consultation timetable is displayed in the Consultation Schedule section of this website. Use the toggle button at the top of the schedule to switch between Regular Time and Ramadan Time.",
+      "category": "Schedule"
+    },
+    {
+      "id": "faq-6",
+      "question": "How can I get help with assignments and quizzes?",
+      "answer": "Student Tutors explain the core concepts, syntax, and logic behind problems, helping you understand how to approach assignments and quizzes independently. In accordance with university academic integrity, tutors will not write code for you or solve graded questions directly.",
+      "category": "Academic Support"
+    }
+  ],
+  "INITIAL_ANNOUNCEMENTS": [
+    {
+      "id": "ann-1",
+      "title": "Welcome to CSE ST Fall 2026",
+      "date": "Fall 2026 · Semester Start",
+      "category": "General",
+      "description": "Welcome to the BRAC University CSE Student Tutor Program for Fall 2026. Student Tutors are here to support your learning journey in CSE110: Programming Language I (Java) throughout the semester."
+    },
+    {
+      "id": "ann-2",
+      "title": "Official Discord Server",
+      "date": "Fall 2026 · Community",
+      "category": "Discord",
+      "description": "Join the official CSE Student Tutor Discord server for real-time online consultation, academic discussions, and announcements. Online consultation hours are 9:30 PM - 10:50 PM. You can also DM Imtiaz on Discord at bloodrayne_.",
+      "linkText": "Join Discord Server",
+      "linkUrl": "https://discord.gg/S6qrvUVrgF"
+    },
+    {
+      "id": "ann-3",
+      "title": "Consultation Room Information",
+      "date": "Fall 2026 · Campus Locations",
+      "category": "Location",
+      "description": "Offline consultations are held in Room 10G-33L (Building G, 10th Floor). The Thursday CSE110-07 Lab sessions are conducted in Room 09B-09L (Building B, 9th Floor)."
+    },
+    {
+      "id": "ann-4",
+      "title": "How to Get Academic Support",
+      "date": "Fall 2026 · Student Guide",
+      "category": "Guide",
+      "description": "To get the most out of your consultation, isolate the problem you are struggling with, bring your laptop or notes, and review the consultation schedule before visiting."
+    }
+  ],
+  "RAMADAN_SCHEDULE": [
+    {
+      "id": "ram-sat-1",
+      "day": "Saturday",
+      "time": "11:45 AM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "ram-sat-2",
+      "day": "Saturday",
+      "time": "1:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "ram-tue-1",
+      "day": "Tuesday",
+      "time": "10:30 PM",
+      "activity": "Online consultation",
+      "location": "Discord",
+      "type": "online"
+    },
+    {
+      "id": "ram-wed-0",
+      "day": "Wednesday",
+      "time": "11:45 AM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "ram-wed-1",
+      "day": "Wednesday",
+      "time": "1:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "ram-wed-2",
+      "day": "Wednesday",
+      "time": "10:30 PM",
+      "activity": "Online consultation",
+      "location": "Discord",
+      "type": "online"
+    },
+    {
+      "id": "ram-thu-1",
+      "day": "Thursday",
+      "time": "10:30 AM",
+      "activity": "CSE110-07 Lab",
+      "location": "09B-09L",
+      "type": "lab"
+    },
+    {
+      "id": "ram-thu-2",
+      "day": "Thursday",
+      "time": "11:45 AM",
+      "activity": "CSE110-07 Lab",
+      "location": "09B-09L",
+      "type": "lab"
+    },
+    {
+      "id": "ram-thu-3",
+      "day": "Thursday",
+      "time": "1:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "ram-thu-4",
+      "day": "Thursday",
+      "time": "2:15 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    }
+  ],
+  "REGULAR_SCHEDULE": [
+    {
+      "id": "reg-sat-0",
+      "day": "Saturday",
+      "time": "8:00 AM",
+      "activity": "Student Class",
+      "location": "Class",
+      "type": "class"
+    },
+    {
+      "id": "reg-sat-0b",
+      "day": "Saturday",
+      "time": "11:00 AM",
+      "activity": "Student Class",
+      "location": "Class",
+      "type": "class"
+    },
+    {
+      "id": "reg-sat-1",
+      "day": "Saturday",
+      "time": "12:30 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "reg-sat-2",
+      "day": "Saturday",
+      "time": "2:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "reg-tue-1",
+      "day": "Tuesday",
+      "time": "9:30 PM",
+      "activity": "Online consultation",
+      "location": "Discord",
+      "type": "online"
+    },
+    {
+      "id": "reg-wed-0",
+      "day": "Wednesday",
+      "time": "12:30 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "reg-wed-1",
+      "day": "Wednesday",
+      "time": "2:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "reg-wed-2",
+      "day": "Wednesday",
+      "time": "9:30 PM",
+      "activity": "Online consultation",
+      "location": "Discord",
+      "type": "online"
+    },
+    {
+      "id": "reg-thu-1",
+      "day": "Thursday",
+      "time": "11:00 AM",
+      "activity": "CSE110-07 Lab",
+      "location": "09B-09L",
+      "type": "lab"
+    },
+    {
+      "id": "reg-thu-2",
+      "day": "Thursday",
+      "time": "12:30 PM",
+      "activity": "CSE110-07 Lab",
+      "location": "09B-09L",
+      "type": "lab"
+    },
+    {
+      "id": "reg-thu-3",
+      "day": "Thursday",
+      "time": "2:00 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    },
+    {
+      "id": "reg-thu-4",
+      "day": "Thursday",
+      "time": "3:30 PM",
+      "activity": "Offline consultation",
+      "location": "10G-33L",
+      "type": "offline"
+    }
+  ],
+  "TUTOR_INFO": {
+    "name": "Imtiaz Hossain",
+    "role": "Student Tutor (ST)",
+    "course": "CSE110: Programming Language I",
+    "initial": "T07",
+    "email": "imtiaz.hossain@g.bracu.ac.bd",
+    "offlineRoom": "10G-33L",
+    "labRoom": "09B-09L",
+    "onlinePlatform": "CSE ST Discord Server",
+    "term": "Fall 2026",
+    "termPeriod": "3rd November 2026 to 4th January 2027",
+    "maxHours": "Max 15 hours per week",
+    "discordInviteUrl": "https://discord.gg/S6qrvUVrgF",
+    "discordUsername": "bloodrayne_",
+    "slackUrl": "https://cse110fall2026.slack.com/team/U0CDM29USQ7",
+    "slackMemberId": "U0CDM29USQ7",
+    "slackDisplayName": "ST_Imtiaz_T07"
+  }
+}

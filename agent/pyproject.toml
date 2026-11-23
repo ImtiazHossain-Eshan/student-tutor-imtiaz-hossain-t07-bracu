@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cse110-tutor-agent"
+version = "0.1.0"
+description = "A grounded, tool-using teaching assistant for BRAC University CSE110 (Java), built with LangGraph and the Model Context Protocol."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Imtiaz Hossain" }]
+dependencies = [
+    "langgraph>=1.2",
+    "langchain-core>=1.8",
+    "langchain-google-genai>=4.5",
+    "langchain-groq>=1.2",
+    "langchain-mcp-adapters>=0.3",
+    "mcp>=1.30",
+    "qdrant-client>=1.20",
+    "pypdf>=6",
+    "python-pptx>=1.0",
+    "python-docx>=1.1",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.6",
+    "python-dotenv>=1.0",
+    "starlette>=0.40",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+tutor-ingest = "tutor_agent.ingest.build:main"
+tutor-mcp = "tutor_agent.mcp_server.server:main"
+tutor-ask = "tutor_agent.cli:main"
+tutor-eval = "tutor_agent.evals.run:main"
+tutor-web = "tutor_agent.web.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+tutor_agent = ["web/static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

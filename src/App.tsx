@@ -6,6 +6,7 @@ import discordLogo from './assets/discord-logo-64.png';
 import buxLogo from './assets/bux-logo.png';
 import beecrowdLogo from './assets/beecrowd-logo.svg';
 import youtubeLogo from './assets/youtube-playlist-logo.svg';
+import TutorChat from './components/TutorChat';
 
 /* ─── Schedule Data (Regular Semester  -  Official BRACU Consultation Planner) ─── */
 
@@ -1391,6 +1392,9 @@ export default function App() {
         </section>
 
       </main>
+
+      {/* Ask the CSE110 Tutor: renders only when VITE_TUTOR_API_URL is set */}
+      <TutorChat />
 
       {/* ── 5. Clean, Minimal Footer ── */}
       <footer className="border-t-2 border-[var(--ink)] bg-[var(--paper-2)] py-6 text-xs font-mono text-[var(--ink-2)]">
