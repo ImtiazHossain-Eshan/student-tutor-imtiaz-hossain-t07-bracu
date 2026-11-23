@@ -52,13 +52,17 @@ def _info(s, brain_models: list[str]) -> dict:
     }
 
 
-def with_context(question: str, previous: str) -> str:
+def with_context(question: str, previous: str, previous_language: str = "") -> str:
     """Follow-ups like "give me an example of that" only make sense with the question before.
-    The agent is single-turn, so the previous question rides along as labelled context. Only the
-    question, never the previous answer, so every answer is still grounded in fresh retrieval."""
+    The agent is single-turn, so the previous question rides along as labelled context, with the
+    language the agent decided for it, so a follow-up stays in that language unless the student
+    names another. Only the question, never the previous answer, so every answer is still grounded
+    in fresh retrieval."""
     if not previous:
         return question
-    return f"(Earlier in this chat the student asked: {previous})\nFollow-up question: {question}"
+    lang = {"python": "Python", "java": "Java"}.get(previous_language.lower(), "")
+    about = f", about {lang}" if lang else ""
+    return f"(Earlier in this chat the student asked{about}: {previous})\nFollow-up question: {question}"
 
 
 def create_app() -> Starlette:
@@ -115,7 +119,8 @@ def create_app() -> Starlette:
             return JSONResponse({"error": "Type a question first."}, status_code=400)
         if len(q) > MAX_QUESTION:
             return JSONResponse({"error": f"Keep the question under {MAX_QUESTION} characters."}, status_code=400)
-        q = with_context(q, str(body.get("previous", "")).strip()[:MAX_QUESTION])
+        q = with_context(q, str(body.get("previous", "")).strip()[:MAX_QUESTION],
+                         str(body.get("previous_language", "")).strip()[:10])
         model = str(body.get("model") or models[0])
         if model not in models or (not s.show_model_menu and model != models[0]):
             return JSONResponse({"error": f"Unknown model {model!r}."}, status_code=400)

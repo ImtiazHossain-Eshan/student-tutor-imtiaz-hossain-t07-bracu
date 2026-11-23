@@ -143,3 +143,11 @@ def test_a_language_named_in_the_question_wins_over_the_classifier(concept_route
     q = "(Earlier in this chat the student asked: How does a while loop work?)\nFollow-up question: hint for the python loops task"
     asyncio.run(ask(build_graph(brain, tools), q))
     assert tools.languages[0] == "python"
+
+
+def test_indexing_inside_code_is_not_read_as_a_citation():
+    from tutor_agent.agent.graph import citation_numbers, citations_valid
+
+    draft = "Tuples are immutable [2].\n\n```python\nt = (1, 2)\nprint(t[0])\n```\nUse `nums[1]` for the second item."
+    assert citation_numbers(draft) == {2}
+    assert citations_valid(draft, 3)

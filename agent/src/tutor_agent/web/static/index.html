@@ -310,7 +310,7 @@ fetch('/api/info').then(r => r.json()).then(d => {
   renderMenu();
   pick.hidden = choices.length < 2;
 }).catch(() => {});
-let previous = '';  // the last question, sent along so follow-ups make sense
+let previous = '', previousLang = '';  // the last question and its language, sent along so follow-ups make sense
 
 /* the question box sits in the centre until the first question, then docks at the bottom */
 const helloSlot = $('#helloSlot'), dock = $('#dock');
@@ -322,7 +322,7 @@ function placeBox() {
 }
 $('#ideas').innerHTML = IDEAS.map(t => `<button type="button" class="idea">${t}</button>`).join('');
 document.querySelectorAll('.idea').forEach(b => b.addEventListener('click', () => { if (!busy) ask(b.textContent); }));
-$('#new').addEventListener('click', () => { if (busy) return; thread.innerHTML = ''; previous = ''; placeBox(); q.value = ''; grow(); q.focus(); });
+$('#new').addEventListener('click', () => { if (busy) return; thread.innerHTML = ''; previous = ''; previousLang = ''; placeBox(); q.value = ''; grow(); q.focus(); });
 
 function lockChips(on) { document.querySelectorAll('.next button, .idea').forEach(b => b.disabled = on); }
 function grow() { q.style.height = 'auto'; q.style.height = Math.min(q.scrollHeight, 200) + 'px'; send.disabled = busy || !q.value.trim(); }
@@ -332,11 +332,14 @@ form.addEventListener('submit', e => { e.preventDefault(); const v = q.value.tri
 
 /* markdown: escape first, then a small safe subset */
 const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const inline = s => s
-  .replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`)
-  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-  .replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>')
-  .replace(/\s*(\[\d+\])+/g, '');  // citations stay in the model's answer for grading, not on screen
+// Text outside `code` gets emphasis and loses citation numbers (they stay in the model's answer for
+// grading, not on screen); text inside `code` is left alone, so `t[0]` stays `t[0]`.
+const inline = s => s.split(/(`[^`]+`)/).map((part, i) => i % 2
+  ? `<code>${part.slice(1, -1)}</code>`
+  : part
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>')
+    .replace(/\s*(\[\d+\])+/g, '')).join('');
 function md(src) {
   try { return renderMd(src); } catch { return `<p>${esc(src)}</p>`; }  // never let formatting break the page
 }
@@ -430,7 +433,7 @@ async function ask(question) {
     if (!painting) { painting = true; setTimeout(go, 30); }  // a timer, not rAF: rAF pauses in background tabs
   };
   try {
-    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, previous, model: model || undefined }) });
+    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question, previous, previous_language: previousLang, model: model || undefined }) });
     if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `Server answered ${res.status}`); }
     const reader = res.body.getReader(), dec = new TextDecoder(); let buf = '';
     for (;;) {
@@ -462,7 +465,7 @@ async function ask(question) {
           renderAnswer(box, ev, steps);
           if (draft) box.querySelector('.answer')?.classList.remove('enter');  // it streamed in already
           toBottom();
-          if (ev.outcome !== 'busy') previous = question;
+          if (ev.outcome !== 'busy') { previous = question; previousLang = ((steps.find(s => s.node === 'classify') || {}).detail || {}).language || ''; }
         }
       }
     }

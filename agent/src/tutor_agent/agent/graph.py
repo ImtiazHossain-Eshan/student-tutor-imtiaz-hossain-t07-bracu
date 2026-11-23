@@ -105,17 +105,25 @@ def strip_unbacked_code(draft: str, passages: list[dict]) -> tuple[str, int]:
     return FENCE.sub(keep, draft).strip(), removed
 
 
+CODE = re.compile(r"```.*?(```|$)|`[^`\n]*`", re.S)
+
+
+def citation_numbers(draft: str) -> set[int]:
+    """The [n] citations in a draft, ignoring code: `t[0]` or `nums[1]` is indexing, not a citation."""
+    return {int(x) for x in CITE.findall(CODE.sub(" ", draft))}
+
+
 def cited_evidence(draft: str, passages: list[dict], schedule: dict | None) -> str:
     """The evidence items the draft cites, keeping their original numbers, for a smaller grader call."""
     full = format_evidence(passages, schedule)
-    cited = {int(x) for x in CITE.findall(draft)}
+    cited = citation_numbers(draft)
     items = re.split(r"\n\n(?=\[\d+\] )", full)
     kept = [it for it in items if (m := re.match(r"\[(\d+)\]", it)) and int(m.group(1)) in cited]
     return "\n\n".join(kept) if kept else full
 
 
 def citations_valid(draft: str, n_evidence: int) -> bool:
-    cited = {int(x) for x in CITE.findall(draft)}
+    cited = citation_numbers(draft)
     return bool(cited) and all(1 <= c <= n_evidence for c in cited)
 
 
@@ -132,11 +140,13 @@ def build_graph(brain: Brain, tools: CourseTools, *, k: int = 5, max_attempts: i
         r = await brain.classify(state["question"])
         intent = "off_topic" if r.injection and r.intent == "off_topic" else r.intent
         # A student who names a language in this question means it, whatever the earlier chat was about.
-        current = state["question"].rsplit("Follow-up question:", 1)[-1]
+        earlier, _, current = state["question"].rpartition("Follow-up question:")
         if re.search(r"\bpython\b", current, re.I):
             r.language = "python"
         elif re.search(r"\bjava\b", current, re.I):
             r.language = "java"
+        elif m := re.search(r"student asked, about (Python|Java):", earlier):
+            r.language = m.group(1).lower()  # a follow-up stays in the conversation's language
         return {
             "intent": intent, "scope": r.scope, "language": r.language, "day": r.day,
             "query": r.search_query or state["question"], "attempts": 0,
@@ -198,7 +208,7 @@ def build_graph(brain: Brain, tools: CourseTools, *, k: int = 5, max_attempts: i
     async def finalize(state: AgentState) -> AgentState:
         if state.get("grounded"):
             labels = evidence_labels(state.get("passages", []), state.get("schedule"))
-            cited = sorted({int(x) for x in CITE.findall(state["draft"])})
+            cited = sorted(citation_numbers(state["draft"]))
             sources = [f"[{i}] {labels[i - 1]}" for i in cited if 1 <= i <= len(labels)]
             return {"answer": state["draft"], "sources": sources, "trace": log(state, "finalize: grounded answer")}
         try:

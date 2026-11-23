@@ -61,3 +61,15 @@ def test_lab_help_drafts_are_never_streamed():
     tools = FakeTools()
     events = asyncio.run(_collect(build_graph(brain, tools), "hint for the prime task", tools))
     assert not [e for e in events if e["type"] == "token"] and events[-1]["outcome"] == "hint"
+
+
+def test_follow_up_keeps_the_conversation_language():
+    from tutor_agent.agent.brain import Route
+    from tutor_agent.web.server import with_context
+
+    q = with_context("Show me a code example", "Difference between a tuple and a list?", "python")
+    assert "about Python" in q
+    route = Route(intent="concept", search_query="tuple example", scope="theory", language="java")
+    tools = FakeTools()
+    asyncio.run(_collect(build_graph(FakeBrain(route, answers=["t = (1, 2) [1]"]), tools), q, tools))
+    assert tools.languages[0] == "python"
